@@ -1,0 +1,13 @@
+/*@mixin for blocks
+  @extend to copy code of another property
+  $ for vars*/
+
+$card-background: grey;
+
+#receipt-grid {
+  border: red 10px solid;
+}
+
+.card {
+  background-color: $card-background;
+}
