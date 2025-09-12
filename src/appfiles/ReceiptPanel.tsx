@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { receiptsDummy } from './dummydata';
-import './tailwind.css'
-import './style.scss'
+import '../tailwind.css'
+import '../style.scss'
 
 //let receipts : any[] = []; //uncomment for production
 let receipts : any[] = receiptsDummy;

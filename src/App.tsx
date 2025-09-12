@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
-import ReceiptPanel from './ReceiptPanel'
-import CardPanel from './CardPanel'
+import ReceiptPanel from './appfiles/ReceiptPanel'
+import CardPanel from './appfiles/CardPanel'
+import Login from './auth/Login'
 import './tailwind.css'
 import './style.scss'
 
@@ -131,4 +132,4 @@ function App() : any {
   }
 }
 
-export default App;
+export default Login;
