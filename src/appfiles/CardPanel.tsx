@@ -40,7 +40,13 @@ function CardPanel() : any {
     </div>
   )
 
-  return cardPanel;
+  return (
+    <div className='container mt-20 mb-20'>
+      <div id='receipt-grid' className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols3 lg:grid-cols4 gap-4'>
+        {cardPanel}
+      </div>
+    </div>
+  );
 }
 
 export default CardPanel;

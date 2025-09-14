@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, NavLink, Outlet } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, NavLink, Outlet, Router } from 'react-router-dom';
 import { useState, useEffect } from 'react'
 import Register from './Register'
 import '../tailwind.css'
@@ -18,9 +18,10 @@ function Login() : any {
 
             <button className="btn btn-neutral mt-4">Login</button>
 
-            <p>Don't have an account? Register <NavLink to='/register'></NavLink></p>
+            <p>Don't have an account? <NavLink to='/register'>Register</NavLink></p>
+            
         </fieldset>
-    );
+    )
 
     return LoginPanel;
 }

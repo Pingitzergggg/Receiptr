@@ -48,7 +48,13 @@ function ReceiptPanel() : any {
     </div>
   );
 
-  return receiptPanel;
+  return (
+    <div className='container mt-20 mb-20'>
+      <div id='receipt-grid' className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols3 lg:grid-cols4 gap-4'>
+        {receiptPanel}
+      </div>
+    </div>
+  );
 }
 
 export default ReceiptPanel;
