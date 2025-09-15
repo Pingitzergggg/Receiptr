@@ -67,12 +67,8 @@ function nameValidator(input : string) : boolean {
     if (checkInjection(input)) {
         if (input.length <= 45) {
             const chars : unknown[] = input.split('');
-            let convertedNumber : number = 0;
             for (let ch in chars) {
-                convertedNumber= chars[ch] as number;
-                if (convertedNumber == convertedNumber + 0) {
-                    throw 'Name should only contain letters!';
-                }
+                if 
             }
         return true;
         } else {
