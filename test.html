@@ -4,36 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script>
-        fetch('http://localhost:5001/billconvert/fetch_receipt_data', {
-            method: 'POST',
-            headers: {
-                'Content-type': 'application/json',
-                'X-API-KEY': "]WcdihR9N6}Ol5/V`e}sDD',HRRZIm`Kk|oG'grXb})cJqKS(S",
-                'id': '1'
-            },
-            body: JSON.stringify({id:1})
-        })
-            .then(response => response.json())
-            .then(data => {update(data);})
-
-        function update(object) {
-            for(let key in object) {
-                const div = document.createElement('div');
-                const h2 = document.createElement('h2');
-                const p = document.createElement('p');
-                const h2_text = document.createTextNode = `${object[key]['title']}`;
-                const p_text = document.createTextNode = `test: ${object[key]['title']}`;
-
-                document.body.appendChild(div)
-                div.setAttribute('id', String(key))
-                div.appendChild(h2)
-                div.appendChild(p)
-                h2.innerHTML = h2_text
-                p.innerHTML = p_text
-            }
-        }
-    </script>
+    <script src="src/auth/stringValidator.ts"></script>
 </head>
 <body>
     <div>

@@ -11,10 +11,12 @@ function Login() : any {
             <legend className="fieldset-legend">Login</legend>
 
             <label className="label">Email</label>
-            <input type="email" className="input" placeholder="Email" />
+            <input type="email" className="input" placeholder="Email"/>
+            <span className='error'>Error</span>
 
             <label className="label">Password</label>
             <input type="password" className="input" placeholder="Password" />
+            <span className='error'>Error</span>
 
             <button className="btn btn-neutral mt-4">Login</button>
 
