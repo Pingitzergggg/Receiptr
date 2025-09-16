@@ -22,59 +22,130 @@ function stringNormalize(input : string) : string {
 
 function checkInjection(input : string) : boolean {
     if (input.includes(' ') || input.includes(';')) {
-        return true;
-    } else {
         throw 'Field cannot contain \' \' and \';\' characters!';
+    } else {
+        return true;
     }
 }
 
 function mailValidator(input : string) : boolean {
     if (checkInjection(input)) {
-        const counter : number = countChars(input, '@');
-        if (counter == 1) {
-            const domain : string = input.split('@')[1];
-            if (countChars(domain, '.') >= 1) {
-                return true;
+        if (input.length != 0 && input.length <=45) {
+            const counter : number = countChars(input, '@');
+            if (counter == 1) {
+                const domain : string = input.split('@')[1];
+                if (countChars(domain, '.') >= 1) {
+                    return true;
+                } else {
+                    throw 'Email format not valid!';
+                }
             } else {
                 throw 'Email format not valid!';
             }
         } else {
-            throw 'Email format not valid!';
+            throw 'Field length is not in supported range!'
         }
     } else {
         return false;
     }
 }
 
+//48-57
 function phoneValidator(input : string) : boolean {
-    if (4 < input.length && input.length < 16) {
-        const digits : unknown[] = input.split('');
-        let convertedNumber : number = 0;
-        for (let digit in digits) {
-            convertedNumber= digits[digit] as number;
-            if (convertedNumber != convertedNumber + 0) {
-                throw 'Phone should only contain numbers!';
+    if (checkInjection(input)) {
+        if (4 < input.length && input.length < 16) {
+            const digits : string[] = input.split('');
+            let currentAscii : number = 0;
+            for (let dg in digits) {
+                currentAscii = digits[dg].charCodeAt(0); console.log(`ascii code: ${currentAscii}`)
+                if (!(currentAscii >= 48 && currentAscii <= 57)) {
+                    throw 'Field must contain ASCII letters only!';
+                }
             }
-        }
-        return true;
+            return true;
+        } else {
+            throw 'Digit length is not in supported range!';
+        } 
     } else {
-        throw 'Digit length is not in supported range!';
+        return false;
     }
 }
 
 //65-90 | 97-122
 function nameValidator(input : string) : boolean {
     if (checkInjection(input)) {
-        if (input.length <= 45) {
-            const chars : unknown[] = input.split('');
+        if (input.length <= 45 && input.length >= 2) {
+            const chars : string[] = input.split('');
+            let currentAscii : number = 0;
             for (let ch in chars) {
-                if 
+                currentAscii = chars[ch].charCodeAt(0); console.log(`ascii code: ${currentAscii}`)
+                if (!((currentAscii >= 65 && currentAscii <= 90) || (currentAscii >= 97 && currentAscii <= 122))) {
+                    throw 'Field must contain ASCII letters only!';
+                }
             }
         return true;
         } else {
-            throw 'Field length exceeds limit!'
+            throw 'Field length is not in supported range!';
         }
     } else {
         return false;
     }
 }
+
+//32-64, 91-96, 123-126 special chars
+function passwordValidator(input : string) : boolean {
+    let hasSpecialKey : boolean = false;
+    if (checkInjection(input)) {
+        if (input.length >= 15 && input.length <=50) {
+            const chars : string[] = input.split('');
+            let currentAscii : number = 0;
+            for (let ch in chars) {
+                currentAscii = chars[ch].charCodeAt(0); console.log(`ascii code: ${currentAscii}`)
+                if (currentAscii >= 32 && currentAscii <= 126) {
+                    if (!(currentAscii >= 65 && currentAscii <= 90) || !(currentAscii >= 97 && currentAscii <= 122)) {
+                        hasSpecialKey = true;
+                    }
+                } else {
+                    throw 'Field must contain ASCII letters only!';
+                }
+            }
+        } else {
+            throw 'Password length must be between 15 and 50';
+        }
+    } else {
+        return false;
+    }
+
+    if (hasSpecialKey) {
+        return hasSpecialKey;
+    } else {
+        throw 'Password must contain at least one special character or number!'
+    }
+}
+
+console.log(`mail1: ${mailValidator('asdasdasd')}`)
+console.log(`mail2: ${mailValidator('asdasdasd@asdasdasd')}`)
+console.log(`mail3: ${mailValidator('asdasdasd@asdasd.asd')}`)
+console.log(`mail4: ${mailValidator('asdasd.asd@asd.asd.asd')}`)
+console.log(`mail5: ${mailValidator('')}`)
+console.log(`mail6: ${mailValidator('asdasdasdsasdasdasdsasdasdasdsasdasdasdsasdsdd')}`)
+
+console.log(`phone1: ${mailValidator('asda')}`)
+console.log(`phone2: ${mailValidator('asdasdasdasdasda')}`)
+console.log(`phone3: ${mailValidator('asdasdasd45')}`)
+console.log(`phone4: ${mailValidator('345454/.$')}`)
+console.log(`phone5: ${mailValidator('567486')}`)
+
+console.log(`name1: ${nameValidator('a')}`)
+console.log(`name1: ${nameValidator('as')}`)
+console.log(`name1: ${nameValidator('asdasdasdsasdasdasdsasdasdasdsasdasdasdsasdsdd')}`)
+console.log(`name1: ${nameValidator('23454')}`)
+console.log(`name1: ${nameValidator('&%&^')}`)
+console.log(`name1: ${nameValidator('Dávid')}`)
+
+console.log(`password1: ${passwordValidator('asdasdasdasdsd')}`)
+console.log(`password1: ${passwordValidator('asdasdasdasdsda')}`)
+console.log(`password1: ${passwordValidator('asdasdasdasdsdD')}`)
+console.log(`password1: ${passwordValidator('asdasdasdasdsd6')}`)
+console.log(`password1: ${passwordValidator('asdasdasdasdsd$')}`)
+console.log(`password1: ${passwordValidator('asdasdasdsdasdasdasdsdasdasdasdsdasdasdasdsdasdasdasdsda')}`)
