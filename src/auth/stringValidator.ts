@@ -6,7 +6,7 @@ function countChars(input : string, char : string) : number {
     let containsChar : boolean = false;
     let countChar : number = 0;
     for (let ch in chars) {
-        if (ch == char) {
+        if (chars[ch] == char) {
             containsChar = true;
             countChar++;
         }
@@ -102,8 +102,8 @@ function passwordValidator(input : string) : boolean {
             for (let ch in chars) {
                 currentAscii = chars[ch].charCodeAt(0); console.log(`ascii code: ${currentAscii}`)
                 if (currentAscii >= 32 && currentAscii <= 126) {
-                    if (!(currentAscii >= 65 && currentAscii <= 90) || !(currentAscii >= 97 && currentAscii <= 122)) {
-                        hasSpecialKey = true;
+                    if (!(currentAscii >= 65 && currentAscii <= 90) && !(currentAscii >= 97 && currentAscii <= 122)) {
+                        hasSpecialKey = true; console.log('switched spkey to true')
                     }
                 } else {
                     throw 'Field must contain ASCII letters only!';
@@ -122,30 +122,3 @@ function passwordValidator(input : string) : boolean {
         throw 'Password must contain at least one special character or number!'
     }
 }
-
-console.log(`mail1: ${mailValidator('asdasdasd')}`)
-console.log(`mail2: ${mailValidator('asdasdasd@asdasdasd')}`)
-console.log(`mail3: ${mailValidator('asdasdasd@asdasd.asd')}`)
-console.log(`mail4: ${mailValidator('asdasd.asd@asd.asd.asd')}`)
-console.log(`mail5: ${mailValidator('')}`)
-console.log(`mail6: ${mailValidator('asdasdasdsasdasdasdsasdasdasdsasdasdasdsasdsdd')}`)
-
-console.log(`phone1: ${mailValidator('asda')}`)
-console.log(`phone2: ${mailValidator('asdasdasdasdasda')}`)
-console.log(`phone3: ${mailValidator('asdasdasd45')}`)
-console.log(`phone4: ${mailValidator('345454/.$')}`)
-console.log(`phone5: ${mailValidator('567486')}`)
-
-console.log(`name1: ${nameValidator('a')}`)
-console.log(`name1: ${nameValidator('as')}`)
-console.log(`name1: ${nameValidator('asdasdasdsasdasdasdsasdasdasdsasdasdasdsasdsdd')}`)
-console.log(`name1: ${nameValidator('23454')}`)
-console.log(`name1: ${nameValidator('&%&^')}`)
-console.log(`name1: ${nameValidator('Dávid')}`)
-
-console.log(`password1: ${passwordValidator('asdasdasdasdsd')}`)
-console.log(`password1: ${passwordValidator('asdasdasdasdsda')}`)
-console.log(`password1: ${passwordValidator('asdasdasdasdsdD')}`)
-console.log(`password1: ${passwordValidator('asdasdasdasdsd6')}`)
-console.log(`password1: ${passwordValidator('asdasdasdasdsd$')}`)
-console.log(`password1: ${passwordValidator('asdasdasdsdasdasdasdsdasdasdasdsdasdasdasdsdasdasdasdsda')}`)
