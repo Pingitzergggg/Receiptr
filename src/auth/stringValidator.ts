@@ -15,11 +15,6 @@ function countChars(input : string, char : string) : number {
     return countChar;
 }
 
-function stringNormalize(input : string) : string {
-    const getNFD : string = input.normalize('NFD');
-    return getNFD.replace(/[\u0300-\u036f]/g, '');
-}
-
 function checkInjection(input : string) : boolean {
     if (input.includes(' ') || input.includes(';')) {
         throw 'Field cannot contain \' \' and \';\' characters!';
@@ -28,7 +23,12 @@ function checkInjection(input : string) : boolean {
     }
 }
 
-function mailValidator(input : string) : boolean {
+export function stringNormalize(input : string) : string {
+    const getNFD : string = input.normalize('NFD');
+    return getNFD.replace(/[\u0300-\u036f]/g, '');
+}
+
+export function mailValidator(input : string) : boolean {
     if (checkInjection(input)) {
         if (input.length != 0 && input.length <=45) {
             const counter : number = countChars(input, '@');
@@ -51,7 +51,7 @@ function mailValidator(input : string) : boolean {
 }
 
 //48-57
-function phoneValidator(input : string) : boolean {
+export function phoneValidator(input : string) : boolean {
     if (checkInjection(input)) {
         if (4 < input.length && input.length < 16) {
             const digits : string[] = input.split('');
@@ -72,7 +72,7 @@ function phoneValidator(input : string) : boolean {
 }
 
 //65-90 | 97-122
-function nameValidator(input : string) : boolean {
+export function nameValidator(input : string) : boolean {
     if (checkInjection(input)) {
         if (input.length <= 45 && input.length >= 2) {
             const chars : string[] = input.split('');
@@ -93,7 +93,7 @@ function nameValidator(input : string) : boolean {
 }
 
 //32-64, 91-96, 123-126 special chars
-function passwordValidator(input : string) : boolean {
+export function passwordValidator(input : string) : boolean {
     let hasSpecialKey : boolean = false;
     if (checkInjection(input)) {
         if (input.length >= 15 && input.length <=50) {
