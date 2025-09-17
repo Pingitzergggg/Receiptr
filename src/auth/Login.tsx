@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, NavLink, Outlet, Router } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { useState, useEffect } from 'react'
 import Register from './Register'
 import '../tailwind.css'

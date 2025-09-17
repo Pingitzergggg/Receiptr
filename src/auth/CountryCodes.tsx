@@ -5,7 +5,7 @@ import codes from './CountryCodes.json'
 function CountryCodes() : any {
     const codeList = codes;
     const codeOptions : any = codeList.map(codeList =>
-        <option key={codeList.code} value={codeList.dial_code}>{codeList.dial_code} - {codeList.name}</option>
+        <option key={codeList.code} value={codeList.dial_code.substring(1)}>{codeList.dial_code} - {codeList.name}</option>
     );
     return codeOptions;
 }
