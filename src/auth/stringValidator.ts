@@ -28,7 +28,7 @@ export function stringNormalize(input : string) : string {
     return getNFD.replace(/[\u0300-\u036f]/g, '');
 }
 
-export function mailValidator(input : string) : boolean {
+function mailValidator(input : string) : boolean {
     if (checkInjection(input)) {
         if (input.length != 0 && input.length <=45) {
             const counter : number = countChars(input, '@');
@@ -51,13 +51,13 @@ export function mailValidator(input : string) : boolean {
 }
 
 //48-57
-export function phoneValidator(input : string) : boolean {
+function phoneValidator(input : string) : boolean {
     if (checkInjection(input)) {
         if (4 < input.length && input.length < 16) {
             const digits : string[] = input.split('');
             let currentAscii : number = 0;
             for (let dg in digits) {
-                currentAscii = digits[dg].charCodeAt(0); console.log(`ascii code: ${currentAscii}`)
+                currentAscii = digits[dg].charCodeAt(0);
                 if (!(currentAscii >= 48 && currentAscii <= 57)) {
                     throw 'Field must contain ASCII letters only!';
                 }
@@ -72,13 +72,13 @@ export function phoneValidator(input : string) : boolean {
 }
 
 //65-90 | 97-122
-export function nameValidator(input : string) : boolean {
+function nameValidator(input : string) : boolean {
     if (checkInjection(input)) {
         if (input.length <= 45 && input.length >= 2) {
             const chars : string[] = input.split('');
             let currentAscii : number = 0;
             for (let ch in chars) {
-                currentAscii = chars[ch].charCodeAt(0); console.log(`ascii code: ${currentAscii}`)
+                currentAscii = chars[ch].charCodeAt(0);
                 if (!((currentAscii >= 65 && currentAscii <= 90) || (currentAscii >= 97 && currentAscii <= 122))) {
                     throw 'Field must contain ASCII letters only!';
                 }
@@ -93,17 +93,17 @@ export function nameValidator(input : string) : boolean {
 }
 
 //32-64, 91-96, 123-126 special chars
-export function passwordValidator(input : string) : boolean {
+function passwordValidator(input : string) : boolean {
     let hasSpecialKey : boolean = false;
     if (checkInjection(input)) {
         if (input.length >= 15 && input.length <=50) {
             const chars : string[] = input.split('');
             let currentAscii : number = 0;
             for (let ch in chars) {
-                currentAscii = chars[ch].charCodeAt(0); console.log(`ascii code: ${currentAscii}`)
+                currentAscii = chars[ch].charCodeAt(0);
                 if (currentAscii >= 32 && currentAscii <= 126) {
                     if (!(currentAscii >= 65 && currentAscii <= 90) && !(currentAscii >= 97 && currentAscii <= 122)) {
-                        hasSpecialKey = true; console.log('switched spkey to true')
+                        hasSpecialKey = true;
                     }
                 } else {
                     throw 'Field must contain ASCII letters only!';
@@ -120,5 +120,20 @@ export function passwordValidator(input : string) : boolean {
         return hasSpecialKey;
     } else {
         throw 'Password must contain at least one special character or number!'
+    }
+}
+
+export type inputType = "NAME" | "EMAIL" | "TEL" | "PASSWORD";
+export function stringValidate(command : inputType, input : string) : boolean {
+    if (command == "NAME") {
+        return nameValidator(input);
+    } else if (command == "EMAIL") {
+        return mailValidator(input);
+    } else if (command == "TEL") {
+        return phoneValidator(input);
+    } else if (command == "PASSWORD") {
+        return passwordValidator(input);
+    } else {
+        throw 'You must provide command type!';
     }
 }
