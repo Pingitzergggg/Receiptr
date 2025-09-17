@@ -1,0 +1,13 @@
+import '../tailwind.css'
+import '../style.scss'
+import codes from './CountryCodes.json'
+
+function CountryCodes() : any {
+    const codeList = codes;
+    const codeOptions : any = codeList.map(codeList =>
+        <option key={codeList.code} value={codeList.dial_code}>{codeList.dial_code} - {codeList.name}</option>
+    );
+    return codeOptions;
+}
+
+export default CountryCodes;

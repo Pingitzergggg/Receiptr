@@ -1,4 +1,5 @@
 import { stringValidate, stringNormalize } from './stringValidator';
+import CountryCodes from './CountryCodes';
 import type { inputType } from './stringValidator';
 import { useState } from 'react';
 import '../tailwind.css'
@@ -27,6 +28,9 @@ function Register() : any {
             value: '',
             error: '',
         },
+        countryCode: {
+            value: ''
+        }
     });
 
     const handleInputChange = (event : any) => {
@@ -45,8 +49,18 @@ function Register() : any {
         }
     };
 
+    const handleSelectChange = (event : any) => {
+        const getId : string = event.target.id;
+        const getValue = event.target.value;
+        if (getValue.length != 0) {
+            setRegisterData((prev) => ({...prev, countryCode : {value : getValue}}));
+        } else {
+            setRegisterData((prev) => ({...prev, countryCode : {value : ''}}));
+        }
+    }
+
     const register = () => {
-        console.log(registerData)
+        console.log(registerData);
     };
 
     return (
@@ -65,29 +79,15 @@ function Register() : any {
             <input id='email' onChange={handleInputChange} type="email" className="input" placeholder="Email" />
             {(registerData.email.error.length != 0) && <span id='firstNameError' className='error'>{registerData.email.error}</span>}
 
-            <div className="join">
-                <select className='select' name="" id="">
-                    <option value="">+36</option>
-                </select>
-                <div>
-                  <label className="input validator join-item">
-                    <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                      <g
-                        strokeLinejoin="round"
-                        strokeLinecap="round"
-                        strokeWidth="2.5"
-                        fill="none"
-                        stroke="currentColor"
-                      >
-                        <rect width="20" height="16" x="2" y="4" rx="2"></rect>
-                        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
-                      </g>
-                    </svg>
-                    <input id='tel' onChange={() => handleInputChange} type="tel" placeholder="Phone" required />
-                  </label>
-                  <div className="validator-hint hidden">Enter valid email address</div>
-                </div>
-            </div>
+            <label className="label">Code</label>
+            <select onChange={handleSelectChange} className='select' name="" id="countryCode">
+                <option value="">-</option>
+                < CountryCodes/>
+            </select>
+
+            <label className="label">Phone</label>
+            <input id='tel' onChange={handleInputChange} type="tel" className="input" placeholder="Phone" />
+            {(registerData.tel.error.length != 0) && <span id='firstNameError' className='error'>{registerData.tel.error}</span>}
 
             <label className="label">Password</label>
             <input id='password' onChange={handleInputChange} type="password" className="input" placeholder="Password" />
