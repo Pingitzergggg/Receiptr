@@ -15,7 +15,7 @@ function countChars(input : string, char : string) : number {
     return countChar;
 }
 
-function checkInjection(input : string) : boolean {
+export function checkInjection(input : string) : boolean {
     if (input.includes(' ') || input.includes(';')) {
         throw 'Field cannot contain \' \' and \';\' characters!';
     } else {

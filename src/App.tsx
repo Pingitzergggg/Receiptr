@@ -7,10 +7,9 @@ import Register from './auth/Register'
 import './tailwind.css'
 import './style.scss'
 
-const accountId : string = localStorage.getItem('id') as string; console.log(`accountId: ${accountId}`);
-// accountId = '2';
 function isUserLoggedIn() : boolean {
-  if (accountId !== null) {
+  const accountId : string = localStorage.getItem('id') as string; console.log(`accountId: ${accountId}`);
+  if (accountId.length != 0) {
     return true;
   } else {
     return false;
@@ -18,6 +17,7 @@ function isUserLoggedIn() : boolean {
 }
 
 function Panel() {
+  const logout = () => localStorage.setItem('id', '');
   const Navbar = (
     <div className="navbar bg-base-100 shadow-sm">
       <div className="flex-1">
@@ -61,7 +61,7 @@ function Panel() {
               </a>
             </li>
             <li><a>Settings</a></li>
-            <li><a>Logout</a></li>
+            <li><NavLink to='/login' onClick={logout}>Logout</NavLink></li>
           </ul>
         </div>
       </div>
@@ -72,7 +72,7 @@ function Panel() {
     const location = useLocation();
     const navigate = useNavigate();
     useEffect(() => {
-      console.log('checking if user logged in...')
+      console.log('checking if user logged in...'+isUserLoggedIn())
       if (!isUserLoggedIn()) {
         navigate('/login'); console.log("User not logged in, redirecting to /login")
       }
