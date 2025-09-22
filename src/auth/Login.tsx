@@ -44,6 +44,7 @@ function Login() : any {
     };
 
     const navigate = useNavigate();
+    const location = useLocation();
 
     const login = () => {
         console.log(loginData);
@@ -80,9 +81,7 @@ function Login() : any {
         }
     }
 
-    const ReturnPanel = () => {
-        const location = useLocation();
-        return (
+    return (
             <>
             {location.state?.fromRegister && <Popup type='SUCCESS' message='User registered succesfully!' />}
             <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
@@ -102,9 +101,6 @@ function Login() : any {
 
             </fieldset></>
         );
-    }
-
-    return <ReturnPanel />;
 }
 
 export default Login;
