@@ -33,8 +33,6 @@ function Popup({type, message} : {type: popupType, message: string}) : any {
         </div>
     );
 
-    // const [currentPopup, set ] = useState(<></>);
-
     if (type == "INFO") {
         return (infoPopup);
     } else if (type == "SUCCESS") {
@@ -44,14 +42,6 @@ function Popup({type, message} : {type: popupType, message: string}) : any {
     } else {
         return (<></>);
     }
-
-    // useEffect(() => {
-    //     setTimeout(() => {
-    //         return (<></>);
-    //     }, 5000);
-    // }, [])
-
-    // return currentPopup;
 }
 
 export default Popup;

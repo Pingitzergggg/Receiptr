@@ -17,7 +17,7 @@ function isUserLoggedIn() : boolean {
   }
 }
 
-function Panel() {
+function App() {
   const logout = () => localStorage.setItem('id', '');
   const Navbar = (
     <div className="navbar bg-base-100 shadow-sm">
@@ -126,12 +126,4 @@ function Panel() {
   );
 }
 
-function App() : any {
-  if (isUserLoggedIn()) {
-    return <>< Panel/></>
-  } else {
-    return <><Login/></>
-  }
-}
-
-export default Panel;
+export default App;
