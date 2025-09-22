@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, NavLink, Outlet, Router, useNavigate, use
 import { useState, useEffect } from 'react'
 import Popup from './Popup';
 import ReceiptPanel from './appfiles/ReceiptPanel'
+import BinaryPanel from './appfiles/binrayPanel';
 import CardPanel from './appfiles/CardPanel'
 import SettingsPanel from './appfiles/SettingsPanel';
 import Login from './auth/Login'
@@ -109,6 +110,7 @@ function App() {
       <>
         {location.state?.fromLogin && <Popup type='SUCCESS' message='succesful login' />}
         {Navbar}
+        <BinaryPanel receiptId={1}/>
         <Outlet/>
         <Dock/>
       </>

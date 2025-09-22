@@ -38,7 +38,7 @@ $card-background: grey;
 
 .alert {
   position: fixed;
-  z-index: 1;
+  z-index: 2;
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -58,6 +58,27 @@ $card-background: grey;
   }
 }
 
-hr {
-  color: white;
+#binary-panel-div {
+  border: red 1px solid;
+  position: fixed;
+  z-index: 1;
+  width: 500px;
+  height: 80vh;
+  top: 5vh;
+
+  iframe {
+    width: 100%;
+    height: 95%;
+  }
+
+  #binary-panel-control-bar {
+    width: 100%;
+    height: 5%;
+    display: flex;
+    justify-content: flex-end;
+
+    a {
+      margin-right: .75rem;
+    }
+  }
 }
