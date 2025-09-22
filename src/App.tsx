@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, NavLink, Outlet, Router, useNavigate, useLocation } from 'react-router-dom'
 import { useState, useEffect } from 'react'
+import Popup from './Popup';
 import ReceiptPanel from './appfiles/ReceiptPanel'
 import CardPanel from './appfiles/CardPanel'
 import Login from './auth/Login'
@@ -100,23 +101,27 @@ function Panel() {
     </div>
   )};
 
-  const panel = (
-    <>
-      {Navbar}
-      <Outlet/>
-      <Dock/>
-    </>
-  )
+  const Panel = () => {
+    const location = useLocation();
+    return (
+      <>
+        {location.state?.fromLogin && <Popup type='SUCCESS' message='succesful login' />}
+        {Navbar}
+        <Outlet/>
+        <Dock/>
+      </>
+    )
+  } 
 
   return(
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={panel}>
+        <Route path='/' element={<Panel/>}>
           <Route path='/' element={<ReceiptPanel/>} />
           <Route path='/receipts' element={<ReceiptPanel/>} />
           <Route path='/cards' element={<CardPanel/>} />
           <Route path='/settings' element={<p>settings</p>} />
-          <Route path='user' element={<p>user</p>} />
+          <Route path='/user' element={<p>user</p>} />
         </Route>
         <Route path='/login' element={<Login/>} />
         <Route path='/register' element={<Register/>} />
