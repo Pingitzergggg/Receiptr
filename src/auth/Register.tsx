@@ -117,7 +117,7 @@ function Register() : any {
           .then(data => {
             console.log(data.status);
             if (data.status == '201') {
-                navigate('/login', {state: {fromRegister: true}});
+                navigate('/login');
             } else {
                 throw data.error;
             }

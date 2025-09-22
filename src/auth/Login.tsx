@@ -1,7 +1,7 @@
-import { NavLink, useLocation, useNavigate } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { checkInjection } from './stringValidator'
-import Popup from '../Popup'
+import type { inputType } from './stringValidator'
 import '../tailwind.css'
 import '../style.scss'
 
@@ -72,7 +72,7 @@ function Login() : any {
                     console.log(data.status);
                     if (data.status == '302') {
                         localStorage.setItem('id', data.reply.id);
-                        navigate('/', {state: {fromLogin: true}});
+                        navigate('/');
                     } else {
                         throw data.error;
                     }
@@ -80,31 +80,24 @@ function Login() : any {
         }
     }
 
-    const ReturnPanel = () => {
-        const location = useLocation();
-        return (
-            <>
-            {location.state?.fromRegister && <Popup type='SUCCESS' message='User registered succesfully!' />}
-            <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
-                <legend className="fieldset-legend">Login</legend>
+    return (
+        <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
+            <legend className="fieldset-legend">Login</legend>
 
-                <label className="label">Email</label>
-                <input id='email' onChange={handleInputChange} type="email" className="input" placeholder="Email"/>
-                {(loginData.email.error.length != 0) && <span className='error'>{loginData.email.error}</span>}
+            <label className="label">Email</label>
+            <input id='email' onChange={handleInputChange} type="email" className="input" placeholder="Email"/>
+            {(loginData.email.error.length != 0) && <span className='error'>{loginData.email.error}</span>}
 
-                <label className="label">Password</label>
-                <input id='password' onChange={handleInputChange} type="password" className="input" placeholder="Password" />
-                {(loginData.password.error.length != 0) && <span className='error'>{loginData.password.error}</span>}
+            <label className="label">Password</label>
+            <input id='password' onChange={handleInputChange} type="password" className="input" placeholder="Password" />
+            {(loginData.password.error.length != 0) && <span className='error'>{loginData.password.error}</span>}
 
-                <button onClick={login} className="btn btn-neutral mt-4">Login</button>
+            <button onClick={login} className="btn btn-neutral mt-4">Login</button>
 
-                <p>Don't have an account? <NavLink to='/register'>Register</NavLink></p>
-
-            </fieldset></>
-        );
-    }
-
-    return <ReturnPanel />;
+            <p>Don't have an account? <NavLink to='/register'>Register</NavLink></p>
+            
+        </fieldset>
+    );
 }
 
 export default Login;
