@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import Popup from './Popup';
 import ReceiptPanel from './appfiles/ReceiptPanel'
 import CardPanel from './appfiles/CardPanel'
+import SettingsPanel from './appfiles/SettingsPanel';
 import Login from './auth/Login'
 import Register from './auth/Register'
 import './tailwind.css'
@@ -121,7 +122,7 @@ function App() {
           <Route path='/' element={<ReceiptPanel/>} />
           <Route path='/receipts' element={<ReceiptPanel/>} />
           <Route path='/cards' element={<CardPanel/>} />
-          <Route path='/settings' element={<p>settings</p>} />
+          <Route path='/settings' element={<SettingsPanel/>} />
           <Route path='/user' element={<p>user</p>} />
         </Route>
         <Route path='/login' element={<Login/>} />
