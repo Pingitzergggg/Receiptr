@@ -9,7 +9,8 @@ import './tailwind.css'
 import './style.scss'
 
 function isUserLoggedIn() : boolean {
-  const accountId : string = localStorage.getItem('id') as string; console.log(`accountId: ${accountId}`);
+  let accountId : string = localStorage.getItem('id') as string; console.log(`accountId: ${accountId}`); //put CONST at production
+  accountId = '1';
   if (accountId !== null) {
     if (accountId.length != 0) {
       return true;
@@ -21,7 +22,7 @@ function isUserLoggedIn() : boolean {
   }
 }
 
-function Panel() {
+function App() {
   const logout = () => localStorage.setItem('id', '');
   const Navbar = (
     <div className="navbar bg-base-100 shadow-sm">
@@ -130,12 +131,4 @@ function Panel() {
   );
 }
 
-function App() : any {
-  if (isUserLoggedIn()) {
-    return <>< Panel/></>
-  } else {
-    return <><Login/></>
-  }
-}
-
-export default Panel;
+export default App;
