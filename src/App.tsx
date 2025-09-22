@@ -10,8 +10,12 @@ import './style.scss'
 
 function isUserLoggedIn() : boolean {
   const accountId : string = localStorage.getItem('id') as string; console.log(`accountId: ${accountId}`);
-  if (accountId.length != 0) {
-    return true;
+  if (accountId !== null) {
+    if (accountId.length != 0) {
+      return true;
+    } else {
+      return false;
+    }
   } else {
     return false;
   }
