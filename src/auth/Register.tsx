@@ -124,45 +124,41 @@ function Register() : any {
           })
     }
 
-    const ReturnPanel = () => {
-        return (
-            <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
-                <legend className="fieldset-legend">Register Account</legend>
-    
-                <label className="label">First Name</label>
-                <input id="firstName" onChange={handleInputChange} type="text" className="input" placeholder="First Name" />
-                {(registerData.firstName.error.length != 0) && <span className='error'>{registerData.firstName.error}</span>}
-    
-                <label className="label">Last Name</label>
-                <input id='lastName' onChange={handleInputChange} type="text" className="input" placeholder="Last Name" />
-                {(registerData.lastName.error.length != 0) && <span className='error'>{registerData.lastName.error}</span>}
-                
-                <label className="label">Email</label>
-                <input id='email' onChange={handleInputChange} type="email" className="input" placeholder="Email" />
-                {(registerData.email.error.length != 0) && <span className='error'>{registerData.email.error}</span>}
-    
-                <label className="label">Country Code</label>
-                <select onChange={handleSelectChange} className='select' name="" id="countryCode">
-                    <option value="">Select your country</option>
-                    < CountryCodes/>
-                </select>
-    
-                <label className="label">Phone</label>
-                <input id='tel' onChange={handleInputChange} type="tel" className="input" placeholder="Phone" />
-                {(registerData.tel.error.length != 0) && <span className='error'>{registerData.tel.error}</span>}
-    
-                <label className="label">Password</label>
-                <input id='password' onChange={handleInputChange} type="password" className="input" placeholder="Password" />
-                {(registerData.password.error.length != 0) && <span className='error'>{registerData.password.error}</span>}
-    
-                <button onClick={register} className="btn btn-neutral mt-4">Register</button>
-    
-                <p>Back to <NavLink to='/login'>Login</NavLink></p>
-            </fieldset>
-        );
-    }
+    return (
+        <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
+            <legend className="fieldset-legend">Register Account</legend>
 
-    return <ReturnPanel/>
+            <label className="label">First Name</label>
+            <input id="firstName" onChange={handleInputChange} type="text" className="input" placeholder="First Name" />
+            {(registerData.firstName.error.length != 0) && <span className='error'>{registerData.firstName.error}</span>}
+
+            <label className="label">Last Name</label>
+            <input id='lastName' onChange={handleInputChange} type="text" className="input" placeholder="Last Name" />
+            {(registerData.lastName.error.length != 0) && <span className='error'>{registerData.lastName.error}</span>}
+            
+            <label className="label">Email</label>
+            <input id='email' onChange={handleInputChange} type="email" className="input" placeholder="Email" />
+            {(registerData.email.error.length != 0) && <span className='error'>{registerData.email.error}</span>}
+
+            <label className="label">Country Code</label>
+            <select onChange={handleSelectChange} className='select' name="" id="countryCode">
+                <option value="">Select your country</option>
+                < CountryCodes/>
+            </select>
+
+            <label className="label">Phone</label>
+            <input id='tel' onChange={handleInputChange} type="tel" className="input" placeholder="Phone" />
+            {(registerData.tel.error.length != 0) && <span className='error'>{registerData.tel.error}</span>}
+
+            <label className="label">Password</label>
+            <input id='password' onChange={handleInputChange} type="password" className="input" placeholder="Password" />
+            {(registerData.password.error.length != 0) && <span className='error'>{registerData.password.error}</span>}
+
+            <button onClick={register} className="btn btn-neutral mt-4">Register</button>
+
+            <p>Back to <NavLink to='/login'>Login</NavLink></p>
+        </fieldset>
+    )
 }
 
 export default Register;
