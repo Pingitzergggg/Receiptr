@@ -60,7 +60,7 @@ $card-background: grey;
 
 #binary-panel-div {
   border: red 1px solid;
-  border-radius: 4rem;
+  border-radius: 15px;
   position: fixed;
   z-index: 1;
   width: 500px;
@@ -70,6 +70,7 @@ $card-background: grey;
   iframe {
     width: 100%;
     height: 95%;
+    
   }
 
   #binary-panel-control-bar {
