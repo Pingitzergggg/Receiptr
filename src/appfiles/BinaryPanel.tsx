@@ -25,8 +25,8 @@ function BinaryPanel({receiptId} : {receiptId : number}) : any {
     return (
         <div id="binary-panel-div">
             <div id="binary-panel-control-bar">
-                <a href="">Fullscreen</a>
-                <a href="">Close</a>
+                <a className="batton">Fullscreen</a>
+                <a className="batton">Close</a>
             </div>
             <iframe src="../../cats.pdf"></iframe>
         </div>

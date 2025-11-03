@@ -110,7 +110,6 @@ function App() {
       <>
         {location.state?.fromLogin && <Popup type='SUCCESS' message='succesful login' />}
         {Navbar}
-        <BinaryPanel receiptId={1}/>
         <Outlet/>
         <Dock/>
       </>
@@ -122,7 +121,9 @@ function App() {
       <Routes>
         <Route path='/' element={<Panel/>}>
           <Route path='/' element={<ReceiptPanel/>} />
-          <Route path='/receipts' element={<ReceiptPanel/>} />
+          <Route path='/receipts' element={<ReceiptPanel/>}>
+            <Route path='receiptId' />
+          </Route>
           <Route path='/cards' element={<CardPanel/>} />
           <Route path='/settings' element={<SettingsPanel/>} />
           <Route path='/user' element={<p>user</p>} />
