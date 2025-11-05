@@ -4,30 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <!-- <script src="src/auth/stringValidator.ts"></script> -->
-     <style>
-        @keyframes test {
-            from {
-                background-color: blue;
-            }
-            to {
-                background-color: red;
-            }
-        }
-        div {
-            height: 200px;
-            width: 200px;
-            border: 1px black solid;
-            animation-name: test;
-            animation-duration: 5s;
-        }
-        iframe {
-            width: 30vw;
-            height: 80vh;
-        }
-     </style>
 </head>
 <body>
-    <iframe allowfullscreen src="cats.pdf" frameborder="0"></iframe>
+
 </body>
+    <script>
+        function injectDOM(structure) {
+            document.body.innerHTML = structure;
+        }
+
+        async function panel() {
+            return  `
+                    <h1> This is test </h1>
+                    <p>asder</p>
+                    ` ;
+        }
+
+        injectDOM(panel());
+    </script>
 </html>
