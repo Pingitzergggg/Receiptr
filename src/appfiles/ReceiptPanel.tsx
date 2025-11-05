@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { receiptsDummy } from './dummydata';
 import '../tailwind.css'
 import '../style.scss'
+import { Outlet, useNavigate } from 'react-router-dom';
 
 //let receipts : any[] = []; //uncomment for production
 let receipts : any[] = receiptsDummy;
@@ -29,6 +30,8 @@ function ReceiptPanel() : any {
   //   });
   // }, [])
 
+  const navigate = useNavigate();
+
   const receiptPanel : any = receipts.map(receipts =>
     <div key={receipts.id} className="card w-96 bg-base-100 card-xs shadow-sm">
       <div className="card-body">
@@ -42,18 +45,24 @@ function ReceiptPanel() : any {
           With card: {receipts.number}
         </p>
         <div className="justify-end card-actions">
-          <button className="btn btn-primary">Open</button>
+          <button onClick={() => navigate(`/receipts/${receipts.id}`)} className="btn btn-primary">Open</button>
         </div>
       </div>
     </div>
   );
 
   return (
-    <div className='container mt-20 mb-20'>
-      <div id='receipt-grid' className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols3 lg:grid-cols4 gap-4'>
-        {receiptPanel}
+    <>
+      <Outlet />
+      <button className='upload-button btn btn-soft'>
+        +
+      </button>
+      <div className='container mt-20 mb-20' id='receipts-div'>
+        <div id='receipt-grid' className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-15'>
+          {receiptPanel}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
-function BinaryPanel({receiptId} : {receiptId : number}) : any {
+function BinaryPanel() : any {
+    const { receiptId } = useParams();
     
 //   const [innerRenderCount, setInnerRenderCount] = useState(0); //This is the working fetch call, only commented for local testing!! DONT DELETE
 
@@ -22,13 +24,16 @@ function BinaryPanel({receiptId} : {receiptId : number}) : any {
 //     });
 //   }, [])
 
+    const navigate = useNavigate();
+
     return (
         <div id="binary-panel-div">
-            <div id="binary-panel-control-bar">
-                <a className="batton">Fullscreen</a>
-                <a className="batton">Close</a>
-            </div>
             <iframe src="../../cats.pdf"></iframe>
+            <div id="binary-panel-control-bar">
+                <p>Id number: {receiptId}</p>
+                <a onClick={() => window.location.assign('../../cats.pdf')} className="batton">Fullscreen</a>
+                <a onClick={() => navigate('/receipts')} className="batton">Close</a>
+            </div>
         </div>
     )
 }
