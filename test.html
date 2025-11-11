@@ -6,20 +6,70 @@
     <title>Document</title>
 </head>
 <body>
-
+    <input type="file">
+    <button>Open</button>
+    <canvas id="display" style="border: 1px solid black"></canvas>
 </body>
-    <script>
-        function injectDOM(structure) {
-            document.body.innerHTML = structure;
-        }
+    <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@4.3.136/build/pdf.min.mjs" type="module"></script>
+    <script type="module">
+        import * as pdfjsLib from "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.3.136/build/pdf.min.mjs";
 
-        async function panel() {
-            return  `
-                    <h1> This is test </h1>
-                    <p>asder</p>
-                    ` ;
-        }
+        // Set up the worker
+        pdfjsLib.GlobalWorkerOptions.workerSrc =
+          "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.3.136/build/pdf.worker.min.mjs";
 
-        injectDOM(panel());
+        document.getElementsByTagName('button')[0].addEventListener('click', () => pdfReader(document.getElementsByTagName('input')[0].files[0]))
+        async function pdfReader(file) {
+            let currentPageInteger = 1;
+            let pdfUpperLimit = undefined;
+            
+            const canvas = document.getElementById("display");
+            const ctx = canvas.getContext("2d");
+    
+            const pdf = await pdfjsLib.getDocument(URL.createObjectURL(file)).promise;
+            let page = await pdf.getPage(1);
+    
+            const viewport = page.getViewport({ scale: .5 });
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+    
+            await page.render({ canvasContext: ctx, viewport }).promise;
+
+            /** *
+             * Changes the page of the PDF
+             * @returns {void}
+             */
+            async function pdfChanger() {
+                try {
+                    if (pdfUpperLimit === undefined) {
+                        page = await pdf.getPage(currentPageInteger);
+                    } else {
+                        if (currentPageInteger <= pdfUpperLimit) {
+                            page = await pdf.getPage(currentPageInteger);
+                        } else {
+                            currentPageInteger = pdfUpperLimit;
+                        }
+                    }
+                } catch {
+                    pdfUpperLimit = currentPageInteger - 1; console.log("pdfUpperLimit: "+pdfUpperLimit)
+                    currentPageInteger = pdfUpperLimit;
+                    console.error('Pdf.js: PDF page is out of bounds!')
+                } finally {
+                    await page.render({ canvasContext: ctx, viewport }).promise;
+                }
+            }
+
+            let scrollCounter = 0;
+            document.getElementById("display").addEventListener('wheel', event => {
+                if (event.deltaY < 0) {
+                    currentPageInteger = currentPageInteger == 1 ? currentPageInteger : currentPageInteger - 1;
+                    pdfChanger();
+                } else {
+                    currentPageInteger++;
+                    pdfChanger();
+                }
+                console.log(currentPageInteger);
+            });
+        }
     </script>
 </html>

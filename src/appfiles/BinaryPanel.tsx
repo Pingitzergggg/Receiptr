@@ -26,16 +26,24 @@ function BinaryPanel() : any {
 
     const navigate = useNavigate();
 
-    return (
-        <div id="binary-panel-div">
-            <iframe src="../../cats.pdf"></iframe>
-            <div id="binary-panel-control-bar">
-                <p>Id number: {receiptId}</p>
-                <a onClick={() => window.location.assign('../../cats.pdf')} className="batton">Fullscreen</a>
-                <a onClick={() => navigate('/receipts')} className="batton">Close</a>
-            </div>
-        </div>
-    )
+    let [content, setContent] : any = useState(<i>Loading<span className="loading loading-spinner loading-md mx-1"></span></i>);
+
+    useEffect(() => {
+        const promise = new Promise(resolve => setTimeout(() => resolve(
+            <>
+                <iframe src="../../cats.pdf"></iframe>
+                <div id="binary-panel-control-bar">
+                    <p>Id number: {receiptId}</p>
+                    <a onClick={() => window.location.assign('../../cats.pdf')} className="batton">Fullscreen</a>
+                    <a onClick={() => navigate('/receipts')} className="batton">Close</a>
+                </div>
+            </>
+        ), 500));
+
+        promise.then(value => setContent(value));
+    }, []);
+
+    return <div id="binary-panel-div"> {content} </div>;
 }
 
 export default BinaryPanel;

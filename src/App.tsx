@@ -8,6 +8,7 @@ import Login from './auth/Login'
 import Register from './auth/Register'
 import './tailwind.css'
 import './style.scss'
+import logo from '../public/icon.png'
 import BinaryPanel from './appfiles/BinaryPanel'
 
 function isUserLoggedIn() : boolean {
@@ -29,7 +30,10 @@ function App() {
   const Navbar = (
     <div className="navbar bg-base-100 shadow-sm">
       <div className="flex-1">
-        <a className="btn btn-ghost text-xl">Receiptr</a>
+        <a className="text-2xl h-auto flex items-center font-bold p-[.5rem]">
+          <img src={logo} alt="icon.png" className='w-[80px] h-[53.3px] mr-2' id='logo' />
+          Receiptr
+        </a>
       </div>
       <div className="flex-none">
         <div className="dropdown dropdown-end">

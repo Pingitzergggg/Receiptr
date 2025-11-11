@@ -1,0 +1,15 @@
+{
+  "name": "Receiptr",
+  "short_name": "Receiptr",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1a1a1a",
+  "theme_color": "#1a1a1a",
+  "icons": [
+    {
+      "src": "/icon.png",
+      "sizes": "800x800",
+      "type": "image/png"
+    }
+  ]
+}

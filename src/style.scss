@@ -19,7 +19,14 @@
 
 $card-background: grey;
 $bg-color: #1d232a;
+$input-bg: #252525;
 $accent-color: #127012;
+
+.input {
+  background-color: $input-bg;
+  border-radius: 5px;
+  border: dimgray 1px solid;
+}
 
 .batton {
   text-decoration: none;
@@ -50,7 +57,7 @@ $accent-color: #127012;
 }
 
 .error {
-  // color: red;
+  color: red;
 }
 
 // .select {
@@ -79,6 +86,15 @@ $accent-color: #127012;
   }
 }
 
+#upload-receipt-div {
+  background-color: $bg-color;
+  position: fixed;
+  z-index: 1;
+  display: flex;
+  padding: 3rem;
+  border-radius: 15px;
+}
+
 #binary-panel-div {
   background-color: $bg-color;
   border: black 1px solid;
@@ -94,6 +110,13 @@ $accent-color: #127012;
     height: 95%;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
+  }
+
+  i {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 
   #binary-panel-control-bar {
