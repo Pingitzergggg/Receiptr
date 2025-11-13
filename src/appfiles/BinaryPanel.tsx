@@ -1,3 +1,5 @@
+import { faUpRightAndDownLeftFromCenter, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -33,9 +35,15 @@ function BinaryPanel() : any {
             <>
                 <iframe src="../../cats.pdf"></iframe>
                 <div id="binary-panel-control-bar">
-                    <p>Id number: {receiptId}</p>
-                    <a onClick={() => window.location.assign('../../cats.pdf')} className="batton">Fullscreen</a>
-                    <a onClick={() => navigate('/receipts')} className="batton">Close</a>
+                    <p>Receipt name</p>
+                    <div className="flex justify-center items-center">
+                        <a onClick={() => window.location.assign('../../cats.pdf')} className="btn-nav bg-amber-400 ml-3">
+                            <FontAwesomeIcon icon={faUpRightAndDownLeftFromCenter} />
+                        </a>
+                        <a onClick={() => navigate('/receipts')} className="btn-nav bg-red-400 ml-3">
+                            <FontAwesomeIcon icon={faXmark} />
+                        </a>
+                    </div>
                 </div>
             </>
         ), 500));
