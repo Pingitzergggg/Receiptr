@@ -1,7 +1,7 @@
 import { useState, type ReactElement } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
-import PdfViewer from "./pdfViewer";
+import PdfViewer from "../PdfViewer";
 import { useNavigate } from "react-router-dom";
 
 function UploadReceiptPanel() : ReactElement {

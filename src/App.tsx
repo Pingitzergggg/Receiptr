@@ -10,7 +10,8 @@ import './tailwind.css'
 import './style.scss'
 import logo from '../public/icon.png'
 import BinaryPanel from './appfiles/BinaryPanel'
-import UploadReceiptPanel from './appfiles/UploadReceiptPanel'
+import UploadReceiptPanel from './appfiles/upload/UploadReceiptPanel'
+import UploadCardPanel from './appfiles/upload/UploadCardPanel'
 
 function isUserLoggedIn() : boolean {
   let accountId : string = localStorage.getItem('id') as string; console.log(`accountId: ${accountId}`); //put CONST at production
@@ -131,7 +132,7 @@ function App() {
             <Route path='upload' element={<UploadReceiptPanel />} />
           </Route>
           <Route path='/cards' element={<CardPanel/>}>
-            <Route path="upload" element={<p>404</p>} />
+            <Route path="upload" element={<UploadCardPanel />} />
           </Route>
           <Route path='/settings' element={<SettingsPanel/>} />
           <Route path='/user' element={<p>user</p>} />

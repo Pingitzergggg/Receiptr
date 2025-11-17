@@ -3,7 +3,7 @@ import { receiptsDummy } from './dummydata';
 import '../tailwind.css'
 import '../style.scss'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import UploadReceiptPanel from './UploadReceiptPanel';
+import UploadReceiptPanel from './upload/UploadReceiptPanel';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
