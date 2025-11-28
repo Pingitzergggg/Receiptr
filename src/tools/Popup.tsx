@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import './tailwind.css'
-import './style.scss'
+import '../tailwind.css'
+import '../style.scss'
 
 export type popupType = "INFO" | "SUCCESS" | "ERROR";
 

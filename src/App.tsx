@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route, NavLink, Outlet, Router, useNavigate, useLocation } from 'react-router-dom'
 import { useState, useEffect } from 'react'
-import Popup from './Popup'
+import Popup from './tools/Popup'
 import ReceiptPanel from './appfiles/ReceiptPanel'
 import CardPanel from './appfiles/CardPanel'
 import SettingsPanel from './appfiles/SettingsPanel'
@@ -12,6 +12,7 @@ import logo from '../public/icon.png'
 import BinaryPanel from './appfiles/BinaryPanel'
 import UploadReceiptPanel from './appfiles/upload/UploadReceiptPanel'
 import UploadCardPanel from './appfiles/upload/UploadCardPanel'
+import Test from './testing/Test'
 
 function isUserLoggedIn() : boolean {
   let accountId : string = localStorage.getItem('id') as string; console.log(`accountId: ${accountId}`); //put CONST at production
@@ -139,6 +140,7 @@ function App() {
         </Route>
         <Route path='/login' element={<Login/>} />
         <Route path='/register' element={<Register/>} />
+        <Route path='/dev' element={<Test />}/>
       </Routes>
     </BrowserRouter>
   );
