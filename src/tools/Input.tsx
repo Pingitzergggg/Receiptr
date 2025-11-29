@@ -15,7 +15,7 @@ function Input({title, error, className, id, errorInValue, width, onChange} : pr
     const [isClassActivated, setClassActivated] = useState<boolean>(false);
 
     return (
-        <div style={{width: `${width === undefined ? '12rem' : width}`, height: '2rem', margin: '1rem 0'}} className={className === undefined ? '' : className}>
+        <div style={{width: `${width === undefined ? '12rem' : width}`, height: '2.5rem', margin: '1rem 0'}} className={className === undefined ? '' : className}>
             <div className={`input-container 
                 ${isClassActivated ? 'input-focus' : ''} 
                 ${errorInValue ? 'input-error' : ''}`}>

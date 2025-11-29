@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import PdfViewer from "../../tools/PdfViewer";
 import { useNavigate } from "react-router-dom";
+import Input from "../../tools/Input";
 
 function UploadReceiptPanel() : ReactElement {
     const navigate = useNavigate();
@@ -24,12 +25,13 @@ function UploadReceiptPanel() : ReactElement {
                 <FontAwesomeIcon icon={faXmark} />
             </a>
             <h2 className="text-2xl font-semibold">Upload Receipt</h2>
-            <label>Title</label>
-            <input type="text" />
-            <label>Used Card</label>
+            <Input title="Title" errorInValue={false} id='name' width="100%" />
             <select className="select">
-                <option value="">plc</option>
+                <option value="" unselectable="on">Used Card</option>
+                <option value="">asder</option>
+                <option value="">asderer</option>
             </select>
+
             
             <label className="w-[100%]">Upload File</label>
             <div className={`relative w-[100%] h-[100%] text-left flex flex-col justify-center items-center ${!currentFile ? " border border-[#4d5051] rounded-[5px] bg-[#252525] p-[1rem]" : ""}`} >

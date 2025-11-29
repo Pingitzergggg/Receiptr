@@ -65,6 +65,10 @@ input, select, textarea {
   background-color: var(--accent-color);
 }
 
+.btn:hover {
+  background-color: #12701299;
+}
+
 .navbar {
   box-shadow: 0 1px 10px 1px var(--accent-color);
 }
@@ -98,6 +102,7 @@ input, select, textarea {
 }
 
 .upload-button {
+  transition: .1s;
   position: fixed;
   z-index: 1;
   right: 0;
