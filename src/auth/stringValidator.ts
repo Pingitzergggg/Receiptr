@@ -137,7 +137,7 @@ function passwordValidator(input : string) : boolean {
 }
 
 function cardNumberValidator(input : string) : boolean {
-    if (!checkInjection(input)) {
+    if (checkInjection(input)) {
         const inputArr = input.split('');
         if (onlyContainsNumbers(input)) {
             if (inputArr.length % 4 === 0) {
@@ -184,12 +184,12 @@ function cvcValidator(input : string) : boolean {
     if (checkInjection(input)) {
         if (onlyContainsNumbers(input)) {
             if (input.length != 3) {
-                throw 'Field can only have 3 digits!'
+                throw 'Enter valid format!'
             } else {
                 return true;
             }
         } else {
-            throw 'Field must contain numbers only!'
+            throw 'Enter valid format!'
         }
     } else {
         return false;

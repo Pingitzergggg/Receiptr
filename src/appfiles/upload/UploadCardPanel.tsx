@@ -14,7 +14,7 @@ function UploadReceiptPanel() : ReactElement {
 
     type inputFields = {
         name: inputField,
-        number: inputField,
+        card: inputField,
         bank: inputField,
         expiry: inputField,
         cvc: inputField
@@ -25,7 +25,7 @@ function UploadReceiptPanel() : ReactElement {
             value: '',
             error: ''
         },
-        number: {
+        card: {
             value: '',
             error: ''
         },
@@ -70,17 +70,17 @@ function UploadReceiptPanel() : ReactElement {
 
             <Input title="Name on Card" id="name" onChange={handleInputChange} errorInValue={cardData.name.error.length != 0} error={cardData.name.error} className="my-5" width="100%" />
 
-            <Input title="Number" id="card" onChange={handleInputChange} errorInValue={cardData.number.error.length != 0} error={cardData.number.error} className="mb-5" width="100%" />
+            <Input title="Number" id="card" onChange={handleInputChange} errorInValue={cardData.card.error.length != 0} error={cardData.card.error} className="mb-5" width="100%" />
 
             <Input title="Bank" id="bank" onChange={handleInputChange} errorInValue={cardData.bank.error.length != 0} error={cardData.bank.error} className="mb-5" width="100%" />
 
             <div className="flex">
                 <div className="flex flex-col">
-                    <Input id="expiry" title="Expiry Date" onChange={handleInputChange} errorInValue={cardData.expiry.error.length != 0} error={cardData.expiry.error} width="70%" />
+                    <Input id="expiry" title="Expiry Date" onChange={handleInputChange} errorInValue={cardData.expiry.error.length != 0} error={cardData.expiry.error} className="mb-5" width="100%" />
                 </div>
 
                 <div className="flex flex-col ml-[2rem]">
-                    <Input id="cvc" title="CVC" onChange={handleInputChange} errorInValue={cardData.cvc.error.length != 0} error={cardData.cvc.error} width="70%" />
+                    <Input id="cvc" title="CVC" onChange={handleInputChange} errorInValue={cardData.cvc.error.length != 0} error={cardData.cvc.error} className="mb-5" width="100%" />
                 </div>
             </div>
 
