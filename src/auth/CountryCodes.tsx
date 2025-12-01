@@ -1,6 +1,6 @@
 import '../tailwind.css'
 import '../style.scss'
-import codes from './CountryCodes.json'
+import codes from '../misc/CountryCodes.json'
 
 function CountryCodes() : any {
     const codeList = codes;

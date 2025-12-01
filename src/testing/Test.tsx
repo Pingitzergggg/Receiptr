@@ -1,18 +1,24 @@
 import { useState } from "react";
-import Input from "../tools/Input";
+import { testerMethod } from "../misc/reciever";
 
 function Test() : any {
+    let values;
 
-    const [throwError, setError] = useState<boolean>(false);
+    testerMethod()
+        .then(data => {
+            if(data) {
+                values = data.map(i => (
+                    <div>
+                        <h2>{i.name}</h2>
+                        <p>{i.value}</p>
+                    </div>
+                ));
+            }
+        });
 
-    return (
-        <>
-            <legend className="absolute-center">
-                <Input errorInValue={throwError} width="12rem" title="Name" />
-                <button onClick={() => setError(!throwError)} className="mt-5">Throw</button>
-            </legend>
-        </>
-    );
+    return <>
+        {values}
+    </>
 }
 
 export default Test;

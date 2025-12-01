@@ -1,6 +1,6 @@
 import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
-import { checkInjection } from './stringValidator'
+import { checkInjection } from '../misc/stringValidator'
 import Popup from '../tools/Popup'
 import '../tailwind.css'
 import '../style.scss'

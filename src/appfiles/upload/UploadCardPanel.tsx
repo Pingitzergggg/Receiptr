@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState, type ReactElement } from "react";
 import { useNavigate } from "react-router-dom";
 import Input from "../../tools/Input";
-import { type inputType, stringValidate } from "../../auth/stringValidator";
+import { type inputType, stringValidate } from "../../misc/stringValidator";
 
 function UploadReceiptPanel() : ReactElement {
 
