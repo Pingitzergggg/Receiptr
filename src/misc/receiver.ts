@@ -1,16 +1,125 @@
-export async function login(email : string, password : string) : Promise<Object | null> {
+type requestType = {
+    login : {
+        request: {
+            email : string,
+            password : string
+        },
+        response : {
+            status : string,
+            value : string
+        } 
+    },
+
+    register : {
+        request: {
+            name : string,
+            email : string,
+            phone : string,
+            countryCode : number,
+            password : string
+        },
+        response : {
+            status : string,
+            value : string
+        } 
+    },
+
+    fetch_user_data : {
+        request: {
+            id: number
+        },
+        response : {
+            status : string,
+            value : string
+        } 
+    },
+
+    fetch_card_data : {
+        request: {
+            id: number
+        },
+        response : {
+            status : string,
+            value : string
+        } 
+    },
+
+    fetch_receipt_data : {
+        request: {
+            id: number
+        },
+        response : {
+            status : string,
+            value : string
+        } 
+    },
+
+    fetch_binary_data : {
+        request: {
+            id: number
+        },
+        response : {
+            status : string,
+            value : string
+        } 
+    },
+
+    insert_user_data : {
+        request: {
+            name : string,
+            email : string,
+            phone : string,
+            countryCode : number,
+            password : string,
+            userId : number
+        },
+        response : {
+            status : string,
+            value : string
+        } 
+    }
+
+    insert_user_card_data : {
+        request : {
+            name : string,
+            number : string,
+            expiryDate : string,
+            userId: number
+        },
+        response : {
+            status : string,
+            value : string
+        }
+    },
+
+    insert_user_receipt_data : {
+        request : {
+            title : string,
+            cardId: number,
+            userId: number,
+            value: Blob
+        },
+        response : {
+            status : string,
+            value : string
+        }
+    }
+}
+
+async function requestResource<currentType extends keyof requestType> (
+    enpoint : currentType,
+    body : requestType[currentType]['request']
+) : Promise<requestType[currentType]['response'] | null> {
     try {
-        const request = await fetch('https://pgapi.ddns.net/api/receiptr/login', {
+        const request = await fetch(`https://pgapi.ddns.net/receiptr/${enpoint}`, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',
                 'X-API-KEY': "]WcdihR9N6}Ol5/V`e}sDD',HRRZIm`Kk|oG'grXb})cJqKS(S"
-            },
-            body: JSON.stringify({
-                email: email,
-                password: password
-            })
+            }, 
+            body: JSON.stringify(body)
         });
+
         if (!request.ok) throw "REQUEST_ERROR: Connection problem occured...";
 
         return await request.json();
@@ -20,187 +129,4 @@ export async function login(email : string, password : string) : Promise<Object 
     }
 }
 
-export async function getUserData(userId : number) : Promise<Object | null> {
-    try {
-        const request = await fetch('https://pgapi.ddns.net/api/receiptr/fetch_user_data', {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json',
-                'X-API-KEY': "]WcdihR9N6}Ol5/V`e}sDD',HRRZIm`Kk|oG'grXb})cJqKS(S"
-            },
-            body: JSON.stringify({
-                id: userId
-            })
-        });
-        if (!request.ok) throw "REQUEST_ERROR: Connection problem occured...";
-
-        return await request.json();
-    } catch (err) {
-        console.error(err);
-        return null;
-    }
-}
-
-export async function getCardData(userId : number) : Promise<Object | null> {
-    try {
-        const request = await fetch('https://pgapi.ddns.net/api/receiptr/fetch_card_data', {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json',
-                'X-API-KEY': "]WcdihR9N6}Ol5/V`e}sDD',HRRZIm`Kk|oG'grXb})cJqKS(S"
-            },
-            body: JSON.stringify({
-                id: userId
-            })
-        });
-        if (!request.ok) throw "REQUEST_ERROR: Connection problem occured...";
-
-        return await request.json();
-    } catch (err) {
-        console.error(err);
-        return null;
-    }
-}
-
-export async function getReceiptData(userId : number) : Promise<Object | null> {
-    try {
-        const request = await fetch('https://pgapi.ddns.net/api/receiptr/fetch_receipt_data', {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json',
-                'X-API-KEY': "]WcdihR9N6}Ol5/V`e}sDD',HRRZIm`Kk|oG'grXb})cJqKS(S"
-            },
-            body: JSON.stringify({
-                id: userId
-            })
-        });
-        if (!request.ok) throw "REQUEST_ERROR: Connection problem occured...";
-
-        return await request.json();
-    } catch (err) {
-        console.error(err);
-        return null;
-    }
-}
-
-type registerType = {
-    name : string,
-    email : string,
-    phone : string,
-    countryCode : number,
-    password : string
-}
-export async function register(data : registerType) : Promise<Object | null> {
-    try {
-        const request = await fetch('https://pgapi.ddns.net/api/receiptr/register', {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json',
-                'X-API-KEY': "]WcdihR9N6}Ol5/V`e}sDD',HRRZIm`Kk|oG'grXb})cJqKS(S"
-            },
-            body: JSON.stringify(data)
-        });
-        if (!request.ok) throw "REQUEST_ERROR: Connection problem occured...";
-
-        return await request.json();
-    } catch (err) {
-        console.error(err);
-        return null;
-    }
-}
-
-type setCardType = {
-    name : string,
-    number : string,
-    expiryDate : string,
-    userId: number
-}
-export async function setCard(data : setCardType) : Promise<Object | null> {
-    try {
-        const request = await fetch('https://pgapi.ddns.net/api/receiptr/insert_user_card_data', {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json',
-                'X-API-KEY': "]WcdihR9N6}Ol5/V`e}sDD',HRRZIm`Kk|oG'grXb})cJqKS(S"
-            },
-            body: JSON.stringify(data)
-        });
-        if (!request.ok) throw "REQUEST_ERROR: Connection problem occured...";
-
-        return await request.json();
-    } catch (err) {
-        console.error(err);
-        return null;
-    }
-}
-
-type setReceiptType = {
-    title : string,
-    cardId: number,
-    userId: number,
-    value: Blob
-}
-export async function setReceipt(data : setReceiptType) : Promise<Object | null> {
-    try {
-        const request = await fetch('https://pgapi.ddns.net/api/receiptr/insert_user_receipt_data', {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json',
-                'X-API-KEY': "]WcdihR9N6}Ol5/V`e}sDD',HRRZIm`Kk|oG'grXb})cJqKS(S"
-            },
-            body: JSON.stringify(data)
-        });
-        if (!request.ok) throw "REQUEST_ERROR: Connection problem occured...";
-
-        return await request.json();
-    } catch (err) {
-        console.error(err);
-        return null;
-    }
-}
-
-type setUserType = {
-    name : string,
-    email : string,
-    phone : string,
-    countryCode : number,
-    password : string,
-    userId : number
-}
-export async function setUser(data : setUserType) : Promise<Object | null> {
-    try {
-        const request = await fetch('https://pgapi.ddns.net/api/receiptr/insert_user_data', {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json',
-                'X-API-KEY': "]WcdihR9N6}Ol5/V`e}sDD',HRRZIm`Kk|oG'grXb})cJqKS(S"
-            },
-            body: JSON.stringify(data)
-        });
-        if (!request.ok) throw "REQUEST_ERROR: Connection problem occured...";
-
-        return await request.json();
-    } catch (err) {
-        console.error(err);
-        return null;
-    }
-}
-
-type test = {
-    id: number,
-    name: string,
-    isBoolean: boolean,
-    value: number
-};
-export async function testerMethod() : Promise<test[] | null> {
-    try {
-        const request = await fetch('https://pgapi.ddns.net/test/tester');
-        if (!request.ok) throw "ERROR_REQUEST: Connection problem occured...";
-
-        return await request.json();
-    } catch (err) {
-        console.error(err);
-        return null;
-    }
-}
-
+export default requestResource;
