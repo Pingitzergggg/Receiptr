@@ -69,6 +69,16 @@ input, select, textarea {
   background-color: #12701299;
 }
 
+.bta {
+  background-color: transparent;
+  color: var(--error-color);
+}
+
+.bta:hover {
+  background-color: var(--error-color);
+  color: var(--bg-color);
+}
+
 .navbar {
   box-shadow: 0 1px 10px 1px var(--accent-color);
 }

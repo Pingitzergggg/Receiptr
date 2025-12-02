@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { cardsDummy } from './dummydata';
+import { cardsDummy } from '../misc/dummydata';
 import '../tailwind.css'
 import '../style.scss'
 import { Outlet, useNavigate } from 'react-router-dom';

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { receiptsDummy } from './dummydata';
+import { receiptsDummy } from '../misc/dummydata';
 import '../tailwind.css'
 import '../style.scss'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
