@@ -1,8 +1,10 @@
-import { useState } from "react";
-import { testerMethod } from "../misc/reciever";
+import { useState, type ReactElement } from "react";
+import { testerMethod } from "../misc/receiver";
 
 function Test() : any {
-    let values;
+    let values : any;
+
+    const [page, setPage] = useState<ReactElement>(<p>Loading</p>);
 
     testerMethod()
         .then(data => {
@@ -14,10 +16,11 @@ function Test() : any {
                     </div>
                 ));
             }
+            setPage(values);
         });
 
     return <>
-        {values}
+        {page}
     </>
 }
 
