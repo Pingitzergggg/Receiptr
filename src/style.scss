@@ -131,6 +131,7 @@ input, select, textarea {
 }
 
 .card {
+  transition: .5s;
   color: var(--font-color);
   background-color: var(--card-background);
   width: auto;
@@ -140,6 +141,12 @@ input, select, textarea {
     border: none;
     box-shadow: none;
   }
+}
+
+.card:hover {
+  transition: .5s;
+  transform: scale(1.05);
+  cursor: pointer;
 }
 
 .error {

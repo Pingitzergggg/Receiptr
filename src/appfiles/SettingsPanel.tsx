@@ -9,9 +9,9 @@ function SettingsPanel() : any {
     */
     return (
         <>
-        <div className="grid grid-cols-1 gap-3 my-20 bg-(--card-background) p-5 w-[75%] rounded-[15px]">
-          <div className="w-[100%]">
-            <h2>User Settings</h2>
+        <div className="grid grid-cols-1 gap-3 my-20 w-[75%]">
+          <div className="w-[100%] bg-(--card-background) rounded-[15px] p-5">
+            <h2 className="text-2xl font-bold mb-5">User Settings</h2>
             <table>
               <tr>
                 <td>
@@ -64,14 +64,14 @@ function SettingsPanel() : any {
             <button className="btn">Logout</button>
           </div>
 
-          <div>
-            <h2>Cache Settings</h2>
+          <div className="w-[100%] bg-(--card-background) rounded-[15px] p-5">
+            <h2 className="text-2xl font-bold mb-5">Cache Settings</h2>
             <button className="btn">Clear cache</button>
             <button className="btn">Clear session</button>
           </div>
 
-          <div>
-            <h2>Danger Zone</h2>
+          <div className="w-[100%] bg-(--card-background) rounded-[15px] p-5">
+            <h2 className="text-2xl font-bold mb-5">Danger Zone</h2>
             <button className="btn bta">Delete Account</button>
           </div>
         </div>

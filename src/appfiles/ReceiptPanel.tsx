@@ -5,7 +5,7 @@ import '../style.scss'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import UploadReceiptPanel from './upload/UploadReceiptPanel';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faX } from '@fortawesome/free-solid-svg-icons';
 
 //let receipts : any[] = []; //uncomment for production
 let receipts : any[] = receiptsDummy;
@@ -37,7 +37,7 @@ function ReceiptPanel() : any {
   const location = useLocation();
 
   const receiptPanel : any = receipts.map(receipts =>
-    <div key={receipts.id} className="card w-96 bg-base-100 card-xs shadow-sm">
+    <div onClick={() => navigate(`/receipts/${receipts.id}`)} key={receipts.id} className="card w-96 bg-base-100 card-xs shadow-sm">
       <div className="card-body">
         <h2 className="card-title">{receipts.title}</h2>
         <p>
@@ -48,8 +48,10 @@ function ReceiptPanel() : any {
           Creation: {receipts.dateCreated}<br/>
           With card: {receipts.number}
         </p>
-        <div className="justify-end card-actions">
-          <button onClick={() => navigate(`/receipts/${receipts.id}`)} className="btn btn-primary">Open</button>
+        <div>
+          <a className='btn-nav bg-red-400'>
+            <FontAwesomeIcon icon={faX} />
+          </a>
         </div>
       </div>
     </div>
