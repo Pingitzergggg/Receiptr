@@ -5,7 +5,7 @@ import '../style.scss'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import UploadReceiptPanel from './upload/UploadReceiptPanel';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faX } from '@fortawesome/free-solid-svg-icons';
+import { faArrowUp, faFilePen, faPlus, faTrashCan, faX } from '@fortawesome/free-solid-svg-icons';
 
 //let receipts : any[] = []; //uncomment for production
 let receipts : any[] = receiptsDummy;
@@ -48,9 +48,17 @@ function ReceiptPanel() : any {
           Creation: {receipts.dateCreated}<br/>
           With card: {receipts.number}
         </p>
-        <div>
-          <a className='btn-nav bg-red-400'>
-            <FontAwesomeIcon icon={faX} />
+        <div className='flex justify-end'>
+          <a className='btn-nav bg-red-400 ml-1'>
+            <FontAwesomeIcon icon={faTrashCan} />
+          </a>
+
+          <a href="" className="btn-nav bg-amber-400 ml-1">
+            <FontAwesomeIcon icon={faFilePen} />
+          </a>
+
+          <a href="" className='btn-nav bg-green-400 ml-1'>
+            <FontAwesomeIcon icon={faArrowUp} />
           </a>
         </div>
       </div>
