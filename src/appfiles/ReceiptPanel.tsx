@@ -6,6 +6,8 @@ import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import UploadReceiptPanel from './upload/UploadReceiptPanel';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowUp, faFilePen, faPlus, faTrashCan, faX } from '@fortawesome/free-solid-svg-icons';
+import Receipt from '../tools/Receipt';
+import Popup from '../tools/Popup';
 
 //let receipts : any[] = []; //uncomment for production
 let receipts : any[] = receiptsDummy;
@@ -37,32 +39,15 @@ function ReceiptPanel() : any {
   const location = useLocation();
 
   const receiptPanel : any = receipts.map(receipts =>
-    <div onClick={() => navigate(`/receipts/${receipts.id}`)} key={receipts.id} className="card w-96 bg-base-100 card-xs shadow-sm">
-      <div className="card-body">
-        <h2 className="card-title">{receipts.title}</h2>
-        <p>
-          Key: {receipts.id}<br/>
-          Size: {receipts.fileSize + receipts.fileMeasurementUnit}<br/>
-          Type: {receipts.fileType}<br/>
-          Store: {receipts.companyName}<br/>
-          Creation: {receipts.dateCreated}<br/>
-          With card: {receipts.number}
-        </p>
-        <div className='flex justify-end'>
-          <a className='btn-nav bg-red-400 ml-1'>
-            <FontAwesomeIcon icon={faTrashCan} />
-          </a>
-
-          <a href="" className="btn-nav bg-amber-400 ml-1">
-            <FontAwesomeIcon icon={faFilePen} />
-          </a>
-
-          <a href="" className='btn-nav bg-green-400 ml-1'>
-            <FontAwesomeIcon icon={faArrowUp} />
-          </a>
-        </div>
-      </div>
-    </div>
+    <Receipt 
+      id={receipts.id}
+      title={receipts.title}
+      store={receipts.companyName}
+      cardNumber={receipts.number}
+      creation={receipts.dateCreated}
+      size={receipts.fileSize}
+      type={receipts.fileType}
+      unit={receipts.fileMeasurementUnit} /> 
   );
 
   return (

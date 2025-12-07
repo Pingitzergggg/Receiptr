@@ -5,6 +5,7 @@ import '../style.scss'
 import { Outlet, useNavigate } from 'react-router-dom';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Card from '../tools/Card';
 
 //let cards : any[] = [] //uncomment for production
 let cards : any[] = cardsDummy;
@@ -34,14 +35,13 @@ function CardPanel() : any {
   // }, [])
 
   const cardPanel : any = cards.map(cards =>
-    <div key={cards.id} className="card w-96 bg-base-100 card-xs shadow-sm">
-      <div className="card-body">
-        <h2 className="card-title">{cards.bank} *{cards.number}</h2>
-        <div className="justify-end card-actions">
-          <button className="btn btn-primary">Open</button>
-        </div>
-      </div>
-    </div>
+     <Card
+        id={cards.id}
+        bank={cards.bank}
+        date="YY/MM"
+        number={cards.number}
+        holder="Pingitzer David"
+        category="Entertainment " />  
   )
 
   return (
@@ -51,7 +51,7 @@ function CardPanel() : any {
         <FontAwesomeIcon icon={faPlus} />
       </button>
       <div className='container mt-20 mb-20'>
-        <div id='receipt-grid' className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols3 lg:grid-cols4 gap-4'>
+        <div id='receipt-grid' className='grid grid-cols-1 sm:grid-cols-3 md:grid-cols3 lg:grid-cols4 gap-4'>
           {cardPanel}
         </div>
       </div>

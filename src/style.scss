@@ -34,13 +34,22 @@
 }
 
 :root {
-  --font-color: whitesmoke;
-  --card-background: #323339;
-  --bg-color: #1d232a;
-  --input-bg: #252525;
-  --border-icon-color: #4d5051;
-  --accent-color: #127012;
-  --error-color: #a52424;
+  // --font-color: whitesmoke;
+  // --card-background: #323339;
+  // --bg-color: #1d232a;
+  // --input-bg: #252525;
+  // --border-icon-color: #4d5051;
+  // --accent-color: #127012;
+  // --accent-hover-color: #143114;
+  // --error-color: #a52424;
+}
+
+html, .dock {
+  background-color: var(--bg-color);
+}
+
+* {
+  color: var(--font-color)
 }
 
 input, select, textarea {
@@ -61,12 +70,14 @@ input, select, textarea {
 // }
 
 .btn {
+  transition: .1s;
   box-shadow: none;
   background-color: var(--accent-color);
 }
 
 .btn:hover {
-  background-color: #12701299;
+  transition: .1s;
+  background-color: var(--accent-hover-color);
 }
 
 .bta {
@@ -81,6 +92,15 @@ input, select, textarea {
 
 .navbar {
   box-shadow: 0 1px 10px 1px var(--accent-color);
+  background-color: var(--bg-color);
+
+  ul {
+    background-color: var(--bg-color);
+  }
+
+  a, li {
+    color: var(--font-color)
+  }
 }
 
 .btn-nav {
@@ -112,7 +132,6 @@ input, select, textarea {
 }
 
 .upload-button {
-  transition: .1s;
   position: fixed;
   z-index: 1;
   right: 0;
@@ -130,7 +149,7 @@ input, select, textarea {
   // border: red 2.5px solid;
 }
 
-.card {
+.receipt {
   transition: .5s;
   color: var(--font-color);
   background-color: var(--card-background);
@@ -143,7 +162,7 @@ input, select, textarea {
   }
 }
 
-.card:hover {
+.receipt:hover {
   transition: .5s;
   transform: scale(1.05);
   cursor: pointer;
