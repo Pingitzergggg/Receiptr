@@ -1,7 +1,7 @@
 const root = document.querySelector(":root").style;
 
 if (localStorage.getItem("theme") === null) {
-    localStorage.setItem("theme", "light");
+    localStorage.setItem("theme", "dark");
 }
 
 root.setProperty("--accent-color", "#127012");
@@ -17,7 +17,7 @@ if (localStorage.getItem("theme") == "dark") {
 } else  {
     root.setProperty("--bg-color", "whitesmoke");
     root.setProperty("--font-color", "black");
-    root.setProperty("--card-background", "bisque");
+    root.setProperty("--card-background", "#b2b2b2ff");
     root.setProperty("--input-color", "#252525");
     root.setProperty("--border-icon-color", "#4d5051");
 }

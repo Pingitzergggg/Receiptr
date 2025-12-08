@@ -86,24 +86,54 @@ export const cardsDummy: any[] = [
     id: 1,
     bank: 'Raiffaisen Bank',
     number: '5784',
-    expiryDate: '2026-04-01'
+    expiryDate: '26/12',
+    holder: 'Pingitzer David',
+    category: 'Entertainment',
+    color: '#497fd6'
   },
   {
     id: 2,
-    bank: 'OTP Bank',
-    number: '5738',
-    expiryDate: '2026-07-01'
+    bank: 'Bank of America',
+    number: '1123',
+    expiryDate: '11/25',
+    holder: 'Sarah Johnson',
+    category: 'Groceries',
+    color: '#e57373'
   },
   {
     id: 3,
-    bank: 'MBH Bank',
-    number: '5993',
-    expiryDate: '2030-11-01'
+    bank: 'Chase Bank',
+    number: '9034',
+    expiryDate: '03/28',
+    holder: 'Michael Lee',
+    category: 'Travel',
+    color: '#4db6ac'
   },
   {
     id: 4,
-    bank: 'REVOLUT',
-    number: '8574',
-    expiryDate: '2028-03-01'
+    bank: 'Revolut',
+    number: '7645',
+    expiryDate: '07/27',
+    holder: 'Anna Müller',
+    category: 'Shopping',
+    color: '#ba68c8'
+  },
+  {
+    id: 5,
+    bank: 'N26',
+    number: '4567',
+    expiryDate: '09/29',
+    holder: 'Liam Novak',
+    category: 'Food & Dining',
+    color: '#ffb74d'
+  },
+  {
+    id: 6,
+    bank: 'Sparkasse',
+    number: '8291',
+    expiryDate: '12/24',
+    holder: 'Julia Steiner',
+    category: 'Utilities',
+    color: '#64b5f6'
   }
-]
+];

@@ -13,8 +13,8 @@ import BinaryPanel from './appfiles/BinaryPanel'
 import UploadReceiptPanel from './appfiles/upload/UploadReceiptPanel'
 import UploadCardPanel from './appfiles/upload/UploadCardPanel'
 import Test from './testing/Test'
-import setTheme from './misc/setTheme'
-import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons'
+import setTheme from './misc/theme'
+import { faSun, faMoon, faExpand } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 function isUserLoggedIn() : boolean {
@@ -45,27 +45,7 @@ function App() {
         <a onClick={setTheme} className='mx-5 cursor-pointer'>
           {localStorage.getItem("theme") == "light" ? <FontAwesomeIcon className='hover:scale-120 transition' icon={faSun} /> : <FontAwesomeIcon className='hover:scale-120 transition' icon={faMoon} />}
         </a>
-        <div className="dropdown dropdown-end">
-          <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-            <div className="w-10 rounded-full">
-              <img
-                alt="Tailwind CSS Navbar component"
-                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
-            </div>
-          </div>
-          <ul
-            tabIndex={0}
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
-            <li>
-              <a className="justify-between">
-                Profile
-                <span className="badge">New</span>
-              </a>
-            </li>
-            <li><a>Settings</a></li>
-            <li><NavLink to='/login' onClick={logout}>Logout</NavLink></li>
-          </ul>
-        </div>
+        {/* <li><NavLink to='/login' onClick={logout}>Logout</NavLink></li> */}
       </div>
     </div>
   );
@@ -89,6 +69,11 @@ function App() {
         <button id="cards" onClick={() => {navigate('/cards')}} className={location.pathname == "/cards" ? 'dock-active' : ''}>
           <svg className="size-[1.5em]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path fill={localStorage.getItem("theme") == "light" ? "000000" : "#e0e0e0"} d="M64 192L64 224L576 224L576 192C576 156.7 547.3 128 512 128L128 128C92.7 128 64 156.7 64 192zM64 272L64 448C64 483.3 92.7 512 128 512L512 512C547.3 512 576 483.3 576 448L576 272L64 272zM128 424C128 410.7 138.7 400 152 400L200 400C213.3 400 224 410.7 224 424C224 437.3 213.3 448 200 448L152 448C138.7 448 128 437.3 128 424zM272 424C272 410.7 282.7 400 296 400L360 400C373.3 400 384 410.7 384 424C384 437.3 373.3 448 360 448L296 448C282.7 448 272 437.3 272 424z"/></svg>
           <span className="dock-label mb-1 text-(--font-color)">Cards</span>
+        </button>
+
+        <button id="classes" onClick={() => {navigate('/classes')}} className={location.pathname == "/classes" ? 'dock-active' : ''}>
+          <svg className='size-[1.5rem]' viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill={localStorage.getItem("theme") == "light" ? "000000" : "#e0e0e0"} fill-rule="evenodd" clip-rule="evenodd" d="M16.1369 4.72848L17.9665 6.55812C20.6555 9.24711 22 10.5916 22 12.2623C22 13.933 20.6555 15.2775 17.9665 17.9665C15.2775 20.6555 13.933 22 12.2623 22C10.5916 22 9.24711 20.6555 6.55812 17.9665L4.72848 16.1369C3.18295 14.5914 2.41018 13.8186 2.12264 12.816C1.83509 11.8134 2.08083 10.7485 2.57231 8.61875L2.85574 7.39057C3.26922 5.59881 3.47597 4.70292 4.08944 4.08944C4.70292 3.47597 5.5988 3.26922 7.39057 2.85574L8.61875 2.57231C10.7485 2.08083 11.8134 1.83509 12.816 2.12264C13.8186 2.41018 14.5914 3.18295 16.1369 4.72848ZM11.1467 14.3284C10.4737 13.6555 10.4794 12.6899 10.8819 11.9247C10.6807 11.6325 10.7101 11.2295 10.9699 10.9697C11.2288 10.7108 11.6298 10.6807 11.9217 10.8795C12.2615 10.6988 12.635 10.6033 13.0071 10.6068C13.4213 10.6107 13.7539 10.9497 13.75 11.3639C13.7461 11.7781 13.4071 12.1107 12.9929 12.1068C12.816 12.1051 12.5835 12.1845 12.3841 12.3839C11.9966 12.7714 12.0985 13.1589 12.2073 13.2678C12.3162 13.3766 12.7037 13.4785 13.0912 13.091C13.8753 12.307 15.2289 12.0467 16.0964 12.9142C16.7694 13.5872 16.7637 14.5528 16.3612 15.318C16.5624 15.6102 16.533 16.0132 16.2732 16.273C16.0143 16.5319 15.6131 16.5619 15.3212 16.3631C14.8643 16.6059 14.3446 16.6969 13.849 16.595C13.4433 16.5117 13.182 16.1152 13.2654 15.7094C13.3487 15.3037 13.7452 15.0424 14.151 15.1257C14.3281 15.1622 14.6137 15.104 14.859 14.8588C15.2465 14.4712 15.1446 14.0837 15.0358 13.9749C14.9269 13.866 14.5394 13.7641 14.1519 14.1517C13.3678 14.9357 12.0142 15.1959 11.1467 14.3284ZM10.021 10.2931C10.802 9.51207 10.802 8.24574 10.021 7.46469C9.23991 6.68364 7.97358 6.68364 7.19253 7.46469C6.41148 8.24574 6.41148 9.51207 7.19253 10.2931C7.97358 11.0742 9.23991 11.0742 10.021 10.2931Z"></path></svg>
+          <span className="dock-label mb-1 text-(--font-color)">Classes</span>
         </button>
 
         <button id="settings" onClick={() => {navigate('/settings')}} className={location.pathname == "/settings" ? 'dock-active' : ''}>
@@ -122,6 +107,7 @@ function App() {
           <Route path='/cards' element={<CardPanel/>}>
             <Route path="upload" element={<UploadCardPanel />} />
           </Route>
+          <Route path='/classes' element={<div>Classes</div>} />
           <Route path='/settings' element={<SettingsPanel/>} />
           <Route path='/user' element={<p>user</p>} />
         </Route>

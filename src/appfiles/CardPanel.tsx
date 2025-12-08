@@ -38,10 +38,12 @@ function CardPanel() : any {
      <Card
         id={cards.id}
         bank={cards.bank}
-        date="YY/MM"
+        date={cards.expiryDate}
         number={cards.number}
-        holder="Pingitzer David"
-        category="Entertainment " />  
+        holder={cards.holder}
+        category={cards.category}
+        color={cards.color} 
+         />  
   )
 
   return (
