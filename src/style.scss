@@ -150,22 +150,18 @@ input, select, textarea {
 }
 
 .receipt {
-  transition: .5s;
   color: var(--font-color);
   background-color: var(--card-background);
   width: auto;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  box-shadow: none;
   
   button {
     background-color: var(--accent-color);
     border: none;
     box-shadow: none;
   }
-}
-
-.receipt:hover {
-  transition: .5s;
-  transform: scale(1.05);
-  cursor: pointer;
 }
 
 .error {
@@ -256,6 +252,14 @@ input, select, textarea {
     align-items: center;
     padding: .5rem;
   }
+}
+
+.triangle {
+  width: 0;
+  height: 0;
+  border-left: 3rem solid transparent;
+  border-right: 3rem solid transparent;
+  border-top: 2rem solid var(--card-background);
 }
 
 //DEV

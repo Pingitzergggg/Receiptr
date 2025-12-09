@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, type ReactElement } from 'react'
 import { receiptsDummy } from '../misc/dummydata';
 import '../tailwind.css'
 import '../style.scss'
@@ -38,7 +38,7 @@ function ReceiptPanel() : any {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const receiptPanel : any = receipts.map(receipts =>
+  const receiptPanel : ReactElement[] = receipts.map(receipts =>
     <Receipt 
       id={receipts.id}
       title={receipts.title}
@@ -47,7 +47,9 @@ function ReceiptPanel() : any {
       creation={receipts.dateCreated}
       size={receipts.fileSize}
       type={receipts.fileType}
-      unit={receipts.fileMeasurementUnit} /> 
+      unit={receipts.fileMeasurementUnit}
+      category='Movies'
+      color="#009876" /> 
   );
 
   return (

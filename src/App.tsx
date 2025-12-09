@@ -16,6 +16,7 @@ import Test from './testing/Test'
 import setTheme from './misc/theme'
 import { faSun, faMoon, faExpand } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import ClassPanel from './appfiles/ClassPanel'
 
 function isUserLoggedIn() : boolean {
   let accountId : string = localStorage.getItem('id') as string; console.log(`accountId: ${accountId}`); //put CONST at production
@@ -107,7 +108,7 @@ function App() {
           <Route path='/cards' element={<CardPanel/>}>
             <Route path="upload" element={<UploadCardPanel />} />
           </Route>
-          <Route path='/classes' element={<div>Classes</div>} />
+          <Route path='/classes' element={<ClassPanel />} />
           <Route path='/settings' element={<SettingsPanel/>} />
           <Route path='/user' element={<p>user</p>} />
         </Route>

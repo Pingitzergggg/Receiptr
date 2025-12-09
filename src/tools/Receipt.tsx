@@ -1,4 +1,4 @@
-import { faTrashCan, faFilePen, faArrowUp } from "@fortawesome/free-solid-svg-icons";
+import { faTrashCan, faFilePen, faArrowUp, faPlantWilt, faTag } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState, type ReactElement } from "react";
 import { useNavigate } from "react-router-dom";
@@ -11,16 +11,35 @@ type receiptProps = {
     type: string,
     store: string,
     creation: string,
-    cardNumber: number
+    cardNumber: number,
+    category?: string,
+    color?: string
 };
 
-function Receipt({id, title, size, type, unit, store, creation, cardNumber} : receiptProps) : ReactElement {
+function Receipt({id, title, size, type, unit, store, creation, cardNumber, category, color} : receiptProps) : ReactElement {
     const navigate = useNavigate();
 
     return (
-        <div key={id} className="card receipt w-96 bg-base-100 card-xs shadow-sm">
+        <div key={id} id={`receipt-${id}`} className="card receipt w-96 bg-base-100 card-xs shadow-sm relative transition hover:scale-103 cursor-pointer">
             <div className="card-body p-3">
-                <h2 className="text-2xl font-bold">{title}</h2>
+                    <div className='flex justify-between'>
+                        <h2 className="text-2xl font-bold">{title}</h2>
+
+                        <div className="flex justify-end items-center">
+                            <a title='Delete' className='btn-nav bg-red-400 ml-1'>
+                                <FontAwesomeIcon icon={faTrashCan} />
+                            </a>
+
+                            <a title='Edit' className="btn-nav bg-amber-400 ml-1">
+                                <FontAwesomeIcon icon={faFilePen} />
+                            </a>
+
+                            <a onClick={() => navigate(`/receipts/${id}`)} title='Open' className='btn-nav bg-green-400 ml-1'>
+                                <FontAwesomeIcon icon={faArrowUp} />
+                            </a>
+                        </div>
+                    </div>
+                <div className="flex justify-end items-center">
                 <p>
                 Size: {size + unit}<br/>
                 Type: {type}<br/>
@@ -28,20 +47,16 @@ function Receipt({id, title, size, type, unit, store, creation, cardNumber} : re
                 Creation: {creation}<br/>
                 With card: {cardNumber}
                 </p>
-                    <div className='flex justify-end'>
-                        <a title='Delete' className='btn-nav bg-red-400 ml-1'>
-                            <FontAwesomeIcon icon={faTrashCan} />
-                        </a>
-
-                        <a title='Edit' className="btn-nav bg-amber-400 ml-1">
-                            <FontAwesomeIcon icon={faFilePen} />
-                        </a>
-
-                        <a onClick={() => navigate(`/receipts/${id}`)} title='Open' className='btn-nav bg-green-400 ml-1'>
-                            <FontAwesomeIcon icon={faArrowUp} />
-                        </a>
-                    </div>
+                    <p>
+                        <FontAwesomeIcon style={{color: `${color}`}} icon={faTag} />
+                        {category}
+                    </p>
+                </div>
             </div>
+
+            <div className="absolute triangle bottom-[-32px] right-[0%]"></div>
+            <div className="absolute triangle bottom-[-32px] left-[50%]" style={{transform: 'translate(-50%, 0)'}}></div>
+            <div className="absolute triangle bottom-[-32px] left-[0%]"></div>
         </div>
     );
 }

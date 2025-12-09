@@ -14,18 +14,18 @@ type cardProps = {
 
 function Card({id, bank, number, date, holder, category, color} : cardProps) : ReactElement {
     return (
-        <a key={id} href="#" className="hover-3d cursor-pointer">
+        <a key={id} id={`card-${id}`} className="hover-3d cursor-pointer">
         
-        <div className={`card w-96 text-white`} style={{backgroundColor: color}}>
+        <div className={`card text-white`} style={{backgroundColor: color}}>
             <div className="card-body">
-            <div className="flex justify-between mb-10">
+            <div className="flex justify-between">
                 <div className="font-bold">{bank.toUpperCase()}</div>
                 <div className="text-5xl opacity-10">
                     <FontAwesomeIcon icon={faPlantWilt} />
                 </div>
             </div>
             <div>
-                <div className="text-lg mb-4 opacity-40">{`**** **** **** ${number}`}</div>
+                <div className="text-lg opacity-40">{`**** **** **** ${number}`}</div>
                 <div>{category}</div>
             </div>
             <div className="flex justify-between">
@@ -40,8 +40,7 @@ function Card({id, bank, number, date, holder, category, color} : cardProps) : R
             </div>
             </div>
         </div>
-        
-        {/* 8 empty divs needed for the 3D effect */}
+
         <div></div>
         <div></div>
         <div></div>

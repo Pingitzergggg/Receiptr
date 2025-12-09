@@ -137,3 +137,62 @@ export const cardsDummy: any[] = [
     color: '#64b5f6'
   }
 ];
+
+export const classDummy : any[] = [
+  {
+    id: 1,
+    title: "Entertainment",
+    color: "#009876",
+    cardsLinked: 3,
+    receiptsLinked: 23
+  },
+  {
+    id: 2,
+    title: "Groceries",
+    color: "#FF6B6B",
+    cardsLinked: 5,
+    receiptsLinked: 42
+  },
+  {
+    id: 3,
+    title: "Transportation",
+    color: "#1E90FF",
+    cardsLinked: 2,
+    receiptsLinked: 17
+  },
+  {
+    id: 4,
+    title: "Utilities",
+    color: "#F4A300",
+    cardsLinked: 4,
+    receiptsLinked: 12
+  },
+  {
+    id: 5,
+    title: "Dining Out",
+    color: "#8A2BE2",
+    cardsLinked: 3,
+    receiptsLinked: 29
+  },
+  {
+    id: 6,
+    title: "Health & Fitness",
+    color: "#2ECC71",
+    cardsLinked: 1,
+    receiptsLinked: 8
+  },
+  {
+    id: 7,
+    title: "Travel",
+    color: "#FF8C00",
+    cardsLinked: 2,
+    receiptsLinked: 15
+  },
+  {
+    id: 8,
+    title: "Shopping",
+    color: "#E91E63",
+    cardsLinked: 6,
+    receiptsLinked: 54
+  }
+];
