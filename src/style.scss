@@ -49,7 +49,12 @@ html, .dock {
 }
 
 * {
-  color: var(--font-color)
+  color: var(--font-color);
+}
+
+.maximize-view {
+  height: 100%;
+  width: 100%;
 }
 
 input, select, textarea {
