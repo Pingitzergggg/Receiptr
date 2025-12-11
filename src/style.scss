@@ -161,6 +161,8 @@ input, select, textarea {
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
   box-shadow: none;
+
+  container-type: inline-size;
   
   button {
     background-color: var(--accent-color);
@@ -262,9 +264,10 @@ input, select, textarea {
 .triangle {
   width: 0;
   height: 0;
-  border-left: 3rem solid transparent;
-  border-right: 3rem solid transparent;
-  border-top: 2rem solid var(--card-background);
+  border-left: 20cqw solid transparent;
+  border-right: 20cqw solid transparent;
+  border-top: 4rem solid var(--card-background);
+  bottom: -4rem;
 }
 
 //DEV

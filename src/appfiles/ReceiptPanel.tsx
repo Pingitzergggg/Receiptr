@@ -48,8 +48,10 @@ function ReceiptPanel() : any {
       size={receipts.fileSize}
       type={receipts.fileType}
       unit={receipts.fileMeasurementUnit}
-      category='Movies'
-      color="#009876" /> 
+      category={receipts.category}
+      color={receipts.color}
+      price={receipts.price}
+      currency={receipts.currency} /> 
   );
 
   return (
