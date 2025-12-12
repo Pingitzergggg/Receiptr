@@ -18,6 +18,7 @@ import { faSun, faMoon, faExpand } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import ClassPanel from './appfiles/ClassPanel'
 import UploadClassPanel from './appfiles/upload/UploadClassPanel'
+import DeleteItem from './tools/DeleteItem'
 
 function isUserLoggedIn() : boolean {
   let accountId : string = localStorage.getItem('id') as string; console.log(`accountId: ${accountId}`); //put CONST at production
@@ -105,12 +106,15 @@ function App() {
           <Route path='/receipts' element={<ReceiptPanel/>}>
             <Route path=':receiptId' element={<BinaryPanel />} />
             <Route path='upload' element={<UploadReceiptPanel />} />
+            <Route path='delete' element={<DeleteItem itemType='RECEIPT' />} />
           </Route>
           <Route path='/cards' element={<CardPanel/>}>
             <Route path="upload" element={<UploadCardPanel />} />
+            <Route path='delete' element={<DeleteItem itemType='CARD' />} />
           </Route>
           <Route path='/classes' element={<ClassPanel />}>
             <Route path='upload' element={<UploadClassPanel />} />
+            <Route path='delete' element={<DeleteItem itemType='CLASS' />} />
           </Route>
           <Route path='/settings' element={<SettingsPanel/>} />
           <Route path='/user' element={<p>user</p>} />

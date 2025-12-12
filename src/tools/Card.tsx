@@ -1,6 +1,7 @@
-import { faPlantWilt } from "@fortawesome/free-solid-svg-icons";
+import { faPlantWilt, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { ReactElement } from "react";
+import { useNavigate } from "react-router-dom";
 
 type cardProps = {
     id : number,
@@ -13,10 +14,14 @@ type cardProps = {
 };
 
 function Card({id, bank, number, date, holder, category, color} : cardProps) : ReactElement {
+    const navigate = useNavigate();
     return (
-        <a key={id} id={`card-${id}`} className="hover-3d cursor-pointer">
+        <a key={id} id={`card-${id}`} className="hover-3d">
         
-        <div className={`card text-white`} style={{backgroundColor: color}}>
+        <div className={`card text-white relative`} style={{backgroundColor: color}}>
+        <a onClick={() => navigate(`/cards/delete?id=${id}`)} className="absolute top-[1%] right-[1%] m-2 cursor-pointer transition hover:scale-130">
+            <FontAwesomeIcon icon={faTrashCan} />
+        </a>
             <div className="card-body">
             <div className="flex justify-between">
                 <div className="font-bold">{bank.toUpperCase()}</div>
@@ -40,15 +45,6 @@ function Card({id, bank, number, date, holder, category, color} : cardProps) : R
             </div>
             </div>
         </div>
-
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
         </a>
     );
 }

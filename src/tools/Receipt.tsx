@@ -2,6 +2,7 @@ import { faTrashCan, faFilePen, faArrowUp, faPlantWilt, faTag } from "@fortaweso
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState, type ReactElement } from "react";
 import { useNavigate } from "react-router-dom";
+import UploadReceiptPanel from "../appfiles/upload/UploadReceiptPanel";
 
 type receiptProps = {
     id: number,
@@ -25,11 +26,11 @@ function Receipt({id, title, size, type, unit, store, creation, cardNumber, cate
         <div key={id} id={`receipt-${id}`} className="card receipt w-96 bg-base-100 card-xs shadow-sm relative transition hover:scale-103 cursor-pointer mb-[4rem]">
             <div className="card-body p-3">
                         <div className="flex justify-end items-center">
-                            <a title='Delete' className='btn-nav bg-red-400 ml-1'>
+                            <a onClick={() => navigate(`/receipts/delete?id=${id}`)} title='Delete' className='btn-nav bg-red-400 ml-1'>
                                 <FontAwesomeIcon icon={faTrashCan} />
                             </a>
 
-                            <a title='Edit' className="btn-nav bg-amber-400 ml-1">
+                            <a onClick={() => navigate(`/receipts/upload?data=${JSON.stringify({id: id, title: title, price: price, currency: currency, category: category})}`)} title='Edit' className="btn-nav bg-amber-400 ml-1">
                                 <FontAwesomeIcon icon={faFilePen} />
                             </a>
 
@@ -58,9 +59,9 @@ function Receipt({id, title, size, type, unit, store, creation, cardNumber, cate
                 </div>
             </div>
 
-            <div className="absolute triangle bottom-[-32px] right-[0%]"></div>
-            <div className="absolute triangle bottom-[-32px] left-[50%]" style={{transform: 'translate(-50%, 0)'}}></div>
-            <div className="absolute triangle bottom-[-32px] left-[0%]"></div>
+            <div className="absolute triangle bottom-[-30px] right-[0%]"></div>
+            <div className="absolute triangle bottom-[-30px] left-[50%]" style={{transform: 'translate(-50%, 0)'}}></div>
+            <div className="absolute triangle bottom-[-30px] left-[0%]"></div>
         </div>
     );
 }
