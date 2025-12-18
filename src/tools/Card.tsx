@@ -25,7 +25,7 @@ function Card({id, bank, number, date, holder, category, color} : cardProps) : R
             <div className="card-body">
             <div className="flex justify-between">
                 <div className="font-bold">{bank.toUpperCase()}</div>
-                <div className="text-5xl opacity-10">
+                <div className="text-5xl opacity-10 m-[1rem]">
                     <FontAwesomeIcon icon={faPlantWilt} />
                 </div>
             </div>

@@ -4,6 +4,7 @@ import { useState, type ReactElement } from "react";
 import { useNavigate } from "react-router-dom";
 import Input from "../../tools/Input";
 import { type inputType, stringValidate } from "../../misc/stringValidator";
+import Select from "../../tools/Select";
 
 function UploadReceiptPanel() : ReactElement {
 
@@ -74,14 +75,34 @@ function UploadReceiptPanel() : ReactElement {
 
             <Input title="Bank" id="bank" onChange={handleInputChange} errorInValue={cardData.bank.error.length != 0} error={cardData.bank.error} className="mb-5" width="100%" />
 
-            <div className="flex">
-                <div className="flex flex-col">
-                    <Input id="expiry" title="Expiry Date" onChange={handleInputChange} errorInValue={cardData.expiry.error.length != 0} error={cardData.expiry.error} className="mb-5" width="100%" />
-                </div>
-
-                <div className="flex flex-col ml-[2rem]">
-                    <Input id="cvc" title="CVC" onChange={handleInputChange} errorInValue={cardData.cvc.error.length != 0} error={cardData.cvc.error} className="mb-5" width="100%" />
-                </div>
+            <div className="flex justify-between">
+                <Input id="expiry" title="Expiry Date" onChange={handleInputChange} errorInValue={cardData.expiry.error.length != 0} error={cardData.expiry.error} className="mb-5" width="48%" />
+                <Input id="cvc" title="CVC" onChange={handleInputChange} errorInValue={cardData.cvc.error.length != 0} error={cardData.cvc.error} className="mb-5" width="48%" />
+            </div>
+            <div className="flex justify-between">
+                <Select id="class" title="Choose Class" errorInValue={false} width="48%" />
+                <Select id="logo" title="Type" errorInValue={false} width="48%" values={[
+                    {
+                        label: 'Default',
+                        value: ''
+                    },
+                    {
+                        label: 'MasterCard',
+                        value: 'mastercard'
+                    },
+                    {
+                        label: 'VISA',
+                        value: 'visa'
+                    },
+                    {
+                        label: 'Amex',
+                        value: 'amex'
+                    },
+                    {
+                        label: 'Discover',
+                        value: 'discover'
+                    }
+                ]} />
             </div>
 
             <button className="btn mt-[1rem]">Upload</button>

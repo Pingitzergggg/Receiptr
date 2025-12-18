@@ -8,10 +8,11 @@ type propsType = {
     errorInValue: boolean,
     width?: string,
     value?: string,
+    type?: string,
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-function Input({title, error, className, id, errorInValue, width, value, onChange} : propsType) : ReactElement {
+function Input({title, error, className, id, errorInValue, width, value, type, onChange} : propsType) : ReactElement {
     
     const [isClassActivated, setClassActivated] = useState<boolean>(false);
 
@@ -25,12 +26,12 @@ function Input({title, error, className, id, errorInValue, width, value, onChang
     }, []);
 
     return (
-        <div style={{width: `${width === undefined ? '12rem' : width}`, height: '2.5rem', margin: '1rem 0'}} className={className === undefined ? '' : className}>
+        <div style={{width: `${width === undefined ? '12rem' : width}`, height: '2.5rem', margin: `.5rem 0 ${errorInValue ? '1.5rem' : '.5rem'} 0`}} className={className === undefined ? '' : className}>
             <div className={`input-container 
                 ${isClassActivated ? 'input-focus' : ''} 
                 ${errorInValue ? 'input-error' : ''}`}>
-                    <label id="title">{title}</label>
-                    <input ref={input} type="text" id={id}
+                    {type != "date" ? <label id="title">{title}</label> : <></>}
+                    <input ref={input} type={type != 'date' ? 'text' : 'date'} id={id}
                         onFocus={() => setClassActivated(true)}
                         onBlur={e => setClassActivated(e.target.value.length > 0)}
                         onChange={onChange}
@@ -38,7 +39,7 @@ function Input({title, error, className, id, errorInValue, width, value, onChang
                     />
                     <div></div>
             </div>
-            {errorInValue && <label id="error" className="text-(--error-color) text-sm break-all">{error === undefined ? "Input error" : error}</label>}
+            {errorInValue && <label id="error" className="error text-sm break-all">{error === undefined ? "Input error" : error}</label>}
         </div>
     );
 }

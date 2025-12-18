@@ -4,6 +4,7 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import PdfViewer from "../../tools/PdfViewer";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Input from "../../tools/Input";
+import Select from "../../tools/Select";
 
 type updateReceiptDetails = {
     id : number,
@@ -36,20 +37,21 @@ function UploadReceiptPanel() : ReactElement {
             <a onClick={() => navigate('/receipts')} className="btn-nav bg-red-400">
                 <FontAwesomeIcon icon={faXmark} />
             </a>
-            <h2 className="text-2xl font-semibold">{updateReceipt ? 'Update' : 'Upload'} Receipt</h2>
+            <h2 className="text-3xl font-semibold my-5">{updateReceipt ? 'Update' : 'Upload'} Receipt</h2>
             <Input title="Title" errorInValue={false} id='name' width="100%" />
-            <Input title="Price" errorInValue={false} id='price' width="100%" />
-            <Input title="Currency" errorInValue={false} id="currency" width="100%" />
-            <select className="select">
-                <option value="" unselectable="on">Used Card</option>
-                <option value="">asder</option>
-                <option value="">asderer</option>
-            </select>
-            <input type="date" className="input" />
+            <div className="flex justify-between">
+                <Input title="Price" errorInValue={false} id='price' width="48%" />
+                <Input title="Currency" errorInValue={false} id="currency" width="48%" />
+            </div>
+            <Select errorInValue={false} id="class" title="Choose Class" width="100%" />
+            <Select errorInValue={false} id="card" title="Used Card" width="100%" />
+            <Input type="date" errorInValue={false} id="date" title="" width="100%" />
+            {/* <Input title="Creation Date" errorInValue={false} id="date" width="100%" type="date" /> */}
+            {/* <input type="date" className="rounded-[5px] bg-(--bg-input) p-2 border-b" /> */}
 
             
-            {!updateReceipt && <><label className="w-[100%]">Upload File</label>
-            <div className={`relative w-[100%] h-[100%] text-left flex flex-col justify-center items-center ${!currentFile ? " border border-[#4d5051] rounded-[5px] bg-[#252525] p-[1rem]" : ""}`} >
+            {!updateReceipt && <>
+            <div className={`relative w-[100%] h-[100%] text-left flex flex-col justify-center items-center my-[.5rem] ${!currentFile ? " border border-[#4d5051] rounded-[5px] bg-[#252525] p-[1rem]" : ""}`} >
                 {!currentFile && <h3>Click or Drag File</h3>}
                 {!currentFile && <svg className="h-[5rem] w-[5rem]" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M17 19H21M19 17V21M13 3H8.2C7.0799 3 6.51984 3 6.09202 3.21799C5.71569 3.40973 5.40973 3.71569 5.21799 4.09202C5 4.51984 5 5.0799 5 6.2V17.8C5 18.9201 5 19.4802 5.21799 19.908C5.40973 20.2843 5.71569 20.5903 6.09202 20.782C6.51984 21 7.0799 21 8.2 21H12M13 3L19 9M13 3V7.4C13 7.96005 13 8.24008 13.109 8.45399C13.2049 8.64215 13.3578 8.79513 13.546 8.89101C13.7599 9 14.0399 9 14.6 9H19M19 9V12M9 17H12M9 13H15M9 9H10" stroke="#b9babc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>}
                 {currentFile && <p onClick={() => setOpenPreview(true)} className="w-[100%]">File: <b>{currentFile[0].name}</b></p>}
