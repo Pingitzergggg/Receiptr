@@ -1,10 +1,11 @@
-import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faUpload, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState, type ReactElement } from "react";
 import { useNavigate } from "react-router-dom";
 import Input from "../../tools/Input";
 import { type inputType, stringValidate } from "../../misc/stringValidator";
 import Select from "../../tools/Select";
+import Button from "../../tools/Button";
 
 function UploadReceiptPanel() : ReactElement {
 
@@ -105,7 +106,7 @@ function UploadReceiptPanel() : ReactElement {
                 ]} />
             </div>
 
-            <button className="btn mt-[1rem]">Upload</button>
+            <Button label="Upload" width="100%" className="my-5" fontSize="1rem" icon={<FontAwesomeIcon icon={faUpload} />} />
         </legend>
     </>);
 }
