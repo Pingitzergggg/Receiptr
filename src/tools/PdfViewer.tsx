@@ -68,6 +68,6 @@ export default function PdfViewer({ fileUrl, scrollable }: PdfViewerProps) {
   }, [fileUrl]);
 
   return (
-    <canvas style={{borderRadius: '15px'}} ref={canvasRef}></canvas>
+    <canvas className="w-[40%] h-[10rem]" style={{borderRadius: '15px'}} ref={canvasRef}></canvas>
   );
 }
