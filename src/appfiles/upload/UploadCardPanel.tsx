@@ -15,6 +15,7 @@ function UploadReceiptPanel() : ReactElement {
     };
 
     type inputFields = {
+        cardTitle: inputField,
         name: inputField,
         card: inputField,
         bank: inputField,
@@ -23,6 +24,10 @@ function UploadReceiptPanel() : ReactElement {
     };
 
     const [cardData, setCardData] = useState<inputFields>({
+        cardTitle: {
+            value: '',
+            error: ''
+        },
         name: {
             value: '',
             error: ''
@@ -48,7 +53,7 @@ function UploadReceiptPanel() : ReactElement {
     const handleInputChange = (event : any) => {
         const getId : string = event.target.id;
         const getValue : string = event.target.value;
-        const currentCommand : inputType = getId.toLowerCase() == 'bank' ? 'NAME' : getId.toUpperCase() as inputType;
+        const currentCommand : inputType = getId.toLowerCase() == 'bank' || getId.toLowerCase() == 'cardtitle' ? 'NAME' : getId.toUpperCase() as inputType;
         try {
             stringValidate(currentCommand, getValue);
             setCardData((prev) => ({...prev, [getId]: {value: getValue, error: ''}}));
@@ -69,6 +74,8 @@ function UploadReceiptPanel() : ReactElement {
                 <FontAwesomeIcon icon={faXmark} />
             </a>
             <h2 className="text-2xl">Upload Card</h2>
+
+            <Input title="Title" id="cardTitle" onChange={handleInputChange} errorInValue={cardData.cardTitle.error.length != 0} error={cardData.cardTitle.error} className="my-5" width="100%" />
 
             <Input title="Name on Card" id="name" onChange={handleInputChange} errorInValue={cardData.name.error.length != 0} error={cardData.name.error} className="my-5" width="100%" />
 
