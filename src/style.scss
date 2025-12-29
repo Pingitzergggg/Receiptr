@@ -210,7 +210,7 @@ input, select, textarea {
   position: fixed;
   display: flex;
   flex-direction: column;
-  width: 25rem;
+  width: auto;
   background-color: var(--bg-color);
   border: var(--border-icon-color) 1px solid;
   border-radius: 15px;
