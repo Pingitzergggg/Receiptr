@@ -30,7 +30,7 @@ function Receipt({id, title, size, type, unit, store, creation, cardNumber, cate
                                 <FontAwesomeIcon icon={faTrashCan} />
                             </a>
 
-                            <a onClick={() => navigate(`/receipts/upload?data=${JSON.stringify({id: id, title: title, price: price, currency: currency, category: category})}`)} title='Edit' className="btn-nav bg-amber-400 ml-1">
+                            <a onClick={() => navigate(`/receipts/upload?data=${JSON.stringify({id: id, title: title, price: price, currency: currency, category: category, date: creation})}`)} title='Edit' className="btn-nav bg-amber-400 ml-1">
                                 <FontAwesomeIcon icon={faFilePen} />
                             </a>
 

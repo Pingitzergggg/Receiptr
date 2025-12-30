@@ -1,18 +1,21 @@
 import { useEffect, useState, type ReactElement } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUpload, faXmark } from '@fortawesome/free-solid-svg-icons';
-import PdfViewer from "../../tools/PdfViewer";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Input from "../../tools/Input";
 import Select from "../../tools/Select";
 import Button from "../../tools/Button";
+import type { inputField } from "../../misc/types";
+import { stringValidate, type inputType } from "../../misc/stringValidator";
 
 type updateReceiptDetails = {
     id : number,
     title : string,
     price : number,
     currency : string,
-    category : string
+    category : string,
+    date : string,
+    card : string
 }
 
 type fileNotifierType = {
@@ -20,19 +23,70 @@ type fileNotifierType = {
     content : ReactElement
 }
 
+type inputFields = {
+    name : inputField,
+    price : inputField,
+    currency : inputField,
+    date : inputField,
+    usedCardId : inputField,
+    classId : inputField
+}
+
 function UploadReceiptPanel() : ReactElement {
     const navigate = useNavigate();
+
+    const [searchParams] = useSearchParams();
+    const updateReceipt : updateReceiptDetails = searchParams.get('data') ? JSON.parse(searchParams.get('data')!) : null;
 
     const [currentFile, setCurrentFile] = useState<FileList|null>(null);
     const [fileNotifier, setFileNotifier] = useState<fileNotifierType>({
         title: <h3>Click to choose file</h3>,
         content: <svg className="h-[5rem] w-[5rem]" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M17 19H21M19 17V21M13 3H8.2C7.0799 3 6.51984 3 6.09202 3.21799C5.71569 3.40973 5.40973 3.71569 5.21799 4.09202C5 4.51984 5 5.0799 5 6.2V17.8C5 18.9201 5 19.4802 5.21799 19.908C5.40973 20.2843 5.71569 20.5903 6.09202 20.782C6.51984 21 7.0799 21 8.2 21H12M13 3L19 9M13 3V7.4C13 7.96005 13 8.24008 13.109 8.45399C13.2049 8.64215 13.3578 8.79513 13.546 8.89101C13.7599 9 14.0399 9 14.6 9H19M19 9V12M9 17H12M9 13H15M9 9H10" stroke={localStorage.getItem("theme") == "light" ? "#000000" : "#e0e0e0"} stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
     });
+    const [receiptData, setReceiptData] = useState<inputFields>({
+        name: {
+            value: updateReceipt ? updateReceipt.title : '',
+            error: ''
+        },
+        price: {
+            value: updateReceipt ? String(updateReceipt.price) : '',
+            error: ''
+        },
+        currency: {
+            value: updateReceipt ? updateReceipt.currency : '',
+            error: ''
+        },
+        date: {
+            value: updateReceipt ? updateReceipt.date : '',
+            error: ''
+        },
+        classId: {
+            value: updateReceipt ? updateReceipt.category : '',
+            error: ''
+        },
+        usedCardId: {
+            value: '',
+            error: ''
+        }
+    });
 
-    const [searchParams] = useSearchParams();
 
-    const updateReceipt : updateReceiptDetails = searchParams.get('data') ? JSON.parse(searchParams.get('data')!) : null;
-
+    const handleInputChange = (event : any) => {
+            console.log(receiptData)
+            const getId : string = event.target.id;
+            const getValue : string = event.target.value;
+            const currentCommand : inputType = getId.toLowerCase() == 'bank' || getId.toLowerCase() == 'cardtitle' ? 'NAME' : getId.toUpperCase() as inputType;
+            try {
+                stringValidate(currentCommand, getValue);
+                setReceiptData((prev) => ({...prev, [getId]: {value: getValue, error: ''}}));
+            } catch(err : any) {
+                if (getValue.length != 0) {
+                    setReceiptData((prev) => ({...prev, [getId]: {value: getValue, error: err}}));
+                } else {
+                    setReceiptData((prev) => ({...prev, [getId]: {value: '', error: ''}}));
+                }
+            }
+    };
 
     function fileLoader() : string { //prolly wont need this later but stays here anyway...
         if (currentFile === null) {
@@ -64,26 +118,26 @@ function UploadReceiptPanel() : ReactElement {
                 <FontAwesomeIcon icon={faXmark} />
             </a>
             <h2 className="text-3xl font-semibold my-5">{updateReceipt ? 'Update' : 'Upload'} Receipt</h2>
-            <div className="flex justify-evenly">
-                <div className="flex-col w-[50%]">
-                    <Input title="Title" errorInValue={false} id='name' width="100%" />
+            <div className={updateReceipt ? 'flex-col' : `flex justify-evenly`}>
+                <div className={updateReceipt ? "flex-col" :  "flex-col w-[50%]"}>
+                    <Input title="Title" errorInValue={receiptData.name.error.length != 0} error={receiptData.name.error} id='name' width="100%" onChange={handleInputChange} value={receiptData.name.value} />
                     <div className="flex justify-between">
-                        <Input title="Price" errorInValue={false} id='price' width="48%" />
-                        <Input title="Currency" errorInValue={false} id="currency" width="48%" />
+                        <Input title="Price" errorInValue={false} id='price' width="48%" value={receiptData.price.value} />
+                        <Input title="Currency" errorInValue={false} id="currency" width="48%" value={receiptData.currency.value} />
                     </div>
                     <Input type="date" errorInValue={false} id="date" title="" width="100%" />
                     <Select errorInValue={false} id="card" title="Used Card" width="100%" />
                     <Select errorInValue={false} id="class" title="Choose Class" width="100%" />
                 </div>
 
-                <div className="flex-col w-[50%] ml-[2rem]">
+                <div className={`flex-col ${updateReceipt ? "" : "w-[50%] ml-[2rem]"}`}>
                     {!updateReceipt && <>
                     <div className={`relative w-[100%] h-[75%] text-left flex flex-col justify-center items-center my-[.5rem] ${!currentFile ? " border border-[#4d5051] rounded-[5px] bg-(--input-bg) p-[1rem]" : ""}`} >
                         {fileNotifier.content}
                         {fileNotifier.title}
                         <input className="opacity-0 absolute top-0 left-0 h-[100%] w-[100%] cursor-pointer" type="file" accept=".pdf" onChange={e => {setCurrentFile(e.target.files as any); console.log(e.target.files)}} />
                     </div></>}
-                    <Button label="Upload" width="100%" height="15%" fontSize="1rem" icon={<FontAwesomeIcon icon={faUpload} />}/>
+                    <Button label="Upload" width="100%" fontSize="1rem" icon={<FontAwesomeIcon icon={faUpload} />}/>
                 </div>
             </div>
         </div>
