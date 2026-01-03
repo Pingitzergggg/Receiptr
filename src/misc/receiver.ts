@@ -1,3 +1,5 @@
+import type { cards, classes } from "./databaseTables"
+
 type requestType = {
     login : {
         request: {
@@ -40,9 +42,19 @@ type requestType = {
         },
         response : {
             status : string,
-            value : string
+            value : cards[]
         } 
     },
+
+    fetch_class_data : {
+        request: {
+            id: number
+        },
+        response: {
+            status: string,
+            value : classes[]
+        }
+    }
 
     fetch_receipt_data : {
         request: {
@@ -106,7 +118,7 @@ type requestType = {
     }
 }
 
-async function requestResource<currentType extends keyof requestType> (
+export async function requestResource<currentType extends keyof requestType> (
     enpoint : currentType,
     body : requestType[currentType]['request']
 ) : Promise<requestType[currentType]['response'] | null> {
@@ -122,11 +134,14 @@ async function requestResource<currentType extends keyof requestType> (
 
         if (!request.ok) throw "REQUEST_ERROR: Connection problem occured...";
 
-        return await request.json();
+        const data = await request.json();
+
+        const dataToCache = enpoint.match(/^fetch_(user|card|class)_data$/);
+        if (dataToCache) sessionStorage.setItem(dataToCache[1], JSON.stringify(data));
+
+        return data;
     } catch (err) {
         console.error(err);
         return null;
     }
 }
-
-export default requestResource;

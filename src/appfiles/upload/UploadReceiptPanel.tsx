@@ -7,6 +7,13 @@ import Select from "../../tools/Select";
 import Button from "../../tools/Button";
 import type { inputField } from "../../misc/types";
 import { stringValidate, type inputType } from "../../misc/stringValidator";
+import type { cards, classes } from "../../misc/databaseTables";
+import { requestResource } from "../../misc/receiver";
+
+type optionType = {
+    value: string | number,
+    label: string
+}
 
 type updateReceiptDetails = {
     id : number,
@@ -37,6 +44,38 @@ function UploadReceiptPanel() : ReactElement {
 
     const [searchParams] = useSearchParams();
     const updateReceipt : updateReceiptDetails = searchParams.get('data') ? JSON.parse(searchParams.get('data')!) : null;
+
+    const cards  = () => {
+        if (sessionStorage.getItem("card")) {
+            const data : cards[] = JSON.parse(sessionStorage.getItem("card")!);
+            return data.map((obj: cards) => {return {value: obj.id, label: obj.title}});
+        } else {
+            let preData;
+            requestResource("fetch_card_data", {id: Number(localStorage.getItem("id"))})
+                .then(data => {
+                    if (!data) {
+                        preData = data!.value.map((obj: cards) => {return {value: obj.id, label: obj.title}});
+                    }
+                })
+            return preData;
+        }
+    }
+
+    const classes = () => {
+        if (sessionStorage.getItem("class")) {
+            const data : classes[] = JSON.parse(sessionStorage.getItem("class")!);
+            return data.map((obj: classes) => {return {value: obj.id, label: obj.title}});
+        } else {
+            let preData;
+            requestResource("fetch_class_data", {id: Number(localStorage.getItem("id"))})
+                .then(data => {
+                    if (!data) {
+                        preData = data!.value.map((obj: classes) => {return {value: obj.id, label: obj.title}});
+                    }
+                })
+            return preData;
+        }
+    }
 
     const [currentFile, setCurrentFile] = useState<FileList|null>(null);
     const [fileNotifier, setFileNotifier] = useState<fileNotifierType>({
@@ -126,8 +165,8 @@ function UploadReceiptPanel() : ReactElement {
                         <Input title="Currency" errorInValue={false} id="currency" width="48%" value={receiptData.currency.value} />
                     </div>
                     <Input type="date" errorInValue={false} id="date" title="" width="100%" />
-                    <Select errorInValue={false} id="card" title="Used Card" width="100%" />
-                    <Select errorInValue={false} id="class" title="Choose Class" width="100%" />
+                    <Select errorInValue={false} id="card" title="Used Card" width="100%" values={cards()} />
+                    <Select errorInValue={false} id="class" title="Choose Class" width="100%" values={classes()} />
                 </div>
 
                 <div className={`flex-col ${updateReceipt ? "" : "w-[50%] ml-[2rem]"}`}>
