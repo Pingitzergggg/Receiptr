@@ -4,6 +4,7 @@ import { useRef, type ReactElement } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { classDummy } from "../misc/dummydata";
 import Class from "../tools/Class";
+import Upload from "../tools/Upload";
 
 let classes : any[] = classDummy;
 function ClassPanel() : ReactElement {
@@ -21,9 +22,7 @@ function ClassPanel() : ReactElement {
     return (
         <>
             <a>
-            <button onClick={() => navigate('upload')} className='upload-button btn'>
-                <FontAwesomeIcon icon={faPlus} />
-            </button>
+            <Upload onClick={() => navigate('upload')} />
             </a>
             <div className='container mt-20 mb-20'>
                 <div className='grid grid-cols-1 gap-4'>

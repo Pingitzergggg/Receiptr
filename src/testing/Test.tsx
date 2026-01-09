@@ -5,11 +5,16 @@ import DeleteItem from "../tools/DeleteItem";
 import Select from "../tools/Select";
 import Button from "../tools/Button";
 import PdfViewer from "../tools/PdfViewer";
+import Upload from "../tools/Upload";
 
 function Test() : any {
 
+    function handle(date : string) : any {
+        return date;
+    }
+
     return (<>
-        <PdfViewer fileUrl="../../cats.pdf"  scrollable={false} />
+        <Button label="asder" />
     </>);
 }
 

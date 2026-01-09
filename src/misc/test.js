@@ -1,4 +1,11 @@
-const enpoint = "insert_card_data";
+function colorValidator(input) {
+    if (true) {
+        const hexaChecker = /^#[a-fA-F0-9]{6}$/;
+        if (hexaChecker.test(input)) return true;
+        throw "Invalid format!";
+    } else {
+        return false;
+    }
+}
 
-const dataToCache = enpoint.match(/^fetch_(user|card|class)_data$/);
-if (dataToCache) console.log(dataToCache[1]);
+console.log(colorValidator("#025368"))

@@ -1,4 +1,4 @@
-import type { ReactElement } from "react";
+import { useEffect, useState, type ReactElement } from "react";
 
 type propsType = {
     label: string,
@@ -11,8 +11,17 @@ type propsType = {
 };
 
 function Button({label, icon, height, width, className, fontSize, onClick} : propsType) : ReactElement {
+
+    const [isHovered, setHovered] = useState<boolean>(false);
+
+    console.log(`isHovered: ${isHovered}`)
+
+    if (isHovered) {
+        setTimeout(() => setHovered(false), 500);
+    }
+
     return (<>
-        <div className={`btn-container ${className}`} style={{height: `${height ? height : '2.5rem'}`, width: `${width ? width : '5rem'}`}}>
+        <div onMouseOver={() => setHovered(true)} className={`btn-container ${isHovered ? 'btn-container-hover' : ''} ${className}`} style={{height: `${height ? height : '2.5rem'}`, width: `${width ? width : '5rem'}`}}>
             <button className="btn" style={{fontSize: `${fontSize}`}}>
                 {label}
                 {icon && icon}

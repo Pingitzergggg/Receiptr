@@ -1,5 +1,6 @@
 import { faBoxArchive, faCircleExclamation, faCookie, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Button from "../tools/Button";
 
 function SettingsPanel() : any {
     /*
@@ -15,55 +16,36 @@ function SettingsPanel() : any {
             <h2 className="text-2xl font-bold mb-5">
               <FontAwesomeIcon icon={faUser} />
               User Settings</h2>
-            <table>
-              <tr>
-                <td>
-                  Name: 
-                </td>
-                <td>
-                  The Sexer Mexer
-                </td>
-                <td>
-                  <button className="btn">Change</button>
-                </td>
-              </tr>
-
-              <tr>
-                <td>
-                  Email: 
-                </td>
-                <td>
-                  example@gmail.com
-                </td>
-                <td>
-                  <button className="btn">Change</button>
-                </td>
-              </tr>
-
-              <tr>
-                <td>
-                  Tel: 
-                </td>
-                <td>
-                  +36 20 123 4567
-                </td>
-                <td>
-                  <button className="btn">Change</button>
-                </td>
-              </tr>
-
-              <tr>
-                  <td>
-                    Password: 
-                  </td>
-                  <td>
-                    ****
-                  </td>
-                  <td>
-                    <button className="btn">Change</button>
-                  </td>
-              </tr>
-            </table>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+              <legend>
+                <h3>Email</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 flex items-center justify-between w-[100%]">
+                  <p className="w-auto! break-all">asder@example.com</p>
+                  <Button label="Change" />
+                </div>
+              </legend>
+              <legend>
+                <h3>Email</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 flex items-center justify-between w-[100%]">
+                  <p className="w-auto! break-all">asder@example.com</p>
+                  <Button label="Change" />
+                </div>
+              </legend>
+              <legend>
+                <h3>Email</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 flex items-center justify-between w-[100%]">
+                  <p className="w-auto! break-all">asder@example.com</p>
+                  <Button label="Change" />
+                </div>
+              </legend>
+              <legend>
+                <h3>Email</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 flex items-center justify-between w-[100%]">
+                  <p className="w-auto! break-all">asder@example.com</p>
+                  <Button label="Change" />
+                </div>
+              </legend>
+            </div>
             <button className="btn">Logout</button>
           </div>
 

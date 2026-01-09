@@ -1,3 +1,5 @@
+import CurrencyCodes from "./CurrencyCodes.json" assert {type: 'json'};
+
 function countChars(input : string, char : string) : number {
     if (char.length != 1) {
         throw 'char length must be 1!';
@@ -196,7 +198,57 @@ function cvcValidator(input : string) : boolean {
     }
 }
 
-export type inputType = "NAME" | "EMAIL" | "TEL" | "PASSWORD" | "CARD" | "EXPIRY" | "CVC";
+function priceValidator(input : string) : boolean {
+    if (checkInjection(input)) {
+        if (/^[0-9]*[.]?[0-9]+$/.test(input)) return true;
+        throw "Enter valid format!"
+    } else {
+        return false;
+    }
+}
+
+function currencyValidator(input : string) : boolean {
+    if (checkInjection(input)) {
+        type codeType = {
+                    cc : string,
+                    symbol : string,
+                    name : string
+        };
+        const codes : codeType[] = CurrencyCodes;
+        for (let i = 0; i < codes.length; i++) {
+            if (codes[i].cc === input.toUpperCase()) return true;
+        }
+        throw "Code not valid!";
+    } else {
+        return false;
+    }
+}
+
+function dateValidator(input : string) : boolean {
+    const date : Date = new Date(input);
+    const stripper : RegExp = /[12][0-9]{3}-[10][0-9]-[1230][0-9]/;
+    const stringDate : string = date.toISOString();
+    const now : Date = new Date;
+    if (date > now) throw "Invalid date!";
+    if (!stringDate.match(stripper)) throw "Invalid format!";
+    if (checkInjection(stringDate.match(stripper)![0])) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function colorValidator(input : string) : boolean {
+    if (checkInjection(input)) {
+        const hexaChecker : RegExp = /^#[a-fA-F0-9]{6}$/;
+        if (hexaChecker.test(input)) return true;
+        throw "Invalid format!";
+    } else {
+        return false;
+    }
+}
+
+export type inputType = "NAME" | "EMAIL" | "TEL" | "PASSWORD" | "CARD" | "EXPIRY" | "CVC" | "PRICE" | "CURRENCY" | "CREATION" | "COLOR";
 export function stringValidate(command : inputType, input : string) : boolean {
     switch (command) {
         case "NAME":
@@ -213,6 +265,14 @@ export function stringValidate(command : inputType, input : string) : boolean {
             return expiryDateValidator(input);
         case "CVC":
             return cvcValidator(input);
+        case "PRICE":
+            return priceValidator(input);
+        case "CURRENCY":
+            return currencyValidator(input);
+        case "CREATION":
+            return dateValidator(input);
+        case "COLOR":
+            return colorValidator(input);
         default:
             throw 'You must provide a command type!';
     }

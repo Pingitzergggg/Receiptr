@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowUp, faFilePen, faPlus, faTrashCan, faX } from '@fortawesome/free-solid-svg-icons';
 import Receipt from '../tools/Receipt';
 import Popup from '../tools/Popup';
+import Upload from '../tools/Upload';
 
 //let receipts : any[] = []; //uncomment for production
 let receipts : any[] = receiptsDummy;
@@ -57,9 +58,7 @@ function ReceiptPanel() : any {
   return (
     <>
       <Outlet />
-      <button onClick={() => navigate(location.pathname == '/' ? 'receipts/upload' : 'upload')} className='upload-button btn'>
-        <FontAwesomeIcon icon={faPlus} />
-      </button>
+      <Upload onClick={() => navigate(location.pathname == '/' ? 'receipts/upload' : 'upload')} />
       <div className='container mt-20 mb-20' id='receipts-div'>
         <div id='receipt-grid' className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-15'>
           {receiptPanel}

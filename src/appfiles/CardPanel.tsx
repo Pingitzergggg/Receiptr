@@ -6,6 +6,7 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Card from '../tools/Card';
+import Upload from '../tools/Upload';
 
 //let cards : any[] = [] //uncomment for production
 let cards : any[] = cardsDummy;
@@ -49,9 +50,7 @@ function CardPanel() : any {
   return (
     <>
       <Outlet />
-      <button onClick={() => navigate('upload')} className='upload-button btn'>
-        <FontAwesomeIcon icon={faPlus} />
-      </button>
+      <Upload onClick={() => navigate('upload')} />
       <div className='container mt-20 mb-20'>
         <div id='receipt-grid' className='grid grid-cols-1 sm:grid-cols-3 md:grid-cols3 lg:grid-cols4 gap-15'>
           {cardPanel}

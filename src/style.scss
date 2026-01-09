@@ -137,6 +137,7 @@ input, select, textarea {
 }
 
 .upload-button {
+  background-color: var(--card-background);
   position: fixed;
   z-index: 1;
   right: 0;
@@ -148,6 +149,25 @@ input, select, textarea {
   width: auto;
   border: none;
   border-radius: 15px;
+
+  svg {
+    height: 3rem;
+    width: 3rem;
+
+    path {
+      fill: var(--font-color);
+    }
+  }
+}
+
+.upload-button:hover {
+  svg {
+    transform: scale(1.3);
+
+    path {
+      fill: var(--accent-color);
+    }
+  }
 }
 
 #receipt-grid {
@@ -296,6 +316,11 @@ input, select, textarea {
   }
 }
 
+.btn-container-hover button svg{
+  animation-name: buttonHoverAnim;
+  animation-duration: .5s;
+}
+
 .select-container {
   background-color: var(--input-bg);
   padding: .5rem;
@@ -398,14 +423,8 @@ input, select, textarea {
 }
 
 .btn-container:hover {
-
   button {
     transform: scale(1.01);
-
-    svg {
-      animation-name: buttonHoverAnim;
-      animation-duration: .5s;
-    }
   }
 
   div {
