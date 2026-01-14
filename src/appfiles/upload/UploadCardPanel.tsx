@@ -69,7 +69,7 @@ function UploadReceiptPanel() : ReactElement {
     const navigate = useNavigate();
 
     return (<>
-        <legend className="upload">
+        <legend className="upload w-[90%]! sm:w-[auto]!">
             <a onClick={() => navigate('/cards')} className="btn-nav bg-red-400">
                 <FontAwesomeIcon icon={faXmark} />
             </a>

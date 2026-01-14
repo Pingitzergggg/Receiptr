@@ -1,4 +1,4 @@
-import { faTrashCan, faFilePen, faArrowUp, faPlantWilt, faTag } from "@fortawesome/free-solid-svg-icons";
+import { faTrashCan, faWrench, faArrowUp, faPlantWilt, faTag } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState, type ReactElement } from "react";
 import { useNavigate } from "react-router-dom";
@@ -31,7 +31,7 @@ function Receipt({id, title, size, type, unit, store, creation, cardNumber, cate
                             </a>
 
                             <a onClick={() => navigate(`/receipts/upload?data=${JSON.stringify({id: id, title: title, price: price, currency: currency, category: category, date: creation})}`)} title='Edit' className="btn-nav bg-amber-400 ml-1">
-                                <FontAwesomeIcon icon={faFilePen} />
+                                <FontAwesomeIcon icon={faWrench} />
                             </a>
 
                             <a onClick={() => navigate(`/receipts/${id}`)} title='Open' className='btn-nav bg-green-400 ml-1'>
@@ -59,9 +59,9 @@ function Receipt({id, title, size, type, unit, store, creation, cardNumber, cate
                 </div>
             </div>
 
-            <div className="absolute triangle bottom-[-30px] right-[0%]"></div>
-            <div className="absolute triangle bottom-[-30px] left-[50%]" style={{transform: 'translate(-50%, 0)'}}></div>
-            <div className="absolute triangle bottom-[-30px] left-[0%]"></div>
+            <div className="absolute triangle right-[0%]"></div>
+            <div className="absolute triangle left-[50%]" style={{transform: 'translate(-50%, 0)'}}></div>
+            <div className="absolute triangle left-[0%]"></div>
         </div>
     );
 }

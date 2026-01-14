@@ -5,7 +5,7 @@ import '../style.scss'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import UploadReceiptPanel from './upload/UploadReceiptPanel';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowUp, faFilePen, faPlus, faTrashCan, faX } from '@fortawesome/free-solid-svg-icons';
+import { faArrowUp, faWrench, faPlus, faTrashCan, faX } from '@fortawesome/free-solid-svg-icons';
 import Receipt from '../tools/Receipt';
 import Popup from '../tools/Popup';
 import Upload from '../tools/Upload';
@@ -59,8 +59,8 @@ function ReceiptPanel() : any {
     <>
       <Outlet />
       <Upload onClick={() => navigate(location.pathname == '/' ? 'receipts/upload' : 'upload')} />
-      <div className='container mt-20 mb-20' id='receipts-div'>
-        <div id='receipt-grid' className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-15'>
+      <div className='container mt-20 mb-20 w-[90%]' id='receipts-div'>
+        <div id='receipt-grid' className='grid grid-cols-1 min-[520px]:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10'>
           {receiptPanel}
         </div>
       </div>

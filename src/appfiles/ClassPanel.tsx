@@ -24,7 +24,7 @@ function ClassPanel() : ReactElement {
             <a>
             <Upload onClick={() => navigate('upload')} />
             </a>
-            <div className='container mt-20 mb-20'>
+            <div className='container mt-20 mb-45 sm:mb-20 w-[90%]'>
                 <div className='grid grid-cols-1 gap-4'>
                     {classData}
                     <Outlet />

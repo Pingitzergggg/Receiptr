@@ -288,7 +288,7 @@ input, select, textarea {
   border-left: 20cqw solid transparent;
   border-right: 20cqw solid transparent;
   border-top: 4rem solid var(--card-background);
-  bottom: -4rem;
+  bottom: -63px;
 }
 
 //DEV
@@ -441,5 +441,51 @@ input, select, textarea {
   div {
     width: 100%;
     background-color: var(--error-color);
+  }
+}
+
+.user-details {
+  legend {
+    padding: 1rem;
+    background-color: var(--bg-color);
+    border-radius: 15px;
+
+    h3 {
+      font-size: x-large;
+      margin-right: .5rem;
+    }
+
+    a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+
+      svg {
+        width: 1.5rem;
+        height: 1.5rem;
+        fill: var(--font-color);
+      }
+    }
+
+    a:hover {
+      transform: scale(1.05);
+      color: var(--accent-color);
+
+      svg {
+        transform: scale(1.2);
+        fill: var(--accent-color);
+      }
+    }
+
+    p {
+      width: 100%;
+      word-break: break-all;
+      margin-left: 1rem;
+    }
+  }
+
+  legend:hover {
+    transform: scale(1.03);
   }
 }

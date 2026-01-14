@@ -152,13 +152,13 @@ function UploadReceiptPanel() : ReactElement {
     }, [currentFile]);
     
     return (<>
-        <div className="upload">
+        <div className="upload w-[90%]! lg:w-[auto]!">
             <a onClick={() => navigate('/receipts')} className="btn-nav bg-red-400">
                 <FontAwesomeIcon icon={faXmark} />
             </a>
             <h2 className="text-3xl font-semibold my-5">{updateReceipt ? 'Update' : 'Upload'} Receipt</h2>
-            <div className={updateReceipt ? 'flex-col' : `flex justify-evenly`}>
-                <div className={updateReceipt ? "flex-col" :  "flex-col w-[50%]"}>
+            <div className={updateReceipt ? "flex-col" : "grid grid-cols-1 md:grid-cols-2 gap-0"}>
+                <div className='flex-col'>
                     <Input title="Title" errorInValue={receiptData.name.error.length != 0} error={receiptData.name.error} id='name' width="100%" onChange={handleInputChange} value={receiptData.name.value} />
                     <div className="flex justify-between">
                         <Input title="Price" errorInValue={receiptData.price.error.length != 0} error={receiptData.price.error} id='price' width="48%" onChange={handleInputChange} value={receiptData.price.value} />
@@ -169,7 +169,7 @@ function UploadReceiptPanel() : ReactElement {
                     <Select errorInValue={false} id="class" title="Choose Class" width="100%" /> {/*  values={classes()} */}
                 </div>
 
-                <div className={`flex-col ${updateReceipt ? "" : "w-[50%] ml-[2rem]"}`}>
+                <div className={updateReceipt ? '' :'flex-col md:ml-[2rem]'}>
                     {!updateReceipt && <>
                     <div className={`relative w-[100%] h-[75%] text-left flex flex-col justify-center items-center my-[.5rem] ${!currentFile ? " border border-[#4d5051] rounded-[5px] bg-(--input-bg) p-[1rem]" : ""}`} >
                         {fileNotifier.content}

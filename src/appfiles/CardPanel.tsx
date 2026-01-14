@@ -51,8 +51,8 @@ function CardPanel() : any {
     <>
       <Outlet />
       <Upload onClick={() => navigate('upload')} />
-      <div className='container mt-20 mb-20'>
-        <div id='receipt-grid' className='grid grid-cols-1 sm:grid-cols-3 md:grid-cols3 lg:grid-cols4 gap-15'>
+      <div className='container mt-20 mb-20 w-[90%]'>
+        <div id='receipt-grid' className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-15'>
           {cardPanel}
         </div>
       </div>
