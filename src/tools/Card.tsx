@@ -13,6 +13,7 @@ type cardProps = {
     color?: string
 };
 
+// @ts-ignore
 function Card({id, bank, number, date, holder, category, color} : cardProps) : ReactElement {
     const navigate = useNavigate();
     return (

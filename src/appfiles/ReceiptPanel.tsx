@@ -1,19 +1,15 @@
-import { useState, useEffect, type ReactElement } from 'react'
+import { type ReactElement } from 'react'
 import { receiptsDummy } from '../misc/dummydata';
 import '../tailwind.css'
 import '../style.scss'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import UploadReceiptPanel from './upload/UploadReceiptPanel';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowUp, faWrench, faPlus, faTrashCan, faX } from '@fortawesome/free-solid-svg-icons';
 import Receipt from '../tools/Receipt';
-import Popup from '../tools/Popup';
 import Upload from '../tools/Upload';
 
 //let receipts : any[] = []; //uncomment for production
 let receipts : any[] = receiptsDummy;
 function ReceiptPanel() : any {
-  // const [innerRenderCount, setInnerRenderCount] = useState(0); //This is the working fetch call, only commented for local testing!! DONT DELETE
+  // const [innerRenderCount, setInnerRenderCount] = useState(0); //This is the working fetch call, only commented for local testing!! DON'T DELETE
 
   // useEffect(() => {
   //   receipts = [];

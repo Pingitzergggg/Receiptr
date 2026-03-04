@@ -5,6 +5,7 @@ function countChars(input : string, char : string) : number {
         throw 'char length must be 1!';
     }
     const chars : string[] = input.split('');
+    // @ts-expect-error
     let containsChar : boolean = false;
     let countChar : number = 0;
     for (let ch in chars) {

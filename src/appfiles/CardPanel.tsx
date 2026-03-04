@@ -1,10 +1,8 @@
-import { useState, useEffect, type ReactElement } from 'react'
+import { type ReactElement } from 'react'
 import { cardsDummy } from '../misc/dummydata';
 import '../tailwind.css'
 import '../style.scss'
 import { Outlet, useNavigate } from 'react-router-dom';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Card from '../tools/Card';
 import Upload from '../tools/Upload';
 

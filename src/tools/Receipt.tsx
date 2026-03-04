@@ -1,8 +1,7 @@
-import { faTrashCan, faWrench, faArrowUp, faPlantWilt, faTag } from "@fortawesome/free-solid-svg-icons";
+import { faTrashCan, faWrench, faArrowUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState, type ReactElement } from "react";
+import { type ReactElement } from "react";
 import { useNavigate } from "react-router-dom";
-import UploadReceiptPanel from "../appfiles/upload/UploadReceiptPanel";
 
 type receiptProps = {
     id: number,

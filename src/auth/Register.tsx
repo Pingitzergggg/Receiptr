@@ -2,7 +2,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { stringValidate } from '../misc/stringValidator';
 import CountryCodes from './CountryCodes';
 import type { inputType } from '../misc/stringValidator';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import '../tailwind.css'
 import '../style.scss'
 

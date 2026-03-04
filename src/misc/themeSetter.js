@@ -7,7 +7,7 @@ if (localStorage.getItem("theme") === null) {
 root.setProperty("--accent-hover-color", "#143114");
 root.setProperty("--error-color", "#a52424");
 
-if (localStorage.getItem("theme") == "dark") {
+if (localStorage.getItem("theme") === "dark") {
     root.setProperty("--font-color", "whitesmoke");
     root.setProperty("--bg-color", "#1d232a");
     root.setProperty("--card-background", "#323339");

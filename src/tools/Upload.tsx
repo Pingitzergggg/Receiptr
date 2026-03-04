@@ -1,6 +1,4 @@
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import type { MouseEventHandler, ReactElement } from "react";
+import type { ReactElement } from "react";
 import { useNavigate } from "react-router-dom";
 
 type propsType = {
@@ -8,6 +6,7 @@ type propsType = {
 }
 
 function Upload({onClick} : propsType) : ReactElement {
+    // @ts-ignore
     const navigate = useNavigate();
 
     return (<>

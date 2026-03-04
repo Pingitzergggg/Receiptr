@@ -1,3 +1,4 @@
+// @ts-ignore
 import { useEffect, useState, type ReactElement } from "react";
 
 type propsType = {

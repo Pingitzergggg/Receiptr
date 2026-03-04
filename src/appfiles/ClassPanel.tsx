@@ -1,6 +1,4 @@
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useRef, type ReactElement } from "react";
+import { type ReactElement } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { classDummy } from "../misc/dummydata";
 import Class from "../tools/Class";

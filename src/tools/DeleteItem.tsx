@@ -8,6 +8,7 @@ type props = {
 function DeleteItem({itemType} : props) : ReactElement {
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
+    // @ts-ignore
     const itemId : string = searchParams.get('id')!;
 
     return (<>

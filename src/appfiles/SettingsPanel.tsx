@@ -1,17 +1,31 @@
-import { faBoxArchive, faCircleExclamation, faCookie, faWrench, faUser, faCheck, faEnvelope, faLock, faPhone, faAt, faDoorOpen, faDownload } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBoxArchive,
+  faCircleExclamation,
+  faCookie,
+  // @ts-ignore
+  faWrench,
+  faUser,
+  // @ts-ignore
+  faCheck,
+  faEnvelope,
+  faLock,
+  faPhone,
+  faAt,
+  faDoorOpen,
+  faDownload,
+  faBroom
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Button from "../tools/Button";
 import type { ReactElement } from "react";
+import {Outlet, useNavigate} from "react-router-dom";
 
 function SettingsPanel() : ReactElement {
-    /*
-     - Dark mode
-     - Change user data
-     - Logout
-     - I have no idea honestly...
-    */
-    return (
+  const navigate = useNavigate();
+
+  return (
         <>
+          <Outlet />
         <div className="grid grid-cols-1 gap-3 my-20 w-[90%] md:w-[75%]">
           <div className="w-[100%] bg-(--card-background) rounded-[15px] p-5">
             <h2 className="text-2xl font-bold mb-5">
@@ -81,8 +95,9 @@ function SettingsPanel() : ReactElement {
               <FontAwesomeIcon icon={faBoxArchive} />
               Archive</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
-              <Button label="Fetch archived receipts" icon={<FontAwesomeIcon icon={faDownload} />} width="auto" />
-              <Button label="Fetch archived cards" icon={<FontAwesomeIcon icon={faDownload} />} width="auto" />
+              <Button onClick={() => navigate('archive/receipts')} label="Fetch archived receipts" icon={<FontAwesomeIcon icon={faDownload} />} width="auto" />
+              <Button onClick={() => navigate('archive/cards')} label="Fetch archived cards" icon={<FontAwesomeIcon icon={faDownload} />} width="auto" />
+              <Button onClick={() => navigate('archive/classes')} label="Fetch archived classes" icon={<FontAwesomeIcon icon={faDownload} />} width="auto" />
             </div>
           </div>
 
@@ -91,8 +106,9 @@ function SettingsPanel() : ReactElement {
               <FontAwesomeIcon icon={faCookie} />
               Cache Settings</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
-              <Button label="Fetch archived receipts" icon={<FontAwesomeIcon icon={faDownload} />} width="auto" />
-              <Button label="Fetch archived cards" icon={<FontAwesomeIcon icon={faDownload} />} width="auto" />
+              <Button label="Clear cached receipts" icon={<FontAwesomeIcon icon={faBroom} />} width="auto" />
+              <Button label="Clear cached cards" icon={<FontAwesomeIcon icon={faBroom} />} width="auto" />
+              <Button label="Clear cached classes" icon={<FontAwesomeIcon icon={faBroom} />} width="auto" />
             </div>
           </div>
 

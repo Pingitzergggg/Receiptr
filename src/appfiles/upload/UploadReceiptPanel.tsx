@@ -10,6 +10,7 @@ import { stringValidate, type inputType } from "../../misc/stringValidator";
 import type { cards, classes } from "../../misc/databaseTables";
 import { requestResource } from "../../misc/receiver";
 
+// @ts-ignore
 type optionType = {
     value: string | number,
     label: string
@@ -45,6 +46,7 @@ function UploadReceiptPanel() : ReactElement {
     const [searchParams] = useSearchParams();
     const updateReceipt : updateReceiptDetails = searchParams.get('data') ? JSON.parse(searchParams.get('data')!) : null;
 
+    // @ts-ignore
     const cards  = () => {
         if (sessionStorage.getItem("card")) {
             const data : cards[] = JSON.parse(sessionStorage.getItem("card")!);
@@ -61,6 +63,7 @@ function UploadReceiptPanel() : ReactElement {
         }
     }
 
+    // @ts-ignore
     const classes = () => {
         if (sessionStorage.getItem("class")) {
             const data : classes[] = JSON.parse(sessionStorage.getItem("class")!);
@@ -127,6 +130,7 @@ function UploadReceiptPanel() : ReactElement {
             }
     };
 
+    // @ts-ignore
     function fileLoader() : string { //prolly wont need this later but stays here anyway...
         if (currentFile === null) {
             return 'null';
