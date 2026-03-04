@@ -1,35 +1,40 @@
 export type cards = {
-    id : number,
-    title : string,
-    print : string,
-    className : number,
-    color : string
+    id: number,
+    title: string,
+    currency: string,
+    type: "Mastercard" | "Amex" | "Visa" | "Discover",
+    color: string,
+    class: string
+    total_receipts: number,
+    total_spent: number
 };
 
 export type classes = {
-    id : number,
-    title : string,
-    cardsUsed : number,
-    receiptsUsed : number,
-    color : string
+    id: number,
+    title: string,
+    color: string,
+    total_cards: number,
+    total_receipts: number,
 };
 
 export type receipts = {
-    id : number,
-    title : string,
-    creation : Date,
-    size : number,
-    unit : "MiB" | "KiB",
-    type : ".pdf", //Should be removed when changed DB!
-    cardName : string,
-    className : string,
-    color : string
+    id: number,
+    title: string,
+    fileSize: number,
+    fileMeasurementUnit: "MiB" | "KiB",
+    price: number,
+    currency: string,
+    store: string,
+    purchased_at: Date,
+    color: string,
+    card: string,
+    class: string,
 };
 
 export type user = {
-    id : number,
-    username : string,
-    email : string,
-    tel : string,
-    countryCode : string
+    firstName: string,
+    lastName: string,
+    email: string,
+    phone: string,
+    countryCode: string
 };

@@ -1,121 +1,125 @@
 import type { cards, classes } from "./databaseTables"
 
+// type requestType = {
+//     login : {
+//         request: {
+//             email : string,
+//             password : string
+//         },
+//         response : {
+//             status : string,
+//             value : string
+//         }
+//     },
+//
+//     register : {
+//         request: {
+//             name : string,
+//             email : string,
+//             phone : string,
+//             countryCode : number,
+//             password : string
+//         },
+//         response : {
+//             status : string,
+//             value : string
+//         }
+//     },
+//
+//     user: {
+//         request: {
+//             id: number
+//         },
+//         response : {
+//             status : string,
+//             value : string
+//         }
+//     },
+//
+//     fetch_card_data : {
+//         request: {
+//             id: number
+//         },
+//         response : {
+//             status : string,
+//             value : cards[]
+//         }
+//     },
+//
+//     fetch_class_data : {
+//         request: {
+//             id: number
+//         },
+//         response: {
+//             status: string,
+//             value : classes[]
+//         }
+//     }
+//
+//     fetch_receipt_data : {
+//         request: {
+//             id: number
+//         },
+//         response : {
+//             status : string,
+//             value : string
+//         }
+//     },
+//
+//     fetch_binary_data : {
+//         request: {
+//             id: number
+//         },
+//         response : {
+//             status : string,
+//             value : string
+//         }
+//     },
+//
+//     insert_user_data : {
+//         request: {
+//             name : string,
+//             email : string,
+//             phone : string,
+//             countryCode : number,
+//             password : string,
+//             userId : number
+//         },
+//         response : {
+//             status : string,
+//             value : string
+//         }
+//     }
+//
+//     insert_user_card_data : {
+//         request : {
+//             name : string,
+//             number : string,
+//             expiryDate : string,
+//             userId: number
+//         },
+//         response : {
+//             status : string,
+//             value : string
+//         }
+//     },
+//
+//     insert_user_receipt_data : {
+//         request : {
+//             title : string,
+//             cardId: number,
+//             userId: number,
+//             value: Blob
+//         },
+//         response : {
+//             status : string,
+//             value : string
+//         }
+//     }
+// }
+
 type requestType = {
-    login : {
-        request: {
-            email : string,
-            password : string
-        },
-        response : {
-            status : string,
-            value : string
-        } 
-    },
-
-    register : {
-        request: {
-            name : string,
-            email : string,
-            phone : string,
-            countryCode : number,
-            password : string
-        },
-        response : {
-            status : string,
-            value : string
-        } 
-    },
-
-    fetch_user_data : {
-        request: {
-            id: number
-        },
-        response : {
-            status : string,
-            value : string
-        } 
-    },
-
-    fetch_card_data : {
-        request: {
-            id: number
-        },
-        response : {
-            status : string,
-            value : cards[]
-        } 
-    },
-
-    fetch_class_data : {
-        request: {
-            id: number
-        },
-        response: {
-            status: string,
-            value : classes[]
-        }
-    }
-
-    fetch_receipt_data : {
-        request: {
-            id: number
-        },
-        response : {
-            status : string,
-            value : string
-        } 
-    },
-
-    fetch_binary_data : {
-        request: {
-            id: number
-        },
-        response : {
-            status : string,
-            value : string
-        } 
-    },
-
-    insert_user_data : {
-        request: {
-            name : string,
-            email : string,
-            phone : string,
-            countryCode : number,
-            password : string,
-            userId : number
-        },
-        response : {
-            status : string,
-            value : string
-        } 
-    }
-
-    insert_user_card_data : {
-        request : {
-            name : string,
-            number : string,
-            expiryDate : string,
-            userId: number
-        },
-        response : {
-            status : string,
-            value : string
-        }
-    },
-
-    insert_user_receipt_data : {
-        request : {
-            title : string,
-            cardId: number,
-            userId: number,
-            value: Blob
-        },
-        response : {
-            status : string,
-            value : string
-        }
-    }
+    
 }
 
 export async function requestResource<currentType extends keyof requestType> (
