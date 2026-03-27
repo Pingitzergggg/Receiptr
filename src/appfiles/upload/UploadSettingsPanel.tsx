@@ -70,7 +70,7 @@ function UploadSettingsPanel(): ReactElement {
         <h2 className="text-2xl font-bold mb-2.5">Change {type}</h2>
 
         {type === "Phone" &&
-            <Select title="Country Code" id='cc' errorInValue={false} onChange={(event) => countryCode.current = event.target.value} values={codes.map(value => {return {label: `${value.name} - ${value.dial_code}`, value: value.dial_code}})} />}
+            <Select width='100%' title="Country Code" id='cc' errorInValue={false} onChange={(event) => countryCode.current = event.target.value} values={codes.map(value => {return {label: `${value.name} - ${value.dial_code}`, value: value.dial_code}})} />}
 
         {type === "Password" &&
             <Input type='password' width='100%' onChange={(event) => current_password.current = event.target.value} title={'Current password'} id={'secondary'} errorInValue={false} />}

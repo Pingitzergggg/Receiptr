@@ -75,7 +75,7 @@ function UploadCategoryPanel() : ReactElement {
             }
         }
         try {
-            const response = await requestResource<'categories'>('categories', updateData ? 'PUT' : 'POST', categoryId ?? null, null, {
+            const response = await requestResource<'categories'>('categories', updateData.current ? 'PUT' : 'POST', categoryId ?? null, null, {
                 title: categoryData.name.value,
                 color: categoryData.color.value
             });

@@ -46,6 +46,7 @@ function CategoryPanel() : ReactElement {
         );
     }
 
+    console.log(categoryPanel.length);
     return (
         <>
             {location.state?.deleteSuccess && <Popup type={"SUCCESS"} message={'Delete successful!'} />}
@@ -53,11 +54,15 @@ function CategoryPanel() : ReactElement {
             <Refresh trigger={load} />
             <Upload onClick={() => navigate('upload')} />
             <div className='container mt-10 mb-45 sm:mb-20 w-[90%]'>
-                <div className='grid grid-cols-1 gap-4'>
-                    {categories.length != 0 && categoryPanel}
-                    {categories.length == 0 && <p>Empty</p>}
-                    <Outlet />
-                </div>
+                {categoryPanel.length == 0 && !location.pathname.includes('upload') && <div className='flex items-center justify-center'>
+                    {sessionStorage.getItem('categories') && <p className='text-2xl'>No categories yet...</p>}
+                    {!sessionStorage.getItem('categories') &&  <i className='text-2xl'>Loading<span className="loading loading-spinner loading-md mx-1"></span></i>}
+                </div>}
+                {(categoryPanel.length != 0 || location.pathname.includes('upload')) &&
+                    <div id='category-grid' className='grid grid-cols-1 gap-4'>
+                        {categoryPanel}
+                        <Outlet />
+                    </div>}
             </div>
         </>
     );

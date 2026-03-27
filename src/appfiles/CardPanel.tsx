@@ -58,10 +58,14 @@ function CardPanel() : any {
         <Upload onClick={() => navigate('upload')} />
         <Refresh trigger={load} />
           <div className='container mt-10 mb-20 w-[90%]'>
-            <div id='receipt-grid' className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-15'>
-                {cardPanel.length != 0 && cardPanel}
-                {cardPanel.length == 0 && <p>Empty</p>}
-            </div>
+              {cardPanel.length == 0 && <div className='flex items-center justify-center'>
+                  {sessionStorage.getItem('cards') && <p className='text-2xl'>No cards yet...</p>}
+                  {!sessionStorage.getItem('cards') &&  <i className='text-2xl'>Loading<span className="loading loading-spinner loading-md mx-1"></span></i>}
+              </div>}
+              {cardPanel.length != 0 &&
+                  <div id='card-grid' className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-15'>
+                      {cardPanel}
+                  </div>}
           </div>
     </>
   );

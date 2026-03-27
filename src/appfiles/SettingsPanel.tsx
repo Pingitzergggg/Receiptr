@@ -28,7 +28,7 @@ function SettingsPanel() : ReactElement {
 
   const navigate = useNavigate();
   const [userData, setUserData] = useState<responseType["user"]|null>(sessionStorage.getItem("user") ? JSON.parse(sessionStorage.getItem("user")!) : null);
-  const [accoutDeletion, setAccoutDeletion] = useState<boolean>(false);
+  const [accountDeletion, setAccountDeletion] = useState<boolean>(false);
 
   function removeSession(key: 'receipts'|'categories'|'cards') {
     sessionStorage.removeItem(key);
@@ -63,12 +63,12 @@ function SettingsPanel() : ReactElement {
 
   return (
         <>
-          {accoutDeletion &&
+          {accountDeletion &&
               <div>
                 <div className="fixed! bg-(--card-background) p-[1rem] absolute-center rounded-[15px]">
                   <h2 className="text-2xl font-bold text-center my-[2rem] mx-[1rem]">Delete account?</h2>
                   <div className="flex justify-evenly mb-[1rem]">
-                    <button className="btn bta" onClick={() => navigate(-1)}>Cancel</button>
+                    <button className="btn bta" onClick={() => setAccountDeletion(false)}>Cancel</button>
                     <button className="btn ml-[1rem]" onClick={destroy}>Delete</button>
                   </div>
                 </div>
@@ -166,7 +166,7 @@ function SettingsPanel() : ReactElement {
             <h2 className="text-2xl font-bold mb-5">
               <FontAwesomeIcon icon={faCircleExclamation} />
               Danger Zone</h2>
-            <button onClick={() => setAccoutDeletion(true)} className="btn bta">Delete Account</button>
+            <button onClick={() => setAccountDeletion(true)} className="btn bta">Delete Account</button>
           </div>
         </div>
         </>

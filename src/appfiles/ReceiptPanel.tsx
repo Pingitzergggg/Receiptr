@@ -85,10 +85,14 @@ function ReceiptPanel() : any {
             }
         }} />
         <div className='container mt-20 mb-20 w-[90%]' id='receipts-div'>
-        <div id='receipt-grid' className='grid grid-cols-1 min-[520px]:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10'>
-            {receiptPanel.length != 0 && receiptPanel}
-            {receiptPanel.length == 0 && <p>Empty</p>}
-        </div>
+            {receiptPanel.length == 0 && <div className='flex justify-center items-center'>
+                {sessionStorage.getItem('receipts') && <p className='text-2xl'>No receipts yet...</p>}
+                {!sessionStorage.getItem('receipts') &&  <i className='text-2xl'>Loading<span className="loading loading-spinner loading-md mx-1"></span></i>}
+            </div>}
+            {receiptPanel.length != 0 &&
+            <div id='receipt-grid' className='grid grid-cols-1 min-[520px]:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10'>
+                {receiptPanel}
+        </div>}
           {(receiptPanel.length != 0 && !isLastPage.current) &&
               <div className='w-full flex justify-center my-5'>
                 <button className='btn' onClick={() => load(receipts.length)}>Load more</button>

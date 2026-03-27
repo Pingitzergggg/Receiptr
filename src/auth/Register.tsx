@@ -7,6 +7,9 @@ import '../tailwind.css'
 import '../style.scss'
 import {extractResponse, requestResource} from "../misc/receiver.ts";
 import Popup from "../tools/Popup.tsx";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faArrowRightToBracket} from "@fortawesome/free-solid-svg-icons";
+import Button from "../tools/Button.tsx";
 
 function Register() : any {
 
@@ -72,6 +75,9 @@ function Register() : any {
         try {
             const response = await requestResource<'user'>('register', 'POST', null, null, body, true);
             await extractResponse<'user'>(response);
+            sessionStorage.removeItem('cards');
+            sessionStorage.removeItem('receipts');
+            sessionStorage.removeItem('categories');
             navigate('/', {state: {fromLogin: true}});
         } catch (error) {
             console.error(error);
@@ -146,7 +152,7 @@ function Register() : any {
                     <input id='confirm_password' onChange={handleInputChange} type="password" className="input w-full" placeholder="Password" />
                     {(registerData.confirm_password.error.length != 0) && <span className='error'>{registerData.confirm_password.error}</span>}
 
-                    <button onClick={register} className="btn btn-neutral mt-4">Register</button>
+                    <Button onClick={register} className='mt-3' width="100%" label="Register" icon={<FontAwesomeIcon icon={faArrowRightToBracket} />} />
 
                     <p>Back to <NavLink to='/login'>Login</NavLink></p>
                 </fieldset>

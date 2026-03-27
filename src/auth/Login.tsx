@@ -67,6 +67,9 @@ function Login() : any {
                     password: loginData.password.value
                 }, true);
                 await extractResponse(response);
+                sessionStorage.removeItem('cards');
+                sessionStorage.removeItem('receipts');
+                sessionStorage.removeItem('categories');
                 navigate("/", {state: {fromLogin: true}});
             } catch (error) {
                 console.log(error);
@@ -104,7 +107,6 @@ function Login() : any {
                             <input id='password' onChange={handleInputChange} type="password" className="input" placeholder="Password" />
                             {(loginData.password.error.length != 0) && <span className='error'>{loginData.password.error}</span>}
 
-                            {/*<button onClick={login} className="btn btn-neutral mt-4">Login</button>*/}
                             <Button onClick={login} className='mt-3' width="100%" label="Login" icon={<FontAwesomeIcon icon={faArrowRightToBracket} />} />
 
                             <p>Don't have an account? <NavLink to='/register'>Register</NavLink></p>
