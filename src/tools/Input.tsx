@@ -23,7 +23,7 @@ function Input({title, error, className, id, errorInValue, width, value, type, o
         if (input.current.value.length != 0) {
             setClassActivated(true);
         }
-    }, []);
+    }, [input.current?.value]);
 
     return (
         <div style={{width: `${width === undefined ? '12rem' : width}`, height: '2.5rem', margin: `.5rem 0 ${errorInValue ? '1.5rem' : '.5rem'} 0`}} className={className === undefined ? '' : className}>

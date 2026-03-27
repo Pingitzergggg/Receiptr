@@ -1,29 +1,34 @@
-import { useEffect, useState, type ReactElement } from "react";
+import {useEffect, useState, type ReactElement, useRef} from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUpload, faXmark } from '@fortawesome/free-solid-svg-icons';
-import { useNavigate, useSearchParams } from "react-router-dom";
+import {useNavigate, useParams, useSearchParams} from "react-router-dom";
 import Input from "../../tools/Input";
 import Select from "../../tools/Select";
 import Button from "../../tools/Button";
 import type { inputField } from "../../misc/types";
 import { stringValidate, type inputType } from "../../misc/stringValidator";
-import type { cards, classes } from "../../misc/databaseTables";
-import { requestResource } from "../../misc/receiver";
-
-// @ts-ignore
-type optionType = {
-    value: string | number,
-    label: string
-}
+import type {paginatable} from "../../misc/databaseTables";
+import {extractResponse, requestResource, type response, sendFileForm} from "../../misc/receiver";
+import Popup from "../../tools/Popup.tsx";
 
 type updateReceiptDetails = {
-    id : number,
-    title : string,
-    price : number,
-    currency : string,
-    category : string,
-    date : string,
-    card : string
+    title: string,
+    price: number,
+    currency: string,
+    category?: string,
+    date: string,
+    card?: string,
+    card_id: number,
+    category_id: number,
+}
+
+type sendReceiptDetails = {
+    title: string,
+    price: number,
+    currency: string,
+    binding_id: number|null,
+    purchased_at: string,
+    card_id: number|null
 }
 
 type fileNotifierType = {
@@ -32,51 +37,34 @@ type fileNotifierType = {
 }
 
 type inputFields = {
-    name : inputField,
-    price : inputField,
-    currency : inputField,
-    date : inputField,
-    usedCardId : inputField,
-    classId : inputField
+    title: inputField,
+    price: inputField,
+    currency: inputField,
+    purchased_at: inputField
 }
 
-function UploadReceiptPanel() : ReactElement {
+function UploadReceiptPanel(): ReactElement {
     const navigate = useNavigate();
+    const [categories, updateCategories] = useState<{value: string, label: string}[]>([]);
+    const [cards, updateCards] = useState<{value: string, label: string}[]>([]);
 
+    const {receiptId} = useParams();
     const [searchParams] = useSearchParams();
     const updateReceipt : updateReceiptDetails = searchParams.get('data') ? JSON.parse(searchParams.get('data')!) : null;
 
-    // @ts-ignore
-    const cards  = () => {
-        if (sessionStorage.getItem("card")) {
-            const data : cards[] = JSON.parse(sessionStorage.getItem("card")!);
-            return data.map((obj: cards) => {return {value: obj.id, label: obj.title}});
+    async function load<T extends keyof paginatable>(resource: "cards"|"categories"): Promise<paginatable[T] | null> {
+        const session : string | null = sessionStorage.getItem(resource);
+        if (session) {
+            const data : paginatable[T] = JSON.parse(sessionStorage.getItem(resource)!);
+            return data;
         } else {
-            let preData;
-            requestResource("fetch_card_data", {id: Number(localStorage.getItem("id"))})
-                .then(data => {
-                    if (!data) {
-                        preData = data!.value.map((obj: cards) => {return {value: obj.id, label: obj.title}});
-                    }
-                })
-            return preData;
-        }
-    }
-
-    // @ts-ignore
-    const classes = () => {
-        if (sessionStorage.getItem("class")) {
-            const data : classes[] = JSON.parse(sessionStorage.getItem("class")!);
-            return data.map((obj: classes) => {return {value: obj.id, label: obj.title}});
-        } else {
-            let preData;
-            requestResource("fetch_class_data", {id: Number(localStorage.getItem("id"))})
-                .then(data => {
-                    if (!data) {
-                        preData = data!.value.map((obj: classes) => {return {value: obj.id, label: obj.title}});
-                    }
-                })
-            return preData;
+            const response: response<T> = await requestResource<T>(resource, 'GET');
+            const data: paginatable[T] | null = await extractResponse<T>(response);
+            if (data) {
+                sessionStorage.setItem(resource, JSON.stringify(data));
+                return data;
+            }
+            return null;
         }
     }
 
@@ -86,7 +74,7 @@ function UploadReceiptPanel() : ReactElement {
         content: <svg className="h-[5rem] w-[5rem]" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M17 19H21M19 17V21M13 3H8.2C7.0799 3 6.51984 3 6.09202 3.21799C5.71569 3.40973 5.40973 3.71569 5.21799 4.09202C5 4.51984 5 5.0799 5 6.2V17.8C5 18.9201 5 19.4802 5.21799 19.908C5.40973 20.2843 5.71569 20.5903 6.09202 20.782C6.51984 21 7.0799 21 8.2 21H12M13 3L19 9M13 3V7.4C13 7.96005 13 8.24008 13.109 8.45399C13.2049 8.64215 13.3578 8.79513 13.546 8.89101C13.7599 9 14.0399 9 14.6 9H19M19 9V12M9 17H12M9 13H15M9 9H10" stroke={localStorage.getItem("theme") == "light" ? "#000000" : "#e0e0e0"} stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
     });
     const [receiptData, setReceiptData] = useState<inputFields>({
-        name: {
+        title: {
             value: updateReceipt ? updateReceipt.title : '',
             error: ''
         },
@@ -98,24 +86,18 @@ function UploadReceiptPanel() : ReactElement {
             value: updateReceipt ? updateReceipt.currency : '',
             error: ''
         },
-        date: {
+        purchased_at: {
             value: updateReceipt ? updateReceipt.date : '',
-            error: ''
-        },
-        classId: {
-            value: updateReceipt ? updateReceipt.category : '',
-            error: ''
-        },
-        usedCardId: {
-            value: '',
             error: ''
         }
     });
+    const cardId = useRef<number | null>(updateReceipt?.card_id);
+    const categoryId = useRef<number | null>(updateReceipt?.category_id);
 
 
     const handleInputChange = (event : any) => {
             console.log(receiptData)
-            const getId : string = event.target.id;
+            const getId : string = event.target.id == 'name' ? 'title' : event.target.id;
             const getValue : string = event.target.value;
             const currentCommand : inputType = getId.toLowerCase() == 'bank' || getId.toLowerCase() == 'cardtitle' ? 'NAME' : getId.toUpperCase() as inputType;
             try {
@@ -140,6 +122,16 @@ function UploadReceiptPanel() : ReactElement {
     }
 
     useEffect(() => {
+        async function effect() {
+            const cards: paginatable['cards'] | null = await load<'cards'>('cards');
+            const categories: paginatable['categories'] | null = await load<'categories'>('categories');
+            if (cards) updateCards(cards.query.map(obj => {return {label: obj.title, value: String(obj.id)}}));
+            if (categories) updateCategories(categories.query.map(obj => {return {label: obj.title, value: String(obj.id)}}));
+        }
+        effect();
+    }, []);
+
+    useEffect(() => {
         if (currentFile) {
             if (currentFile[0].type === 'application/pdf') {
                 setFileNotifier({
@@ -154,8 +146,67 @@ function UploadReceiptPanel() : ReactElement {
             }
         }
     }, [currentFile]);
-    
+
+    const [popUpError, setError] = useState<string>('');
+    async function upload() {
+        setError('');
+        const response: boolean = updateReceipt ? await update() : await store();
+        if (response) {
+            navigate('/receipts', {state: {uploadSuccess: true}});
+        }
+    }
+
+    async function update(): Promise<boolean> {
+        console.log('update running');
+        for (let field in receiptData) if (receiptData[field as keyof inputFields].error.length != 0) {
+            setError("All fields must be correct!");
+            return false;
+        }
+        let body: sendReceiptDetails = {
+            title: receiptData.title.value,
+            price: Number(receiptData.price.value),
+            currency: receiptData.currency.value,
+            purchased_at: receiptData.purchased_at.value,
+            card_id: cardId.current == 0 ? null : cardId.current,
+            binding_id: categoryId.current == 0 ? null : categoryId.current,
+        }
+        try {
+            console.log(`id is: ${receiptId}`);
+            const response  = await requestResource<'receipts'>('receipts', 'PUT',receiptId, null, body);
+            await extractResponse<'receipts'>(response);
+            return true;
+        } catch (error) {
+            console.error(error);
+            setError('Upload failed!');
+            return false;
+        }
+    }
+
+    async function store(): Promise<boolean> {
+        console.log('store running');
+        const fileContainer: FormData = new FormData();
+        for (let field in receiptData) {
+            if (receiptData[field as keyof inputFields].error.length != 0) {
+                setError("All fields must be correct!");
+                return false;
+            }
+            fileContainer.append(field, String(receiptData[field as keyof inputFields].value));
+        }
+        if (currentFile === null) {
+            setError('Missing file!');
+            return false;
+        }
+        fileContainer.append('value', currentFile[0]);
+        if (categoryId.current) fileContainer.append('binding_id', String(categoryId.current));
+        if (cardId.current) fileContainer.append('card_id', String(cardId.current));
+        const result = await sendFileForm(fileContainer);
+        if (!result) setError('Upload failed!');
+        return result;
+    }
+
+    console.log(cardId.current);
     return (<>
+        {popUpError && <Popup type='ERROR' message={popUpError} />}
         <div className="upload w-[90%]! lg:w-[auto]!">
             <a onClick={() => navigate('/receipts')} className="btn-nav bg-red-400">
                 <FontAwesomeIcon icon={faXmark} />
@@ -163,14 +214,14 @@ function UploadReceiptPanel() : ReactElement {
             <h2 className="text-3xl font-semibold my-5">{updateReceipt ? 'Update' : 'Upload'} Receipt</h2>
             <div className={updateReceipt ? "flex-col" : "grid grid-cols-1 md:grid-cols-2 gap-0"}>
                 <div className='flex-col'>
-                    <Input title="Title" errorInValue={receiptData.name.error.length != 0} error={receiptData.name.error} id='name' width="100%" onChange={handleInputChange} value={receiptData.name.value} />
+                    <Input title="Title" errorInValue={receiptData.title.error.length != 0} error={receiptData.title.error} id='name' width="100%" onChange={handleInputChange} value={receiptData.title.value} />
                     <div className="flex justify-between">
                         <Input title="Price" errorInValue={receiptData.price.error.length != 0} error={receiptData.price.error} id='price' width="48%" onChange={handleInputChange} value={receiptData.price.value} />
                         <Input title="Currency" errorInValue={receiptData.currency.error.length != 0} error={receiptData.currency.error} id="currency" width="48%" onChange={handleInputChange} value={receiptData.currency.value.toUpperCase()} />
                     </div>
-                    <Input type="date" errorInValue={receiptData.date.error.length != 0} error={receiptData.date.error} id="creation" title="" width="100%" onChange={handleInputChange} value={receiptData.date.value} />
-                    <Select errorInValue={false} id="card" title="Used Card" width="100%" /> {/* values={cards()} */} {/* ADD THESE ONTO THE TAGS LATER!!! */}
-                    <Select errorInValue={false} id="class" title="Choose Class" width="100%" /> {/*  values={classes()} */}
+                    <Input type="date" errorInValue={receiptData.purchased_at.error.length != 0} error={receiptData.purchased_at.error} id="purchased_at" title="" width="100%" onChange={handleInputChange} value={receiptData.purchased_at.value} />
+                    <Select onChange={(event) => cardId.current = Number(event.target.value)} errorInValue={false} id="card" title="Used Card" width="100%" values={cards} selected={cardId.current ?? ''} /> {/*fuck thi piece of shit*/}
+                    <Select onChange={(event) => categoryId.current = Number(event.target.value)} errorInValue={false} id="class" title="Choose Category" width="100%" values={categories} selected={categoryId.current ?? ''} />
                 </div>
 
                 <div className={updateReceipt ? '' :'flex-col md:ml-[2rem]'}>
@@ -180,11 +231,11 @@ function UploadReceiptPanel() : ReactElement {
                         {fileNotifier.title}
                         <input className="opacity-0 absolute top-0 left-0 h-[100%] w-[100%] cursor-pointer" type="file" accept=".pdf" onChange={e => {setCurrentFile(e.target.files as any); console.log(e.target.files)}} />
                     </div></>}
-                    <Button label="Upload" width="100%" fontSize="1rem" icon={<FontAwesomeIcon icon={faUpload} />}/>
+                    <Button onClick={upload} label="Upload" width="100%" fontSize="1rem" icon={<FontAwesomeIcon icon={faUpload} />}/>
                 </div>
             </div>
         </div>
     </>);
-};
+}
 
 export default UploadReceiptPanel;

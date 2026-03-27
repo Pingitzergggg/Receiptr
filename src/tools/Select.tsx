@@ -10,6 +10,7 @@ type propsType = {
     title: string,
     error?: string,
     className?: string,
+    selected?: string | number,
     id: string,
     errorInValue: boolean,
     width?: string,
@@ -17,7 +18,7 @@ type propsType = {
     onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void
 }
 
-function Select({title, error, className, id, errorInValue, width, values, onChange} : propsType) : ReactElement {
+function Select({title, error, className, id, errorInValue, width, values, onChange, selected} : propsType) : ReactElement {
     const [isClassActivated, setClassActivated] = useState<boolean>(false);
     
         const select = useRef<HTMLSelectElement>(null);
@@ -27,7 +28,7 @@ function Select({title, error, className, id, errorInValue, width, values, onCha
             if (select.current.value.length != 0) {
                 setClassActivated(true);
             }
-        }, []);
+        }, [select.current?.value]);
     
         return (
             <div style={{width: `${width === undefined ? '12rem' : width}`, height: '2.5rem', margin: `.5rem 0 ${errorInValue ? '1.5rem' : '.5rem'} 0`}} className={className === undefined ? '' : className}>
@@ -40,7 +41,7 @@ function Select({title, error, className, id, errorInValue, width, values, onCha
                             onChange={onChange} >
                                 <option value="" unselectable="on">{title}</option>
                                 {values?.map(element => 
-                                    <option value={element.value}>{element.label}</option>
+                                    <option value={element.value} selected={element.value == selected}>{element.label}</option>
                                 )}
                         </ select>
                         <div></div>

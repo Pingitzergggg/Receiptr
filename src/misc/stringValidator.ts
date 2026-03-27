@@ -30,8 +30,8 @@ function onlyContainsNumbers(input : string) : boolean {
 }
 
 export function checkInjection(input : string) : boolean {
-    if (input.includes(' ') || input.includes(';')) {
-        throw 'Field cannot contain \' \' and \';\' characters!';
+    if (input.includes('\"') || input.includes(';')) {
+        throw 'Field cannot contain \'\"\' and \';\' characters!';
     } else {
         return true;
     }
@@ -95,7 +95,7 @@ function nameValidator(input : string) : boolean {
             let currentAscii : number = 0;
             for (let ch in chars) {
                 currentAscii = chars[ch].charCodeAt(0);
-                if (!((currentAscii >= 65 && currentAscii <= 90) || (currentAscii >= 97 && currentAscii <= 122))) {
+                if (!((currentAscii >= 65 && currentAscii <= 90) || (currentAscii >= 97 && currentAscii <= 122) || currentAscii === 32)) {
                     throw 'Field must contain ASCII letters only!';
                 }
             }
@@ -141,13 +141,8 @@ function passwordValidator(input : string) : boolean {
 
 function cardNumberValidator(input : string) : boolean {
     if (checkInjection(input)) {
-        const inputArr = input.split('');
         if (onlyContainsNumbers(input)) {
-            if (inputArr.length % 4 === 0) {
-                return true;
-            } else {
-                throw 'Field length not sufficient!';
-            }
+            return true;
         } else {
             throw 'Field must contain numbers only!';
         }
@@ -249,14 +244,16 @@ function colorValidator(input : string) : boolean {
     }
 }
 
-export type inputType = "NAME" | "EMAIL" | "TEL" | "PASSWORD" | "CARD" | "EXPIRY" | "CVC" | "PRICE" | "CURRENCY" | "CREATION" | "COLOR";
+export type inputType = "NAME" | "TITLE" | "EMAIL" | "TEL" | "PHONE" | "PASSWORD" | "CARD" | "EXPIRY" | "CVC" | "PRICE" | "CURRENCY" | "PURCHASED_AT" | "COLOR";
 export function stringValidate(command : inputType, input : string) : boolean {
     switch (command) {
+        case "TITLE":
         case "NAME":
             return nameValidator(input);
         case "EMAIL":
             return mailValidator(input);
         case "TEL":
+        case "PHONE":
             return phoneValidator(input);
         case "PASSWORD":
             return passwordValidator(input);
@@ -270,7 +267,7 @@ export function stringValidate(command : inputType, input : string) : boolean {
             return priceValidator(input);
         case "CURRENCY":
             return currencyValidator(input);
-        case "CREATION":
+        case "PURCHASED_AT":
             return dateValidator(input);
         case "COLOR":
             return colorValidator(input);

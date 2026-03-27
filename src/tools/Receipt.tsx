@@ -8,17 +8,18 @@ type receiptProps = {
     title: string,
     size: number,
     unit: string,
-    type: string,
     store: string,
     creation: string,
-    cardNumber: number,
+    card: string,
     category?: string,
     color?: string,
     price: number,
-    currency: string
+    currency: string,
+    card_id: number|null,
+    category_id: number|null,
 };
 
-function Receipt({id, title, size, type, unit, store, creation, cardNumber, category, color, price, currency} : receiptProps) : ReactElement {
+function Receipt({id, title, size, unit, store, creation, card, category, color, price, currency, card_id, category_id} : receiptProps) : ReactElement {
     const navigate = useNavigate();
 
     return (
@@ -29,22 +30,21 @@ function Receipt({id, title, size, type, unit, store, creation, cardNumber, cate
                                 <FontAwesomeIcon icon={faTrashCan} />
                             </a>
 
-                            <a onClick={() => navigate(`/receipts/upload?data=${JSON.stringify({id: id, title: title, price: price, currency: currency, category: category, date: creation})}`)} title='Edit' className="btn-nav bg-amber-400 ml-1">
+                            <a onClick={() => navigate(`/receipts/upload/${id}?data=${JSON.stringify({title: title, price: price, currency: currency, category_id: category_id, date: creation, card_id: card_id})}`)} title='Edit' className="btn-nav bg-amber-400 ml-1">
                                 <FontAwesomeIcon icon={faWrench} />
                             </a>
 
-                            <a onClick={() => navigate(`/receipts/${id}`)} title='Open' className='btn-nav bg-green-400 ml-1'>
+                            <a onClick={() => navigate(`/receipts/${id}?title=${title}`)} title='Open' className='btn-nav bg-green-400 ml-1'>
                                 <FontAwesomeIcon icon={faArrowUp} />
                             </a>
                         </div>
                         <h2 className="text-2xl font-bold">{title}</h2>
                 <div className="flex justify-between items-center">
                 <p>
-                Size: {size + unit}<br/>
-                Type: {type}<br/>
+                Size: {size.toFixed(2) + unit}<br/>
                 Store: {store}<br/>
                 Creation: {creation}<br/>
-                With card: {cardNumber}
+                With card: {card}
                 </p>
                 <div>
                     <h3 className="flex items-start text-right justify-end text-lg font-bold h-[100%]">

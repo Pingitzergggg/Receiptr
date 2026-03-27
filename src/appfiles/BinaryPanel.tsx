@@ -1,11 +1,15 @@
 import { faUpRightAndDownLeftFromCenter, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import {type ReactElement, useEffect, useState} from "react";
+import {useNavigate, useParams, useSearchParams} from "react-router-dom";
+import {requestFile} from "../misc/receiver.ts";
+import Popup from "../tools/Popup.tsx";
 
 function BinaryPanel() : any {
     // @ts-ignore
     const { receiptId } = useParams();
+    const [searchParams] = useSearchParams();
+    const title: string|null = searchParams.get("title");
     
 //   const [innerRenderCount, setInnerRenderCount] = useState(0); //This is the working fetch call, only commented for local testing!! DONT DELETE
 
@@ -27,30 +31,40 @@ function BinaryPanel() : any {
 //     });
 //   }, [])
 
+    async function load() {
+        try {
+            const blob: Blob = await requestFile(Number(receiptId));
+            setContent(<Display fileUrl={URL.createObjectURL(blob)} />);
+        } catch (error) {
+            console.error(error);
+            setError('Failed to load');
+        }
+    }
+
     const navigate = useNavigate();
 
-    let [content, setContent] : any = useState(<i>Loading<span className="loading loading-spinner loading-md mx-1"></span></i>);
+    const [content, setContent] = useState<ReactElement>(<i>Loading<span className="loading loading-spinner loading-md mx-1"></span></i>);
+    const [error, setError] = useState<string>('');
 
-    useEffect(() => {
-        const promise = new Promise(resolve => setTimeout(() => resolve(
-            <>
-                <iframe src="../../cats.pdf"></iframe>
-                <div id="binary-panel-control-bar">
-                    <p>Receipt name</p>
-                    <div className="flex justify-center items-center">
-                        <a onClick={() => window.location.assign('../../cats.pdf')} className="btn-nav bg-amber-400 ml-3">
-                            <FontAwesomeIcon icon={faUpRightAndDownLeftFromCenter} />
-                        </a>
-                        <a onClick={() => navigate('/receipts')} className="btn-nav bg-red-400 ml-3">
-                            <FontAwesomeIcon icon={faXmark} />
-                        </a>
-                    </div>
+    const Display = ({fileUrl}: {fileUrl: string}) => {
+        return <>
+            {error && <Popup type={"ERROR"} message={error} />}
+            <iframe src={fileUrl}></iframe>
+            <div id="binary-panel-control-bar">
+                <p>{title}</p>
+                <div className="flex justify-center items-center">
+                    <a onClick={() => window.location.assign('../../cats.pdf')} className="btn-nav bg-amber-400 ml-3">
+                        <FontAwesomeIcon icon={faUpRightAndDownLeftFromCenter} />
+                    </a>
+                    <a onClick={() => navigate('/receipts')} className="btn-nav bg-red-400 ml-3">
+                        <FontAwesomeIcon icon={faXmark} />
+                    </a>
                 </div>
-            </>
-        ), 500));
+            </div>
+        </>
+    }
 
-        promise.then(value => setContent(value));
-    }, []);
+    useEffect(() => {load();}, []);
 
     return <div id="binary-panel-div"> {content} </div>;
 }

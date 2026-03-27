@@ -4,6 +4,10 @@ import { checkInjection } from '../misc/stringValidator'
 import Popup from '../tools/Popup'
 import '../tailwind.css'
 import '../style.scss'
+import {extractResponse, requestResource} from "../misc/receiver.ts";
+import Button from "../tools/Button.tsx";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faArrowRightToBracket} from "@fortawesome/free-solid-svg-icons";
 
 function Login() : any {
 
@@ -46,7 +50,7 @@ function Login() : any {
     const navigate = useNavigate();
     const location = useLocation();
 
-    const login = () => {
+    async function login() {
         console.log(loginData);
         let errorOccured = false;
         for (let key in loginData) {
@@ -57,49 +61,61 @@ function Login() : any {
         }
 
         if (!errorOccured) {
-            fetch('http://localhost:5001/billconvert/login', {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json',
-                'X-API-KEY': "]WcdihR9N6}Ol5/V`e}sDD',HRRZIm`Kk|oG'grXb})cJqKS(S"
-            },
-            body: JSON.stringify({
-                email: loginData.email.value,
-                password: loginData.password.value
-            })
-            })
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data.status);
-                    if (data.status == '302') {
-                        localStorage.setItem('id', data.reply.id);
-                        navigate('/', {state: {fromLogin: true}});
-                    } else {
-                        throw data.error;
-                    }
-                })
+            try {
+                const response = await requestResource("login", "POST", null, null, {
+                    email: loginData.email.value,
+                    password: loginData.password.value
+                }, true);
+                await extractResponse(response);
+                navigate("/", {state: {fromLogin: true}});
+            } catch (error) {
+                console.log(error);
+                if (error == ReferenceError) {
+                    navigate("/login", {state: {wrongCredentials: true}});
+                } else {
+                    navigate("/login", {state: {errorOccurred: true}});
+                }
+            }
         }
     }
 
     return (
             <>
             {location.state?.fromRegister && <Popup type='SUCCESS' message='User registered succesfully!' />}
-            <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
-                <legend className="fieldset-legend">Login</legend>
+                {location.state?.wrongCredentials && <Popup type='ERROR' message='Wrong login credentials!'/>}
+                {location.state?.errorOccurred && <Popup type='ERROR' message='Error occurred!'/>}
+                <div className='flex justify-evenly items-center w-[100vw] h-[100vh]'>
+                    <div className='w-full hidden lg:block'>
+                        <img src='../../public/banner.jpg' alt='Banner' className='h-[100vh] w-[50vw]' />
+                    </div>
+                    <div className='w-full flex flex-col justify-center items-center'>
+                        <div className='flex items-center justify-center mb-10 flex-wrap'>
+                            <img src='../../public/icon.png' alt='Logo' className='w-[10rem] h-[7.5rem]' />
+                            <h1 className='text-6xl font-bold'>Receiptr</h1>
+                        </div>
+                        <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
+                            <legend className="fieldset-legend">Login</legend>
 
-                <label className="label">Email</label>
-                <input id='email' onChange={handleInputChange} type="email" className="input" placeholder="Email"/>
-                {(loginData.email.error.length != 0) && <span className='error'>{loginData.email.error}</span>}
+                            <label className="label">Email</label>
+                            <input id='email' onChange={handleInputChange} type="email" className="input" placeholder="Email"/>
+                            {(loginData.email.error.length != 0) && <span className='error'>{loginData.email.error}</span>}
 
-                <label className="label">Password</label>
-                <input id='password' onChange={handleInputChange} type="password" className="input" placeholder="Password" />
-                {(loginData.password.error.length != 0) && <span className='error'>{loginData.password.error}</span>}
+                            <label className="label">Password</label>
+                            <input id='password' onChange={handleInputChange} type="password" className="input" placeholder="Password" />
+                            {(loginData.password.error.length != 0) && <span className='error'>{loginData.password.error}</span>}
 
-                <button onClick={login} className="btn btn-neutral mt-4">Login</button>
+                            {/*<button onClick={login} className="btn btn-neutral mt-4">Login</button>*/}
+                            <Button onClick={login} className='mt-3' width="100%" label="Login" icon={<FontAwesomeIcon icon={faArrowRightToBracket} />} />
 
-                <p>Don't have an account? <NavLink to='/register'>Register</NavLink></p>
-
-            </fieldset></>
+                            <p>Don't have an account? <NavLink to='/register'>Register</NavLink></p>
+                        </fieldset>
+                        <p className='italic text-right absolute right-5 bottom-5'>
+                            Application by <a className='hover:underline' href='https://github.com/Fyrra1' target='_blank'><b>Fyrra</b></a> <a className='hover:underline' href='https://github.com/TrxpleD23' target='_blank'><b>Guido</b></a> <a className='hover:underline' href='https://github.com/Pingitzergggg' target='_blank'><b>Pingitzergggg</b></a><br/>
+                            This software is under the <a className='hover:underline' href='https://github.com/Pingitzergggg/Receiptr/blob/main/README.md' target='_blank'><b>MIT License</b></a> {/*Replace link to actual License when created*/}
+                        </p>
+                    </div>
+                </div>
+            </>
         );
 }
 
