@@ -82,8 +82,12 @@ function UploadCategoryPanel() : ReactElement {
             await extractResponse<'categories'>(response);
             navigate('/categories', {state: {uploadSuccess: true}});
         } catch (error) {
+            if (error instanceof WebTransportError) {
+                setError(error.message);
+            } else {
+                setError('Upload failed!');
+            }
             console.log(error);
-            setError('Upload failed!');
         }
     }
         

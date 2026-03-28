@@ -1,4 +1,8 @@
 export type responseType = {
+    error: {
+        error: string,
+        toDisplay: boolean
+    },
     trash: {
         id: number,
         title: string
@@ -6,6 +10,7 @@ export type responseType = {
     user: {
         username: string,
         email: string,
+        email_verified: boolean,
         phone: string
     },
     receipts: {

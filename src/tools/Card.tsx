@@ -23,7 +23,7 @@ function Card({id, title, currency, type, total_receipts, total_spent, color, ca
         
         <div className={`card text-white relative`} style={{backgroundColor: color ? color : "#323339"}}>
             <div className="absolute top-0 right-0 m-3 flex justify-end">
-                <a onClick={() => navigate(`/cards/upload/${id}?data=${JSON.stringify({title: title, type: type, category_id: category_id, currency: currency})}`)} className="cursor-pointer transition hover:scale-130">
+                <a onClick={() => navigate(`/cards/upload/${id}?data=${JSON.stringify({title: title, type: type, binding_id: category_id, currency: currency})}`)} className="cursor-pointer transition hover:scale-130">
                     <FontAwesomeIcon icon={faFilePen} />
                 </a>
                 <a onClick={() => navigate(`/cards/delete?id=${id}`)} className="cursor-pointer transition hover:scale-130">

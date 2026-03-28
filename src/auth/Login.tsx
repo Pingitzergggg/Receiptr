@@ -1,4 +1,4 @@
-import { NavLink, useLocation, useNavigate } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import { checkInjection } from '../misc/stringValidator'
 import Popup from '../tools/Popup'
@@ -48,19 +48,19 @@ function Login() : any {
     };
 
     const navigate = useNavigate();
-    const location = useLocation();
 
+    const [error, setError] = useState<string>('');
     async function login() {
         console.log(loginData);
-        let errorOccured = false;
+        let errorOccurred = false;
         for (let key in loginData) {
             const innerKey = key as keyof inputFields;
             if (loginData[innerKey].value.length == 0) {
-                errorOccured = true;
+                errorOccurred = true;
             }
         }
 
-        if (!errorOccured) {
+        if (!errorOccurred) {
             try {
                 const response = await requestResource("login", "POST", null, null, {
                     email: loginData.email.value,
@@ -73,10 +73,10 @@ function Login() : any {
                 navigate("/", {state: {fromLogin: true}});
             } catch (error) {
                 console.log(error);
-                if (error == ReferenceError) {
-                    navigate("/login", {state: {wrongCredentials: true}});
+                if (error instanceof WebTransportError) {
+                    setError(error.message);
                 } else {
-                    navigate("/login", {state: {errorOccurred: true}});
+                    setError("Error occurred!");
                 }
             }
         }
@@ -84,9 +84,7 @@ function Login() : any {
 
     return (
             <>
-            {location.state?.fromRegister && <Popup type='SUCCESS' message='User registered succesfully!' />}
-                {location.state?.wrongCredentials && <Popup type='ERROR' message='Wrong login credentials!'/>}
-                {location.state?.errorOccurred && <Popup type='ERROR' message='Error occurred!'/>}
+                {error && <Popup type='ERROR' message={error}/>}
                 <div className='flex justify-evenly items-center w-[100vw] h-[100vh]'>
                     <div className='w-full hidden lg:block'>
                         <img src='../../public/banner.jpg' alt='Banner' className='h-[100vh] w-[50vw]' />

@@ -176,8 +176,12 @@ function UploadReceiptPanel(): ReactElement {
             await extractResponse<'receipts'>(response);
             return true;
         } catch (error) {
+            if (error instanceof WebTransportError) {
+                setError(error.message);
+            } else {
+                setError('Upload failed!');
+            }
             console.error(error);
-            setError('Upload failed!');
             return false;
         }
     }
@@ -199,9 +203,19 @@ function UploadReceiptPanel(): ReactElement {
         fileContainer.append('value', currentFile[0]);
         if (categoryId.current) fileContainer.append('binding_id', String(categoryId.current));
         if (cardId.current) fileContainer.append('card_id', String(cardId.current));
-        const result = await sendFileForm(fileContainer);
-        if (!result) setError('Upload failed!');
-        return result;
+        try {
+            const result = await sendFileForm(fileContainer);
+            if (!result) setError('Upload failed!');
+            return result;
+        } catch (error) {
+            if (error instanceof WebTransportError) {
+                setError(error.message);
+            } else {
+                setError('Upload failed!');
+            }
+            console.error(error);
+            return false;
+        }
     }
 
     console.log(cardId.current);

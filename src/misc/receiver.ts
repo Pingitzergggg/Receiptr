@@ -47,6 +47,7 @@ export async function sendFileForm(data: FormData): Promise<boolean> {
         }, body: data
     });
     if (response.status === 401) await authenticate();
+    await extractResponse(response);
     return response.ok;
 }
 
@@ -88,9 +89,9 @@ export async function requestResource<O extends keyof responseType>(
         });
 
         if (endpoint === "receipts") console.log("RECEIPTS TRIGGER");
-        if (!request.ok) return {status: request.status};
 
         const data = await request.json();
+        if (!request.ok) return {content: data, status: request.status};
 
         if ((/login|register/.test(endpoint) && method === "POST")
                     || "user" === endpoint && "GET" === method) {
@@ -117,7 +118,14 @@ export async function extractResponse
     : Promise<responseType[T] | null> {
         if (response.status === -1) throw SyntaxError("CLIENT ERROR: Failed to send request!")
         if (response.status === 401 && !(await authenticate())) throw ReferenceError("AUTHENTICATION ERROR: User is not authenticated!");
-        if (response.status > 299 || response.status < 200) throw Error('UNSUCCESSFUL REQUEST!');
+        if (response.status > 299) {
+            const value: responseType['error'] = response.content as unknown as responseType['error'];
+            if (value.toDisplay) {
+                throw new WebTransportError(value.error);
+            } else {
+                throw Error('UNSUCCESSFUL REQUEST!');
+            }
+        }
         if (response.content && typeof response.content === "object") {
             return response.content;
         }

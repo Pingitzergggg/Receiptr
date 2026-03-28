@@ -91,8 +91,12 @@ function SettingsPanel() : ReactElement {
                     </a>
                   </div>
                   <div className="flex items-center">
-                    <p className="text-(--accent-color)!">Verified</p>
-                    <svg className="w-[1rem] h-[1rem]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path fill="#127012" d="M530.8 134.1C545.1 144.5 548.3 164.5 537.9 178.8L281.9 530.8C276.4 538.4 267.9 543.1 258.5 543.9C249.1 544.7 240 541.2 233.4 534.6L105.4 406.6C92.9 394.1 92.9 373.8 105.4 361.3C117.9 348.8 138.2 348.8 150.7 361.3L252.2 462.8L486.2 141.1C496.6 126.8 516.6 123.6 530.9 134z"/></svg>
+                    <p className={`text-${userData?.email_verified ? '(--accent-color)' : 'red-500'}!`}>{userData?.email_verified ? 'Verified' : 'Not Verified'}</p>
+                    {userData?.email_verified && <svg className="w-[1rem] h-[1rem]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+                      <path fill="#127012"
+                            d="M530.8 134.1C545.1 144.5 548.3 164.5 537.9 178.8L281.9 530.8C276.4 538.4 267.9 543.1 258.5 543.9C249.1 544.7 240 541.2 233.4 534.6L105.4 406.6C92.9 394.1 92.9 373.8 105.4 361.3C117.9 348.8 138.2 348.8 150.7 361.3L252.2 462.8L486.2 141.1C496.6 126.8 516.6 123.6 530.9 134z"/>
+                    </svg>
+                    }
                   </div>
                 </div>
                 <p>{userData?.email}</p>
@@ -105,10 +109,10 @@ function SettingsPanel() : ReactElement {
                       <svg className="transition" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M541.4 162.6C549 155 561.7 156.9 565.5 166.9C572.3 184.6 576 203.9 576 224C576 312.4 504.4 384 416 384C398.5 384 381.6 381.2 365.8 376L178.9 562.9C150.8 591 105.2 591 77.1 562.9C49 534.8 49 489.2 77.1 461.1L264 274.2C258.8 258.4 256 241.6 256 224C256 135.6 327.6 64 416 64C436.1 64 455.4 67.7 473.1 74.5C483.1 78.3 484.9 91 477.4 98.6L388.7 187.3C385.7 190.3 384 194.4 384 198.6L384 240C384 248.8 391.2 256 400 256L441.4 256C445.6 256 449.7 254.3 452.7 251.3L541.4 162.6z"/></svg>
                     </a>
                   </div>
-                  <div className="flex items-center">
-                    <p className="text-(--accent-color)!">Verified</p>
-                    <svg className="w-[1rem] h-[1rem]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path fill="#127012" d="M530.8 134.1C545.1 144.5 548.3 164.5 537.9 178.8L281.9 530.8C276.4 538.4 267.9 543.1 258.5 543.9C249.1 544.7 240 541.2 233.4 534.6L105.4 406.6C92.9 394.1 92.9 373.8 105.4 361.3C117.9 348.8 138.2 348.8 150.7 361.3L252.2 462.8L486.2 141.1C496.6 126.8 516.6 123.6 530.9 134z"/></svg>
-                  </div>
+                  {/*<div className="flex items-center">*/}
+                  {/*  <p className="text-(--accent-color)!">Verified</p>*/}
+                  {/*  <svg className="w-[1rem] h-[1rem]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path fill="#127012" d="M530.8 134.1C545.1 144.5 548.3 164.5 537.9 178.8L281.9 530.8C276.4 538.4 267.9 543.1 258.5 543.9C249.1 544.7 240 541.2 233.4 534.6L105.4 406.6C92.9 394.1 92.9 373.8 105.4 361.3C117.9 348.8 138.2 348.8 150.7 361.3L252.2 462.8L486.2 141.1C496.6 126.8 516.6 123.6 530.9 134z"/></svg>*/}
+                  {/*</div>*/}
                 </div>
                 <p>{userData?.phone}</p>
               </legend>

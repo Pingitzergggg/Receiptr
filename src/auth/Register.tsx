@@ -80,8 +80,12 @@ function Register() : any {
             sessionStorage.removeItem('categories');
             navigate('/', {state: {fromLogin: true}});
         } catch (error) {
+            if (error instanceof WebTransportError) {
+                setError(error.message);
+            } else {
+                setError('Error occurred!');
+            }
             console.error(error);
-            setError('Error occurred!');
         }
     }
 

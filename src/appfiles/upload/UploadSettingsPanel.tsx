@@ -56,8 +56,12 @@ function UploadSettingsPanel(): ReactElement {
             await extractResponse<'user'>(response);
             navigate('/settings', {state: {uploadSuccess: true}});
         } catch (error) {
+            if (error instanceof WebTransportError) {
+                setError(error.message);
+            } else {
+                setError('Upload failed!');
+            }
             console.error(error);
-            setError('Upload failed!');
         }
     }
 

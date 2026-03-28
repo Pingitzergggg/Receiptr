@@ -16,7 +16,7 @@ type updateData = {
     title: string,
     type: cardType,
     category?: string,
-    category_id: number|null,
+    binding_id: number|null,
     currency: string
 }
 
@@ -39,7 +39,7 @@ function UploadReceiptPanel() : ReactElement {
     const {cardId} = useParams();
     const [searchParams] = useSearchParams();
     const updateData: updateData|null = searchParams.get('data') ? JSON.parse(searchParams.get('data')!) : null;
-    const category_id = useRef<number|null>(updateData?.category_id);
+    const category_id = useRef<number|null>(updateData?.binding_id);
     const type = useRef<cardType|null>(updateData?.type);
 
     const [categories, updateCategories] = useState<{value: string, label: string}[]>([]);
@@ -118,15 +118,19 @@ function UploadReceiptPanel() : ReactElement {
             title: cardData.cardTitle.value,
             currency: cardData.currency.value,
             type: type.current ?? null,
-            category_id: category_id.current ?? null
+            binding_id: category_id.current ?? null
         }
         try {
             const response = await requestResource<'cards'>('cards', 'PUT', cardId, null, body);
             await extractResponse<'cards'>(response);
             return true;
         } catch (error) {
+            if (error instanceof WebTransportError) {
+                setError(error.message);
+            } else {
+                setError('Upload failed!');
+            }
             console.error(error);
-            setError('Upload failed!');
             return false;
         }
     }
@@ -154,8 +158,12 @@ function UploadReceiptPanel() : ReactElement {
             await extractResponse<'cards'>(response);
             return true;
         } catch (error) {
+            if (error instanceof WebTransportError) {
+                setError(error.message);
+            } else {
+                setError('Upload failed!');
+            }
             console.error(error);
-            setError('Upload failed!');
             return false;
         }
     }
