@@ -51,6 +51,7 @@ function Login() : any {
 
     const [error, setError] = useState<string>('');
     async function login() {
+        setError('');
         console.log(loginData);
         let errorOccurred = false;
         for (let key in loginData) {

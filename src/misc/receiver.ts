@@ -88,8 +88,6 @@ export async function requestResource<O extends keyof responseType>(
             body: body ? JSON.stringify(body) : null
         });
 
-        if (endpoint === "receipts") console.log("RECEIPTS TRIGGER");
-
         const data = await request.json();
         if (!request.ok) return {content: data, status: request.status};
 
@@ -117,11 +115,13 @@ export async function extractResponse
 <T extends keyof responseType>(response: response<T>)
     : Promise<responseType[T] | null> {
         if (response.status === -1) throw SyntaxError("CLIENT ERROR: Failed to send request!")
-        if (response.status === 401 && !(await authenticate())) throw ReferenceError("AUTHENTICATION ERROR: User is not authenticated!");
         if (response.status > 299) {
             const value: responseType['error'] = response.content as unknown as responseType['error'];
             if (value.toDisplay) {
-                throw new WebTransportError(value.error);
+                //@ts-ignore
+                throw new WebTransportError({message: value.error, streamErrorCode: response.status});
+            } else if (response.status === 401 && !(await authenticate())) {
+                throw ReferenceError("AUTHENTICATION ERROR: User is not authenticated!")
             } else {
                 throw Error('UNSUCCESSFUL REQUEST!');
             }
