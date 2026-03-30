@@ -1,6 +1,11 @@
 [build]
-    command = ""
-    publish = "dist"
+  command = "echo 'Skipping build, using pre-built dist'"
+  publish = "dist"
+
+[build.environment]
+  # This tells Netlify not to run 'npm install'
+  NETLIFY_SKIP_INSTALL = "true"
+  NODE_VERSION = "20"
 
 [redirects]
   from = "/*"
