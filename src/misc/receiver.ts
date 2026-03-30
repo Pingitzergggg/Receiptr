@@ -1,6 +1,7 @@
 import type {paginatable, responseType} from "./databaseTables"
 
-export const domainUrl: string = 'http://localhost:8000';
+export const domainUrl: string = 'https://pgapi.ddns.net';
+// export const domainUrl: string = 'http://localhost:8000';
 
 export type methods = "GET" | "POST" | "PUT" | "DELETE";
 export type endpoints = "user" | "cards" | "categories" | "receipts" | "archive" | "login" | "register" | "logout";
@@ -105,7 +106,7 @@ export async function requestResource<O extends keyof responseType>(
 }
 
 export async function getCSRF(): Promise<void> {
-    await fetch(domainUrl+'/sanctum/csrf-cookie', {
+    await fetch(domainUrl+'/api/receiptr/sanctum/csrf-cookie', {
         method: 'GET',
         credentials: 'include',
     });
