@@ -1,9 +1,9 @@
 import {type ReactElement, useEffect, useRef, useState} from "react";
-import type {paginatable, responseType} from "../misc/databaseTables.ts";
+import type {paginatable} from "../misc/databaseTables.ts";
 import Button from "./Button.tsx";
 import Input from "./Input.tsx";
 import Select from "./Select.tsx";
-import {type response, paginate, requestResource, extractResponse} from "../misc/receiver.ts";
+import {type response, requestResource, extractResponse} from "../misc/receiver.ts";
 import {stringValidate} from "../misc/stringValidator.ts";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowRotateRight, faFilter} from "@fortawesome/free-solid-svg-icons";
@@ -31,7 +31,7 @@ function Filter<T extends keyof paginatable>({forPanel, onFilter, onRefresh, fil
     async function load(): Promise<paginatable[T]|null> {
         const filterString: string = `${filter.current.order ? "orderBy="+filter.current.order : ""}${filter.current.search ? "&search="+filter.current.search : ""}${filter.current.direction ? "&direction="+filter.current.direction : ""}`;
         console.log(`Attempting to fetch with ${filterString.trim()}...`);
-        const response: response<'receipts'> = await requestResource<'empty', 'receipts'>('receipts', 'GET', null, filterString.trim());
+        const response: response<'receipts'> = await requestResource<'receipts'>('receipts', 'GET', null, filterString.trim());
         // @ts-ignore
         const data: paginatable[T]|null = await extractResponse<'receipts'>(response);
         if (data) {
