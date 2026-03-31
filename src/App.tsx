@@ -18,7 +18,6 @@ import Login from './auth/Login'
 import Register from './auth/Register'
 import './tailwind.css'
 import './style.scss'
-import logo from '../public/icon.png'
 import BinaryPanel from './appfiles/BinaryPanel'
 import UploadReceiptPanel from './appfiles/upload/UploadReceiptPanel'
 import UploadCardPanel from './appfiles/upload/UploadCardPanel'
@@ -43,7 +42,7 @@ function App(): ReactElement {
     <div className="navbar bg-base-100 shadow-sm">
       <div className="flex-1">
         <a className="text-2xl h-auto flex items-center font-bold p-[.5rem]">
-          <img src={logo} alt="icon.png" className='w-[80px] h-[53.3px] mr-2' id='logo' />
+          <img src='/icon.png' alt="icon.png" className='w-[80px] h-[53.3px] mr-2' id='logo' />
           Receiptr
         </a>
       </div>

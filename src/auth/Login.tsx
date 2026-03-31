@@ -88,11 +88,11 @@ function Login() : any {
                 {error && <Popup type='ERROR' message={error}/>}
                 <div className='flex justify-evenly items-center w-[100vw] h-[100vh]'>
                     <div className='w-full hidden lg:block'>
-                        <img src='../../public/banner.jpg' alt='Banner' className='h-[100vh] w-[50vw]' />
+                        <img src='/banner.jpg' alt='Banner' className='h-[100vh] w-[50vw]' />
                     </div>
                     <div className='w-full flex flex-col justify-center items-center'>
                         <div className='flex items-center justify-center mb-10 flex-wrap'>
-                            <img src='../../public/icon.png' alt='Logo' className='w-[10rem] h-[7.5rem]' />
+                            <img src='/icon.png' alt='Logo' className='w-[10rem] h-[7.5rem]' />
                             <h1 className='text-6xl font-bold'>Receiptr</h1>
                         </div>
                         <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
