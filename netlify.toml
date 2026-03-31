@@ -1,5 +1,5 @@
 [build]
-  command = "npm run build"
+  command = "ESLINT_NO_DEV_ERRORS=true npm run build --legacy-peer-deps"
   publish = "dist"
 
 [build.environment]
