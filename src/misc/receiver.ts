@@ -1,18 +1,10 @@
 import type {paginatable, responseType} from "./databaseTables"
 
-export const domainUrl: string = 'https://pgapi.ddns.net';
-// export const domainUrl: string = 'http://localhost:8000';
+// export const domainUrl: string = 'https://pgapi.ddns.net';
+export const domainUrl: string = 'http://localhost:8000';
 
 export type methods = "GET" | "POST" | "PUT" | "DELETE";
 export type endpoints = "user" | "cards" | "categories" | "receipts" | "archive" | "login" | "register" | "logout";
-
-function decodeCSRF(): string | undefined {
-    const pair: string[] | undefined = decodeURIComponent(document.cookie).split(";")
-                            .map(cookie => cookie.split("="))
-                                .filter(pair => pair[0] === "XSRF-TOKEN")[0];
-    return pair === undefined ? undefined : pair[1]
-
-}
 
 export type response<T extends keyof responseType> = {
     status: number;
@@ -36,15 +28,12 @@ export async function loadResource<T extends keyof paginatable>(resource: "cards
 }
 
 export async function sendFileForm(data: FormData): Promise<boolean> {
-    if (decodeCSRF() === undefined) await getCSRF();
-    const token: string = decodeCSRF()!;
     const response = await fetch(domainUrl+'/api/receiptr/receipts', {
         method: 'POST',
-        credentials: 'include',
         headers: {
             'Accept': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('receiptr-token') ?? null}`,
             'X-API-KEY': "]WcdihR9N6}Ol5/V`e}sDD',HRRZIm`Kk|oG'grXb})cJqKS(S",
-            'X-XSRF-TOKEN': token,
         }, body: data
     });
     if (response.status === 401) await authenticate();
@@ -55,8 +44,9 @@ export async function sendFileForm(data: FormData): Promise<boolean> {
 export async function requestFile(id: number): Promise<Blob>{
     const response = await fetch(domainUrl+'/api/receiptr/receipts/'+id, {
         method: 'GET',
-        credentials: 'include',
         headers: {
+            'Accept': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('receiptr-token') ?? null}`,
             'X-API-KEY': "]WcdihR9N6}Ol5/V`e}sDD',HRRZIm`Kk|oG'grXb})cJqKS(S",
         }
     });
@@ -70,21 +60,18 @@ export async function requestResource<O extends keyof responseType>(
     method: methods,
     urlParam?: string | number | null,
     queryParam?: string | null,
-    body?: any,
-    forcedCSRFfetch = false
+    body?: any
 ): Promise<response<O>> {
     try {
-        if (decodeCSRF() === undefined || forcedCSRFfetch) await getCSRF();
-        const token: string = decodeCSRF()!;
         console.log(domainUrl+`/api/receiptr/${endpoint}${urlParam ? "/"+urlParam : ""}${queryParam ? "?"+queryParam : ""}`);
         const request = await fetch(domainUrl+`/api/receiptr/${endpoint}${urlParam ? "/"+urlParam : ""}${queryParam ? "?"+queryParam : ""}`, {
             method: method,
-            credentials: 'include',
             headers: {
                 'accept': 'application/json',
                 'content-type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('receiptr-token') ?? null}`,
                 'X-API-KEY': "]WcdihR9N6}Ol5/V`e}sDD',HRRZIm`Kk|oG'grXb})cJqKS(S",
-                'X-XSRF-TOKEN': token
+                'X-DEVICE-KEY': localStorage.getItem('device-key') ?? ''
             },
             body: body ? JSON.stringify(body) : null
         });
@@ -92,10 +79,14 @@ export async function requestResource<O extends keyof responseType>(
         const data = await request.json();
         if (!request.ok) return {content: data, status: request.status};
 
-        if ((/login|register/.test(endpoint) && method === "POST")
-                    || "user" === endpoint && "GET" === method) {
+        if ("user" === endpoint && "GET" === method) {
             console.log("creating session...");
             sessionStorage.setItem('user', JSON.stringify(data));
+        }
+        if (/login|register/.test(endpoint) && method === "POST") {
+            sessionStorage.setItem('user', JSON.stringify(data.content));
+            localStorage.setItem('receiptr-token', data.token);
+            localStorage.setItem('device-key', data.device);
         }
 
         return {status: request.status, content: data};
@@ -103,13 +94,6 @@ export async function requestResource<O extends keyof responseType>(
         console.error(err);
         return {status: -1};
     }
-}
-
-export async function getCSRF(): Promise<void> {
-    await fetch(domainUrl+'/api/receiptr/sanctum/csrf-cookie', {
-        method: 'GET',
-        credentials: 'include',
-    });
 }
 
 export async function extractResponse

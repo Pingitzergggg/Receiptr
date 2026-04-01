@@ -53,7 +53,7 @@ function Receipt({id, title, size, unit, store, creation, card, category, color,
                         </svg>
                         {category}
                     </h3>
-                    <h4 className="text-right text-2xl"><b>{price}</b> {currency}</h4>
+                    <h4 className="text-right text-2xl"><b>{price.toFixed(2)}</b> {currency}</h4>
                 </div>
                 </div>
             </div>

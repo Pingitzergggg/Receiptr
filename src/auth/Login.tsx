@@ -66,7 +66,7 @@ function Login() : any {
                 const response = await requestResource("login", "POST", null, null, {
                     email: loginData.email.value,
                     password: loginData.password.value
-                }, true);
+                });
                 await extractResponse(response);
                 sessionStorage.removeItem('cards');
                 sessionStorage.removeItem('receipts');

@@ -73,8 +73,8 @@ function Register() : any {
             confirm_password: registerData.confirm_password.value
         }
         try {
-            const response = await requestResource<'user'>('register', 'POST', null, null, body, true);
-            await extractResponse<'user'>(response);
+            const response = await requestResource<'login'>('register', 'POST', null, null, body);
+            await extractResponse<'login'>(response);
             sessionStorage.removeItem('cards');
             sessionStorage.removeItem('receipts');
             sessionStorage.removeItem('categories');

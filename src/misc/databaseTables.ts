@@ -13,6 +13,11 @@ export type responseType = {
         email_verified: boolean,
         phone: string
     },
+    login: {
+        content: responseType['user'],
+        token: string,
+        device: string,
+    },
     receipts: {
         query: {
             id: number,
