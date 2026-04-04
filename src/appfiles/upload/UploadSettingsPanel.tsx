@@ -67,7 +67,7 @@ function UploadSettingsPanel(): ReactElement {
 
     if (error.length != 0) setTimeout(() => setError(''), 3000);
     return <>{error && <Popup type={"ERROR"} message={error} />}
-        <legend className="upload w-[90%]! sm:w-[30rem]!">
+        <legend className="window upload w-[90%]! sm:w-[30rem]!">
         <a onClick={() => navigate('/settings')} className="btn-nav bg-red-400">
             <FontAwesomeIcon icon={faXmark} />
         </a>

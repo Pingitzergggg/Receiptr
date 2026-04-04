@@ -221,7 +221,7 @@ function UploadReceiptPanel(): ReactElement {
     console.log(cardId.current);
     return (<>
         {popUpError && <Popup type='ERROR' message={popUpError} />}
-        <div className="upload w-[90%]! lg:w-[auto]!">
+        <div className="window upload w-[90%]! lg:w-[auto]!">
             <a onClick={() => navigate('/receipts')} className="btn-nav bg-red-400">
                 <FontAwesomeIcon icon={faXmark} />
             </a>

@@ -170,7 +170,7 @@ function UploadReceiptPanel() : ReactElement {
 
     return (<>
         {error && <Popup type={"ERROR"} message={error} />}
-        <legend className="upload w-[90%]! sm:w-[auto]!">
+        <legend className="window upload w-[90%]! sm:w-[auto]!">
             <a onClick={() => navigate('/cards')} className="btn-nav bg-red-400">
                 <FontAwesomeIcon icon={faXmark} />
             </a>
@@ -190,8 +190,8 @@ function UploadReceiptPanel() : ReactElement {
             }
 
             <div className='flex justify-between'>
-                {!updateData && <Input title="Bank" id="bank" onChange={handleInputChange} errorInValue={cardData.bank.error.length != 0} error={cardData.bank.error} className="mb-5" width="100%" value={cardData.bank.value} />}
-                <Input title="Currency" id='currency' onChange={handleInputChange} errorInValue={cardData.currency.error.length != 0} error={cardData.currency.error} className='mb-5' width={updateData ? '100%' : '48%'} value={cardData.currency.value.toUpperCase()} />
+                {!updateData && <Input title="Bank" id="bank" onChange={handleInputChange} errorInValue={cardData.bank.error.length != 0} error={cardData.bank.error} className="mb-5" width="55%" value={cardData.bank.value} />}
+                <Input title="Currency" id='currency' onChange={handleInputChange} errorInValue={cardData.currency.error.length != 0} error={cardData.currency.error} className='mb-5' width={updateData ? '100%' : '40%'} value={cardData.currency.value.toUpperCase()} />
             </div>
 
             <div className="flex justify-between">

@@ -106,13 +106,19 @@ function Login() : any {
                             <input id='password' onChange={handleInputChange} type="password" className="input" placeholder="Password" />
                             {(loginData.password.error.length != 0) && <span className='error'>{loginData.password.error}</span>}
 
-                            <Button onClick={login} className='mt-3' width="100%" label="Login" icon={<FontAwesomeIcon icon={faArrowRightToBracket} />} />
+                            <div className='w-[50%] mt-2 flex justify-evenly'>
+                                <p>Remember browser</p>
+                                <input type='checkbox'/>
+                            </div>
 
-                            <p>Don't have an account? <NavLink to='/register'>Register</NavLink></p>
+                            <Button onClick={login} className='mt-1' width="100%" label="Login" icon={<FontAwesomeIcon icon={faArrowRightToBracket} />} />
+
+                            <p>Don't have an account? <NavLink to='/register'><b className='hover:underline'>Register</b></NavLink></p>
+                            <a className='hover:underline cursor-pointer'>Forgot my password</a>
                         </fieldset>
                         <p className='italic text-right absolute right-5 bottom-5'>
                             Application by <a className='hover:underline' href='https://github.com/Fyrra1' target='_blank'><b>Fyrra</b></a> <a className='hover:underline' href='https://github.com/TrxpleD23' target='_blank'><b>Guido</b></a> <a className='hover:underline' href='https://github.com/Pingitzergggg' target='_blank'><b>Pingitzergggg</b></a><br/>
-                            This software is under the <a className='hover:underline' href='https://github.com/Pingitzergggg/Receiptr/blob/main/README.md' target='_blank'><b>MIT License</b></a> {/*Replace link to actual License when created*/}
+                            This software is under the <a className='hover:underline' href='https://github.com/Pingitzergggg/Receiptr/blob/main/LICENSE' target='_blank'><b>MIT License</b></a>
                         </p>
                     </div>
                 </div>

@@ -161,8 +161,8 @@ function Register() : any {
                     <p>Back to <NavLink to='/login'>Login</NavLink></p>
                 </fieldset>
                 <p className='italic text-right absolute right-1 bottom-1'>
-                    Application by <a className='hover:underline' href='https://github.com/Fyrra1' target='_blank'><b>Fyrra</b></a> <a className='hover:underline' href='https://github.com/TrxpleD23' target='_blank'><b>Guido</b></a> <a className='hover:underline' href='https://github.com/Pingitzergggg' target='_blank'><b>Pingitzergggg</b></a><br/>
-                    This software is under the <a className='hover:underline' href='https://github.com/Pingitzergggg/Receiptr/blob/main/README.md' target='_blank'><b>MIT License</b></a> {/*Replace link to actual License when created*/}
+                    Application by <a className='hover:underline' href='https://github.com/Fyrra1' target='_blank'><b>Fyrra</b></a>, <a className='hover:underline' href='https://github.com/TrxpleD23' target='_blank'><b>Guido</b></a>, <a className='hover:underline' href='https://github.com/Pingitzergggg' target='_blank'><b>Pingitzergggg</b></a><br/>
+                    This software is under the <a className='hover:underline' href='https://github.com/Pingitzergggg/Receiptr/blob/main/LICENSE' target='_blank'><b>MIT License</b></a> {/*Replace link to actual License when created*/}
                 </p>
             </div>
         </div></>

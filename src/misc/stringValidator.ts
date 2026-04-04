@@ -58,7 +58,7 @@ function mailValidator(input : string) : boolean {
                 throw 'Email format not valid!';
             }
         } else {
-            throw 'Field length is not in supported range!'
+            throw 'Field length too short!'
         }
     } else {
         return false;
@@ -79,7 +79,7 @@ function phoneValidator(input : string) : boolean {
             }
             return true;
         } else {
-            throw 'Digit length is not in supported range!';
+            throw 'Digit length too short!';
         } 
     } else {
         return false;
@@ -101,7 +101,7 @@ function nameValidator(input : string) : boolean {
             }
         return true;
         } else {
-            throw 'Field length is not in supported range!';
+            throw 'Field length too short!';
         }
     } else {
         return false;

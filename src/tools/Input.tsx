@@ -27,8 +27,8 @@ function Input({title, error, className, id, errorInValue, width, value, type, o
 
     return (
         <div style={{width: `${width === undefined ? '12rem' : width}`, height: '2.5rem', margin: `.5rem 0 ${errorInValue ? '1.5rem' : '.5rem'} 0`}} className={className === undefined ? '' : className}>
-            <div className={`input-container 
-                ${isClassActivated ? 'input-focus' : ''} 
+            <div className={`input-container
+                ${isClassActivated ? 'input-focus' : ''}
                 ${errorInValue ? 'input-error' : ''}`}>
                     {type != "date" ? <label id="title">{title}</label> : <></>}
                     <input ref={input} type={type != 'date' ? 'text' : 'date'} id={id}
