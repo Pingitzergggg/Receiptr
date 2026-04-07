@@ -4,7 +4,7 @@ import type {paginatable, responseType} from "./databaseTables"
 export const domainUrl: string = 'http://localhost:8000';
 
 export type methods = "GET" | "POST" | "PUT" | "DELETE";
-export type endpoints = "user" | "cards" | "categories" | "receipts" | "archive" | "login" | "register" | "logout";
+export type endpoints = "user" | "cards" | "categories" | "receipts" | "archive" | "login" | "register" | "logout" | "wipeout";
 
 export type response<T extends keyof responseType> = {
     status: number;

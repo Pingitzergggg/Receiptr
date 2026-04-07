@@ -1,5 +1,5 @@
 import { NavLink, useNavigate } from 'react-router-dom'
-import { useState } from 'react'
+import { useRef, useState, type RefObject } from 'react'
 import { checkInjection } from '../misc/stringValidator'
 import Popup from '../tools/Popup'
 import '../tailwind.css'
@@ -21,6 +21,7 @@ function Login() : any {
         password: inputField
     };
 
+    const rememberMe: RefObject<boolean> = useRef(false);
     const [loginData, setLoginData] = useState<inputFields>({
         email: {
             value: '',
@@ -65,7 +66,8 @@ function Login() : any {
             try {
                 const response = await requestResource("login", "POST", null, null, {
                     email: loginData.email.value,
-                    password: loginData.password.value
+                    password: loginData.password.value,
+                    remember_device: rememberMe.current
                 });
                 await extractResponse(response);
                 sessionStorage.removeItem('cards');
@@ -108,7 +110,7 @@ function Login() : any {
 
                             <div className='w-[50%] mt-2 flex justify-evenly'>
                                 <p>Remember browser</p>
-                                <input type='checkbox'/>
+                                <input onChange={event => rememberMe.current = event.target.checked} type='checkbox'/>
                             </div>
 
                             <Button onClick={login} className='mt-1' width="100%" label="Login" icon={<FontAwesomeIcon icon={faArrowRightToBracket} />} />

@@ -12,7 +12,6 @@ import {
   faPhone,
   faAt,
   faDoorOpen,
-  faDownload,
   faBroom, faInfo
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -39,8 +38,8 @@ function SettingsPanel() : ReactElement {
     navigate("/settings", {state: {cacheClearSuccess: true}});
   }
 
-  async function logout() {
-    await requestResource<'user'>('logout', 'POST');
+  async function logout(wipeoutMode: boolean = false) {
+    await requestResource<'user'>(wipeoutMode ? 'wipeout' : 'logout', 'POST');
     sessionStorage.removeItem("user");
     navigate("/login");
   }
@@ -141,7 +140,7 @@ function SettingsPanel() : ReactElement {
               </legend>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-4">
-              <Button onClick={logout} label="Logout" icon={<FontAwesomeIcon icon={faDoorOpen} />} className="mt-5" width="auto" />
+              <Button onClick={() => logout()} label="Logout" icon={<FontAwesomeIcon icon={faDoorOpen} />} className="mt-5" width="auto" />
             </div>
           </div>
 
@@ -183,7 +182,7 @@ function SettingsPanel() : ReactElement {
               Danger Zone</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
                 <button onClick={() => setAccountDeletion(true)} className="btn bta">Delete Account</button>
-                <button className="btn bta">Log out everywhere</button>
+                <button onClick={() => logout(true)} className="btn bta">Log out everywhere</button>
               </div>
           </div>
 
