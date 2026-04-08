@@ -152,7 +152,7 @@ function SettingsPanel() : ReactElement {
               <Select onChange={event => setArchiveSelected(event.target.value as any ?? null)} id="archive" errorInValue={false} width="auto" title="Select cache" values={[{label: 'Cards', value: 'cards'}, {label: 'Receipts', value: 'receipts'}, {label: 'Categories', value: 'categories'}]} />
               <Button className="my-auto" onClick={() => {
                 if (archiveSelected) {
-                  removeSession(archiveSelected);
+                  navigate('/settings/archive/'+archiveSelected);
                 } else {
                   setError('You must select first!');
                 }

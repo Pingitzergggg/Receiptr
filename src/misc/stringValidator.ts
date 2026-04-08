@@ -126,7 +126,7 @@ function passwordValidator(input : string) : boolean {
                 }
             }
         } else {
-            throw 'Password length must be between 15 and 50';
+            throw 'Min 15 max 50 characters!';
         }
     } else {
         return false;
@@ -135,7 +135,7 @@ function passwordValidator(input : string) : boolean {
     if (hasSpecialKey) {
         return hasSpecialKey;
     } else {
-        throw 'Password must contain at least one special character or number!'
+        throw 'Min 1 special character needed!'
     }
 }
 

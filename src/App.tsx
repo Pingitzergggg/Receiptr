@@ -32,7 +32,8 @@ import DeleteItem from './tools/DeleteItem'
 import Archive from "./tools/Archive.tsx";
 import {extractResponse, requestResource} from "./misc/receiver.ts";
 import UploadSettingsPanel from "./appfiles/upload/UploadSettingsPanel.tsx";
-
+import NotFound from './tools/NotFound.tsx'
+import PasswordReset from './tools/PasswordReset.tsx'
 
 function App(): ReactElement {
 
@@ -161,7 +162,8 @@ function App(): ReactElement {
           <Route path='/register' element={<Register/>} />
           <Route path='/dev' element={<Test />}/>
 
-          <Route path="*" element={<p>404 not found</p>} />
+          <Route path="/password" element={<PasswordReset />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
   );

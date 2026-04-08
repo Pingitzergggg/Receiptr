@@ -35,7 +35,7 @@ function DeleteItem<T extends keyof responseType>({itemType} : props) : ReactEle
 
     return (<>
         {error && <Popup type={"ERROR"} message={error} />}
-        <div className="fixed! bg-(--card-background) p-[1rem] absolute-center rounded-[15px]">
+        <div className="fixed! bg-(--card-background) p-[1rem] absolute-center rounded-[15px] window">
             <h2 className="text-2xl font-bold text-center my-[2rem] mx-[1rem]">Delete {itemType.toLowerCase().replace(/^[a-z]/, c => c.toUpperCase())}?</h2>
             <div className="flex justify-evenly mb-[1rem]">
                 <button className="btn bta" onClick={() => navigate(-1)}>Cancel</button>

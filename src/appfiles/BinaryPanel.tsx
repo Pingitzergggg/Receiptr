@@ -1,4 +1,4 @@
-import { faUpRightAndDownLeftFromCenter, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faDownload, faUpRightAndDownLeftFromCenter, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {type ReactElement, useEffect, useState} from "react";
 import {useNavigate, useParams, useSearchParams} from "react-router-dom";
@@ -53,11 +53,14 @@ function BinaryPanel() : any {
             <div id="binary-panel-control-bar">
                 <p>{title}</p>
                 <div className="flex justify-center items-center">
-                    <a onClick={() => window.location.assign('../../cats.pdf')} className="btn-nav bg-amber-400 ml-3">
-                        <FontAwesomeIcon icon={faUpRightAndDownLeftFromCenter} />
-                    </a>
                     <a onClick={() => navigate('/receipts')} className="btn-nav bg-red-400 ml-3">
                         <FontAwesomeIcon icon={faXmark} />
+                    </a>
+                    <a onClick={() => window.location.assign(fileUrl)} className="btn-nav bg-amber-400 ml-3">
+                        <FontAwesomeIcon icon={faUpRightAndDownLeftFromCenter} />
+                    </a>
+                    <a  title='Open' className='btn-nav bg-green-400 ml-3'>
+                        <FontAwesomeIcon icon={faDownload} />
                     </a>
                 </div>
             </div>
