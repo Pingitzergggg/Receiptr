@@ -1,7 +1,7 @@
 import { useState, type ReactElement } from "react";
 import Input from "./Input";
 import Button from "./Button";
-import { checkInjection, stringValidate } from "../misc/stringValidator";
+import { stringValidate } from "../misc/stringValidator";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRotateLeft } from "@fortawesome/free-solid-svg-icons";
 
