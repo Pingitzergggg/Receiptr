@@ -1,4 +1,4 @@
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { useRef, useState, type RefObject } from 'react'
 import { checkInjection } from '../misc/stringValidator'
 import Popup from '../tools/Popup'
@@ -9,17 +9,19 @@ import Button from "../tools/Button.tsx";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowRightToBracket} from "@fortawesome/free-solid-svg-icons";
 
+type inputField = {
+    value: string,
+    error: string
+};
+
+type inputFields = {
+    email: inputField,
+    password: inputField
+};
+
 function Login() : any {
 
-    type inputField = {
-        value: string,
-        error: string
-    };
-
-    type inputFields = {
-        email: inputField,
-        password: inputField
-    };
+    const location = useLocation();
 
     const rememberMe: RefObject<boolean> = useRef(false);
     const [loginData, setLoginData] = useState<inputFields>({
@@ -87,6 +89,8 @@ function Login() : any {
 
     return (
             <>
+                {location.state?.passworddRequest && <Popup type='SUCCESS' message='Password requested!' />}
+                {location.state?.passwordReset && <Popup type='SUCCESS' message='Password reset!' />}
                 {error && <Popup type='ERROR' message={error}/>}
                 <div className='flex justify-evenly items-center w-[100vw] h-[100vh]'>
                     <div className='w-full hidden lg:block'>
