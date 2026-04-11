@@ -5,6 +5,9 @@ import { stringValidate, type inputType } from "../../misc/stringValidator";
 import {useNavigate, useParams, useSearchParams} from "react-router-dom";
 import {extractResponse, requestResource} from "../../misc/receiver.ts";
 import Popup from "../../tools/Popup.tsx";
+import Button from "../../tools/Button.tsx";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUpload } from "@fortawesome/free-solid-svg-icons";
 
 type updateData = {
     name: string,
@@ -100,7 +103,7 @@ function UploadCategoryPanel() : ReactElement {
                 <input type="color" id="color" placeholder="Color" className="maximize-view cursor-pointer absolute opacity-0" onChange={handleInputChange} value={categoryData.color.value} />
                 <div className={`maximize-view rounded-[5px]`} style={categoryData.color.value ? {backgroundColor: categoryData.color.value} : {backgroundColor: 'black'}}></div>
             </div>
-            <button className="btn w-[100%]" onClick={upload}>Save</button>
+            <Button label="Upload" loadingIndicator={true} width="100%" onClick={upload} icon={<FontAwesomeIcon icon={faUpload} />} />
         </div></>;
 }
 

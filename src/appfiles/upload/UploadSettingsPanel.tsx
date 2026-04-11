@@ -81,7 +81,7 @@ function UploadSettingsPanel(): ReactElement {
 
         <Input type={type === "Password" ? "password" : "text"} width='100%' id={type!.includes("name") ? "name" : type!} title={type!} errorInValue={data.error.length != 0} error={data.error} value={data.value} onChange={handleInputChange} />
 
-        <Button label={'Upload'} onClick={upload} className='mt-5' fontSize="1rem" width="100%" icon={<FontAwesomeIcon icon={faUpload} />} />
+        <Button loadingIndicator={true} label={'Upload'} onClick={upload} className='mt-5' fontSize="1rem" width="100%" icon={<FontAwesomeIcon icon={faUpload} />} />
     </legend></>
 }
 

@@ -8,12 +8,14 @@ type propsType = {
     width?: string,
     fontSize?: string,
     className?: string,
+    loadingIndicator?: boolean,
     onClick?: (event: React.MouseEvent<HTMLDivElement>) => void
 };
 
-function Button({label, icon, height, width, className, fontSize, onClick} : propsType) : ReactElement {
+function Button({label, icon, height, width, className, loadingIndicator, fontSize, onClick} : propsType) : ReactElement {
 
     const [isHovered, setHovered] = useState<boolean>(false);
+    const [isClicked, setClicked] = useState<boolean>(false);
 
     console.log(`isHovered: ${isHovered}`)
 
@@ -25,9 +27,13 @@ function Button({label, icon, height, width, className, fontSize, onClick} : pro
         <div onMouseOver={() => setHovered(true)} className={`btn-container ${isHovered ? 'btn-container-hover' : ''} ${className}`} style={{height: `${height ? height : '2.5rem'}`, width: `${width ? width : '5rem'}`}}>
             <button className="btn" style={{fontSize: `${fontSize}`}}>
                 {label}
-                {icon && icon}
+                {(icon && !isClicked) && icon}
+                {(loadingIndicator && isClicked) && <span className="loading loading-spinner loading-md mx-1"></span>}
             </button>
-            <div onClick={onClick}></div>
+            <div onClick={event => {
+                setClicked(true);
+                if (onClick) onClick(event);
+            }}></div>
         </div>
     </>);
 }

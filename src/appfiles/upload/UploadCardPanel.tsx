@@ -220,7 +220,7 @@ function UploadReceiptPanel() : ReactElement {
                 ]} />
             </div>
 
-            <Button onClick={upload} label="Upload" width="100%" className="my-5" fontSize="1rem" icon={<FontAwesomeIcon icon={faUpload} />} />
+            <Button loadingIndicator={true} onClick={upload} label="Upload" width="100%" className="my-5" fontSize="1rem" icon={<FontAwesomeIcon icon={faUpload} />} />
         </legend>
     </>);
 }

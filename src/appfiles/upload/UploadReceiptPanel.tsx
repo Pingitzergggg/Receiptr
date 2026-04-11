@@ -245,7 +245,7 @@ function UploadReceiptPanel(): ReactElement {
                         {fileNotifier.title}
                         <input className="opacity-0 absolute top-0 left-0 h-[100%] w-[100%] cursor-pointer" type="file" accept=".pdf" onChange={e => {setCurrentFile(e.target.files as any); console.log(e.target.files)}} />
                     </div></>}
-                    <Button onClick={upload} label="Upload" width="100%" fontSize="1rem" icon={<FontAwesomeIcon icon={faUpload} />}/>
+                    <Button loadingIndicator={true} onClick={upload} label="Upload" width="100%" fontSize="1rem" icon={<FontAwesomeIcon icon={faUpload} />}/>
                 </div>
             </div>
         </div>

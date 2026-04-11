@@ -118,7 +118,7 @@ function Register() : any {
 
     return (
         <>{error && <Popup type={"ERROR"} message={error} />}
-        <div className='flex justify-evenly items-center w-[100vw] h-[100%]'>
+        <div className='flex justify-evenly items-center w-[100vw] h-[100vh]'>
             <div className='w-full hidden lg:block'>
                 <img src='/banner.jpg' alt='Banner' className='h-[100vh] w-[50vw]' />
             </div>
@@ -156,14 +156,10 @@ function Register() : any {
                     <input id='confirm_password' onChange={handleInputChange} type="password" className="input w-full" placeholder="Password" />
                     {(registerData.confirm_password.error.length != 0) && <span className='error'>{registerData.confirm_password.error}</span>}
 
-                    <Button onClick={register} className='mt-3' width="100%" label="Register" icon={<FontAwesomeIcon icon={faArrowRightToBracket} />} />
+                    <Button loadingIndicator={true} onClick={register} className='mt-3' width="100%" label="Register" icon={<FontAwesomeIcon icon={faArrowRightToBracket} />} />
 
                     <p>Back to <NavLink to='/login'>Login</NavLink></p>
                 </fieldset>
-                <p className='italic text-right my-10'>
-                    Application by <a className='hover:underline' href='https://github.com/Fyrra1' target='_blank'><b>Fyrra</b></a>, <a className='hover:underline' href='https://github.com/TrxpleD23' target='_blank'><b>Guido</b></a>, <a className='hover:underline' href='https://github.com/Pingitzergggg' target='_blank'><b>Pingitzergggg</b></a><br/>
-                    This software is under the <a className='hover:underline' href='https://github.com/Pingitzergggg/Receiptr/blob/main/LICENSE' target='_blank'><b>MIT License</b></a> {/*Replace link to actual License when created*/}
-                </p>
             </div>
         </div></>
     )

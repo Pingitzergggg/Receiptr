@@ -5,4 +5,5 @@
 - Redesign the filter bar to be more mobile friendly - done
 - Make the download button work on BinaryPanel - done
 - Look into why CSS isn't loading on email-verified page
-- Maybe add a loading indicator to see what's happening
+- Maybe add a loading indicator to see what's happening - done
+- Fix iframe does not work on Google Chrome Mobile
