@@ -118,7 +118,7 @@ function Register() : any {
 
     return (
         <>{error && <Popup type={"ERROR"} message={error} />}
-        <div className='flex justify-evenly items-center w-[100vw] h-[100vh]'>
+        <div className='flex justify-evenly items-center w-[100vw] h-[100%]'>
             <div className='w-full hidden lg:block'>
                 <img src='/banner.jpg' alt='Banner' className='h-[100vh] w-[50vw]' />
             </div>
@@ -160,7 +160,7 @@ function Register() : any {
 
                     <p>Back to <NavLink to='/login'>Login</NavLink></p>
                 </fieldset>
-                <p className='italic text-right absolute right-1 bottom-1'>
+                <p className='italic text-right my-10'>
                     Application by <a className='hover:underline' href='https://github.com/Fyrra1' target='_blank'><b>Fyrra</b></a>, <a className='hover:underline' href='https://github.com/TrxpleD23' target='_blank'><b>Guido</b></a>, <a className='hover:underline' href='https://github.com/Pingitzergggg' target='_blank'><b>Pingitzergggg</b></a><br/>
                     This software is under the <a className='hover:underline' href='https://github.com/Pingitzergggg/Receiptr/blob/main/LICENSE' target='_blank'><b>MIT License</b></a> {/*Replace link to actual License when created*/}
                 </p>

@@ -92,7 +92,7 @@ function Login() : any {
                 {location.state?.passwordRequest && <Popup type='SUCCESS' message='Password requested!' />}
                 {location.state?.passwordReset && <Popup type='SUCCESS' message='Password reset!' />}
                 {error && <Popup type='ERROR' message={error}/>}
-                <div className='flex justify-evenly items-center w-[100vw] h-[100vh]'>
+                <div className='flex justify-evenly items-center w-[100vw] h-[90vh]'>
                     <div className='w-full hidden lg:block'>
                         <img src='/banner.jpg' alt='Banner' className='h-[100vh] w-[50vw]' />
                     </div>
@@ -122,12 +122,12 @@ function Login() : any {
                             <p>Don't have an account? <NavLink to='/register'><b className='hover:underline'>Register</b></NavLink></p>
                             <NavLink to='/request-password'><a className='hover:underline cursor-pointer'>Forgot my password</a></NavLink>
                         </fieldset>
-                        <p className='italic text-right absolute right-5 bottom-5'>
-                            Application by <a className='hover:underline' href='https://github.com/Fyrra1' target='_blank'><b>Fyrra</b></a> <a className='hover:underline' href='https://github.com/TrxpleD23' target='_blank'><b>Guido</b></a> <a className='hover:underline' href='https://github.com/Pingitzergggg' target='_blank'><b>Pingitzergggg</b></a><br/>
-                            This software is under the <a className='hover:underline' href='https://github.com/Pingitzergggg/Receiptr/blob/main/LICENSE' target='_blank'><b>MIT License</b></a>
-                        </p>
                     </div>
                 </div>
+                <p className='italic text-right'>
+                    Application by <a className='hover:underline' href='https://github.com/Fyrra1' target='_blank'><b>Fyrra</b></a> <a className='hover:underline' href='https://github.com/TrxpleD23' target='_blank'><b>Guido</b></a> <a className='hover:underline' href='https://github.com/Pingitzergggg' target='_blank'><b>Pingitzergggg</b></a><br/>
+                    This software is under the <a className='hover:underline' href='https://github.com/Pingitzergggg/Receiptr/blob/main/LICENSE' target='_blank'><b>MIT License</b></a>
+                </p>
             </>
         );
 }

@@ -57,31 +57,35 @@ function Filter<T extends keyof paginatable>({forPanel, onFilter, onRefresh, fil
 
     return (
         <div className='flex md:flex-row flex-col bg-(--card-background) rounded-[15px] p-2 justify-evenly items-center w-[90%] mt-10'>
-            <Button width='30%' className='mx-5' label='Refresh' icon={<FontAwesomeIcon style={{width: '1rem', height: '1rem'}} icon={faArrowRotateRight} />} onClick={async () => {
-                if (onRefresh) onRefresh(await load());
-            }} />
-            <div className='mx-2 w-[50%]'>
+            <div className='mx-2 md:w-[50%] w-[95%]'>
                 <Input width='100%' title='Search' id='search' errorInValue={keyword.error.length != 0} error={keyword.error} value={keyword.value} onChange={handleInputChange} />
             </div>
-            <div className='mx-2 w-[50%]'>
-                <Select width='100%' title='Order By' id='orderby' errorInValue={false} onChange={(event) => {
-                    if (event.target.value) filter.current.order = event.target.value;
-                }} values={
-                    !filterableColumns ? [] :
-                        filterableColumns.map(each => {return {value: each, label: each}})
-                } />
+            <div className="flex w-full justify-center items-center">
+                <div className='mx-2 w-[50%]'>
+                    <Select width='100%' title='Order By' id='orderby' errorInValue={false} onChange={(event) => {
+                        if (event.target.value) filter.current.order = event.target.value;
+                    }} values={
+                        !filterableColumns ? [] :
+                            filterableColumns.map(each => {return {value: each, label: each}})
+                    } />
+                </div>
+                <div className='mx-2 w-[50%]'>
+                    <Select width='100%' title='Direction' id='direction' errorInValue={false} onChange={(event) => {
+                        if (event.target.value) filter.current.direction = event.target.value;
+                    }} values={[
+                        {label: 'ascending', value:'asc'},
+                        {label: 'descending', value:'desc'}
+                    ]} />
+                </div>
             </div>
-            <div className='mx-2 w-[50%]'>
-                <Select width='100%' title='Direction' id='direction' errorInValue={false} onChange={(event) => {
-                    if (event.target.value) filter.current.direction = event.target.value;
-                }} values={[
-                    {label: 'ascending', value:'asc'},
-                    {label: 'descending', value:'desc'}
-                ]} />
+            <div className="flex w-full justify-center items-center">
+                <Button width='100%' className='mx-5' label='Refresh' icon={<FontAwesomeIcon style={{width: '1rem', height: '1rem'}} icon={faArrowRotateRight} />} onClick={async () => {
+                    if (onRefresh) onRefresh(await load());
+                }} />
+                <Button width='100%' className='mx-5' label='Filter' icon={<FontAwesomeIcon style={{width: '1rem', height: '1rem'}} icon={faFilter} />} onClick={async () => {
+                    if (onFilter) onFilter(await load());
+                }} />
             </div>
-            <Button width='30%' className='mx-5' label='Filter' icon={<FontAwesomeIcon style={{width: '1rem', height: '1rem'}} icon={faFilter} />} onClick={async () => {
-                if (onFilter) onFilter(await load());
-            }} />
         </div>
     );
 }

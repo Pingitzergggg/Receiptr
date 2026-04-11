@@ -41,9 +41,19 @@ function BinaryPanel() : any {
         }
     }
 
+    function download(fileUrl: string) {
+        console.log(fileUrl)
+        const link: HTMLAnchorElement = document.createElement('a') as HTMLAnchorElement;
+        link.href = fileUrl;
+        link.download = title ? `${title}.pdf` : "unknown.pdf";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
     const navigate = useNavigate();
 
-    const [content, setContent] = useState<ReactElement>(<i>Loading<span className="loading loading-spinner loading-md mx-1"></span></i>);
+    const [content, setContent] = useState<ReactElement>(<div className="h-[80vh]"><i>Loading<span className="loading loading-spinner loading-md mx-1"></span></i></div>);
     const [error, setError] = useState<string>('');
 
     const Display = ({fileUrl}: {fileUrl: string}) => {
@@ -53,13 +63,16 @@ function BinaryPanel() : any {
             <div id="binary-panel-control-bar">
                 <p>{title}</p>
                 <div className="flex justify-center items-center">
-                    <a onClick={() => navigate('/receipts')} className="btn-nav bg-red-400 ml-3">
+                    <a onClick={() => {
+                        URL.revokeObjectURL(fileUrl);
+                        navigate('/receipts');
+                    }} className="btn-nav bg-red-400 ml-3">
                         <FontAwesomeIcon icon={faXmark} />
                     </a>
                     <a onClick={() => window.location.assign(fileUrl)} className="btn-nav bg-amber-400 ml-3">
                         <FontAwesomeIcon icon={faUpRightAndDownLeftFromCenter} />
                     </a>
-                    <a  title='Open' className='btn-nav bg-green-400 ml-3'>
+                    <a  onClick={() => download(fileUrl)} className='btn-nav bg-green-400 ml-3'>
                         <FontAwesomeIcon icon={faDownload} />
                     </a>
                 </div>
