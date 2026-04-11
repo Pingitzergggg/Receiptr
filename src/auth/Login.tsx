@@ -89,7 +89,7 @@ function Login() : any {
 
     return (
             <>
-                {location.state?.passworddRequest && <Popup type='SUCCESS' message='Password requested!' />}
+                {location.state?.passwordRequest && <Popup type='SUCCESS' message='Password requested!' />}
                 {location.state?.passwordReset && <Popup type='SUCCESS' message='Password reset!' />}
                 {error && <Popup type='ERROR' message={error}/>}
                 <div className='flex justify-evenly items-center w-[100vw] h-[100vh]'>
@@ -120,7 +120,7 @@ function Login() : any {
                             <Button onClick={login} className='mt-1' width="100%" label="Login" icon={<FontAwesomeIcon icon={faArrowRightToBracket} />} />
 
                             <p>Don't have an account? <NavLink to='/register'><b className='hover:underline'>Register</b></NavLink></p>
-                            <a className='hover:underline cursor-pointer'>Forgot my password</a>
+                            <NavLink to='/request-password'><a className='hover:underline cursor-pointer'>Forgot my password</a></NavLink>
                         </fieldset>
                         <p className='italic text-right absolute right-5 bottom-5'>
                             Application by <a className='hover:underline' href='https://github.com/Fyrra1' target='_blank'><b>Fyrra</b></a> <a className='hover:underline' href='https://github.com/TrxpleD23' target='_blank'><b>Guido</b></a> <a className='hover:underline' href='https://github.com/Pingitzergggg' target='_blank'><b>Pingitzergggg</b></a><br/>

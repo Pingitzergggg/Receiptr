@@ -5,6 +5,7 @@ import { stringValidate } from "../misc/stringValidator";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRotateLeft } from "@fortawesome/free-solid-svg-icons";
+import { domainUrl } from "../misc/receiver";
 
 type FieldType = {
     value: string,
@@ -20,16 +21,17 @@ function PasswordRequest(): ReactElement {
 
     async function load() {
         try {
-            if (email.error || !email.value) return;
-            const response = await fetch("https://pgapi.ddns.net/api/receiptr/request-password", {
+            if (email.error.length || !email.value.length) return;
+            console.log("fetching data...")
+            const response = await fetch(domainUrl+"/api/receiptr/request-password-reset", {
                 method: 'POST',
                 headers: {
-                    'content-type': 'application/json'
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({email: email.value})
             });
 
-            const data = await response.json();
+            if (!response.ok) throw Error(await response.json());
             navigate('/login', {state: {passwordRequest: true}});
         } catch (error) {
             console.error(error);

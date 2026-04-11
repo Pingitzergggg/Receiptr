@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactElement } from "react";
+import { useState, type ReactElement } from "react";
 import Input from "./Input";
 import Button from "./Button";
 import { stringValidate } from "../misc/stringValidator";
@@ -7,6 +7,7 @@ import { faArrowRotateLeft } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Popup from "./Popup";
 import NotFound from "./NotFound";
+import { domainUrl } from "../misc/receiver";
 
 type FormField = {
         value: string;
@@ -58,7 +59,7 @@ function PasswordReset(): ReactElement {
                 return;
             }
             if (passwordData.password.error || passwordData.password_confirm.error) return;
-            const response = await fetch("https://pgapi.ddns.net/api/receiptr/reset-password", {
+            const response = await fetch(domainUrl+"/api/receiptr/reset-password", {
                 method: "POST",
                 headers: {
                     'content-type': 'application/json'

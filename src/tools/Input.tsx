@@ -31,7 +31,7 @@ function Input({title, error, className, id, errorInValue, width, value, type, o
                 ${isClassActivated ? 'input-focus' : ''}
                 ${errorInValue ? 'input-error' : ''}`}>
                     {type != "date" ? <label id="title">{title}</label> : <></>}
-                    <input ref={input} type={type != 'date' ? 'text' : 'date'} id={id}
+                    <input ref={input} type={type} id={id}
                         onFocus={() => setClassActivated(true)}
                         onBlur={e => setClassActivated(e.target.value.length > 0)}
                         onChange={onChange}
