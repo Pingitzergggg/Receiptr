@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState, type ReactElement, type RefObject } from "react";
 import * as pdfjsLib from "pdfjs-dist";
 import pdfjsWorker from "pdfjs-dist/build/pdf.worker.min?url";
 
@@ -6,68 +6,68 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
 
 interface PdfViewerProps {
   fileUrl: string;
-  scrollable: boolean
 }
 
-export default function PdfViewer({ fileUrl, scrollable }: PdfViewerProps) {
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+function PdfViewer({ fileUrl }: PdfViewerProps) {
+  const output: RefObject<ReactElement[]> = useRef([]);
+  const [loaded, setLoaded] = useState<boolean>(false);
+
+  function Page({pdf, page}: {pdf: pdfjsLib.PDFDocumentProxy, page: number}): ReactElement {
+    const canvasRef: RefObject<HTMLCanvasElement|null> = useRef(null);
+    
+    useEffect(() => {
+      async function renderPage() {
+        let pageUpperLimit: number = pdf.numPages;
+        if (page > pageUpperLimit) {
+          console.error("Pdf.js: Page cursor overflow!");
+          return;
+        }
+        let doc = await pdf.getPage(page);
+
+        const viewport = doc.getViewport({ scale: 2 });
+        const canvas = canvasRef.current;
+        if (!canvas) {
+          console.error("Pdf.js: There is no canvas to use!");
+          return;
+        }
+        const context = canvas.getContext("2d");
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
+
+        await doc.render({ canvasContext: context!, viewport, canvas: canvasRef.current! }).promise;
+      }
+
+      renderPage();
+    }, []);
+
+    return <div className="w-full mb-5">
+      <canvas className="h-[60vh] md:h-[80vh] w-[100%]" ref={canvasRef}></canvas>
+    </div>;
+  }
 
   useEffect(() => {
-    const renderPdf = async () => {
-      let currentPage : number = 1;
-      let pageUpperLimit : number = NaN;
+    async function renderPdf() {
       const pdf = await pdfjsLib.getDocument(fileUrl).promise;
-      let page = await pdf.getPage(1);
-
-      const viewport = page.getViewport({ scale: .5 });
-      const canvas = canvasRef.current;
-      if (!canvas) return;
-
-      const context = canvas.getContext("2d");
-      canvas.height = viewport.height;
-      canvas.width = viewport.width;
-
-      await page.render({ canvasContext: context!, viewport, canvas: canvasRef.current! }).promise;
-
-      const pageChanger = async () => {
-        try {
-            if (isNaN(pageUpperLimit)) {
-                page = await pdf.getPage(currentPage);
-            } else {
-                if (currentPage <= pageUpperLimit) {
-                    page = await pdf.getPage(currentPage);
-                } else {
-                    currentPage = pageUpperLimit;
-                }
-            }
-        } catch {
-            pageUpperLimit = currentPage - 1;
-            currentPage = pageUpperLimit;
-            console.error('Pdf.js: PDF page is out of bounds!');
-        } finally {
-            await page.render({canvasContext: context!, viewport, canvas: canvasRef.current!});
-        }
+      for (let i: number = 1; i <= pdf.numPages; ++i) {
+        console.log(i);
+        output.current.push(await <Page page={i} pdf={pdf} />)
       }
+      console.log(output.current);
+    }
 
-      const scrollControl = (e: { deltaY: number; }) => {
-        if (e.deltaY < 0) {
-            currentPage = currentPage == 1 ? currentPage : currentPage - 1;
-            pageChanger();
-        } else {
-            currentPage++;
-            pageChanger();
-        }
+    renderPdf().then(() => {
+      if (output.current.length != 0) {
+        setLoaded(true);
       }
-      
-      if (scrollable) { //Scrolling doesnt work properly when loading in multiple documents -- DONT USE
-            canvas.addEventListener('wheel', scrollControl);
-      }
-    };
-
-    renderPdf().catch(console.error);
+    }).catch(console.error);
   }, [fileUrl]);
 
-  return (
-    <canvas className="w-[40%] h-[10rem]" style={{borderRadius: '15px'}} ref={canvasRef}></canvas>
-  );
+  let Element: ReactElement[] = [];
+  if (loaded) {
+    Element = output.current;
+  }
+
+  return Element;
 }
+
+export default PdfViewer;

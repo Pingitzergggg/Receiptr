@@ -101,7 +101,7 @@ function Login() : any {
                             <img src='/icon.png' alt='Logo' className='w-[10rem] h-[7.5rem]' />
                             <h1 className='text-6xl font-bold'>Receiptr</h1>
                         </div>
-                        <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
+                        <fieldset className="fieldset bg-(--fieldset-bg) border-base-300 rounded-box w-xs border p-4">
                             <legend className="fieldset-legend">Login</legend>
 
                             <label className="label">Email</label>
@@ -117,7 +117,7 @@ function Login() : any {
                                 <input onChange={event => rememberMe.current = event.target.checked} type='checkbox'/>
                             </div>
 
-                            <Button loadingIndicator={true} onClick={login} className='mt-1' width="100%" label="Login" icon={<FontAwesomeIcon icon={faArrowRightToBracket} />} />
+                            <Button async={true} onClick={login} className='mt-1' width="100%" label="Login" icon={<FontAwesomeIcon icon={faArrowRightToBracket} />} />
 
                             <p>Don't have an account? <NavLink to='/register'><b className='hover:underline'>Register</b></NavLink></p>
                             <NavLink to='/request-password'><a className='hover:underline cursor-pointer'>Forgot my password</a></NavLink>

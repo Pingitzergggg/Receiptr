@@ -103,7 +103,7 @@ function UploadCategoryPanel() : ReactElement {
                 <input type="color" id="color" placeholder="Color" className="maximize-view cursor-pointer absolute opacity-0" onChange={handleInputChange} value={categoryData.color.value} />
                 <div className={`maximize-view rounded-[5px]`} style={categoryData.color.value ? {backgroundColor: categoryData.color.value} : {backgroundColor: 'black'}}></div>
             </div>
-            <Button label="Upload" loadingIndicator={true} width="100%" onClick={upload} icon={<FontAwesomeIcon icon={faUpload} />} />
+            <Button label="Upload" async={true} width="100%" onClick={upload} icon={<FontAwesomeIcon icon={faUpload} />} />
         </div></>;
 }
 

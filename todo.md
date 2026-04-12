@@ -6,4 +6,8 @@
 - Make the download button work on BinaryPanel - done
 - Look into why CSS isn't loading on email-verified page
 - Maybe add a loading indicator to see what's happening - done
+- Make colors responsive inside <fieldset> on /login, /register - done
+- Make loading indicator stop the animation when response arrives
+- Fix double clicking on Mobile for button click event
 - Fix iframe does not work on Google Chrome Mobile
+- Design the checkbox

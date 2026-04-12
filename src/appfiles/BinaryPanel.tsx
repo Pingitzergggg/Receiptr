@@ -4,6 +4,7 @@ import {type ReactElement, useEffect, useState} from "react";
 import {useNavigate, useParams, useSearchParams} from "react-router-dom";
 import {requestFile} from "../misc/receiver.ts";
 import Popup from "../tools/Popup.tsx";
+import PdfViewer from "../tools/PdfViewer.tsx";
 
 function BinaryPanel() : any {
     // @ts-ignore
@@ -59,7 +60,9 @@ function BinaryPanel() : any {
     const Display = ({fileUrl}: {fileUrl: string}) => {
         return <>
             {error && <Popup type={"ERROR"} message={error} />}
-            <iframe src={fileUrl}></iframe>
+            <div id="binary-panel-content">
+                <PdfViewer fileUrl={fileUrl} />
+            </div>
             <div id="binary-panel-control-bar">
                 <p>{title}</p>
                 <div className="flex justify-center items-center">

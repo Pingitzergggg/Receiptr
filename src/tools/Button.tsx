@@ -8,14 +8,21 @@ type propsType = {
     width?: string,
     fontSize?: string,
     className?: string,
-    loadingIndicator?: boolean,
-    onClick?: (event: React.MouseEvent<HTMLDivElement>) => void
+    async?: boolean,
+    onClick?: (event: React.MouseEvent<HTMLDivElement>) => Promise<void>|void
 };
 
-function Button({label, icon, height, width, className, loadingIndicator, fontSize, onClick} : propsType) : ReactElement {
+function Button({label, icon, height, width, className, async, fontSize, onClick} : propsType) : ReactElement {
 
+    const [canBeHovered, setCanBeHovered] = useState<boolean>(false);
     const [isHovered, setHovered] = useState<boolean>(false);
     const [isClicked, setClicked] = useState<boolean>(false);
+
+    useEffect(() => {
+        const hoverableMatcher = window.matchMedia('(hover: hover)');
+        setCanBeHovered(hoverableMatcher.matches);
+        console.log(hoverableMatcher.matches);
+    }, []);
 
     console.log(`isHovered: ${isHovered}`)
 
@@ -24,16 +31,29 @@ function Button({label, icon, height, width, className, loadingIndicator, fontSi
     }
 
     return (<>
-        <div onMouseOver={() => setHovered(true)} className={`btn-container ${isHovered ? 'btn-container-hover' : ''} ${className}`} style={{height: `${height ? height : '2.5rem'}`, width: `${width ? width : '5rem'}`}}>
+        <div onClick={event => {
+            setClicked(true);
+            if (!canBeHovered) {
+                setHovered(true); console.log("THIS RAN DOW!!!");
+            }
+            if (onClick) {
+                if (async) {
+                    onClick(event)?.then(() => setClicked(false));
+                } else {
+                    onClick(event);
+                    setClicked(false);
+                }
+            }
+        }} onMouseOver={() => {if (canBeHovered) {
+                setHovered(true); console.log("THIS SHOULD NOT BE ABLE TO RUN!!")
+            }}} className={`btn-container ${isHovered ? 'btn-container-hover' : ''} ${className}`} style={{height: `${height ? height : '2.5rem'}`, width: `${width ? width : '5rem'}`}}>
             <button className="btn" style={{fontSize: `${fontSize}`}}>
                 {label}
-                {(icon && !isClicked) && icon}
-                {(loadingIndicator && isClicked) && <span className="loading loading-spinner loading-md mx-1"></span>}
+                {(icon && !async) && icon}
+                {(icon && async && !isClicked) && icon}
+                {(async && isClicked) && <span className="loading loading-spinner loading-md mx-1"></span>}
             </button>
-            <div onClick={event => {
-                setClicked(true);
-                if (onClick) onClick(event);
-            }}></div>
+            <div></div>
         </div>
     </>);
 }

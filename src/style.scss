@@ -263,7 +263,8 @@ input, select, textarea {
   height: auto;
   top: 5vh;
 
-  iframe {
+  #binary-panel-content {
+    overflow: scroll !important;
     width: 100%;
     height: 80vh;
     border-top-left-radius: 15px;
@@ -290,6 +291,9 @@ input, select, textarea {
 @media (max-width: 660px) {
   #binary-panel-div {
     width: 90% !important;
+  }
+  #binary-panel-content {
+    height: 60vh;
   }
   .upload {
     padding: 1.5rem;
@@ -440,17 +444,25 @@ input, select, textarea {
   }
 }
 
-.btn-container:hover {
-  button {
-    transform: scale(1.01);
-  }
+@media (hover: hover) {
+  .btn-container:hover {
+    button {
+      transform: scale(1.01);
+    }
 
-  div {
-    transition: .5s;
-    width: 100%;
-    height: 100%;
-    cursor: pointer;
+    div {
+      transition: .5s;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+    }
   }
+}
+
+.btn-container:active {
+    button {
+      transform: scale(1.02);
+    }
 }
 
 .input-error {

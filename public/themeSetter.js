@@ -10,12 +10,14 @@ root.setProperty("--error-color", "#a52424");
 if (localStorage.getItem("theme") === "dark") {
     root.setProperty("--font-color", "whitesmoke");
     root.setProperty("--bg-color", "#1d232a");
+    root.setProperty("--fieldset-bg", "#191E24");
     root.setProperty("--card-background", "#323339");
     root.setProperty("--input-bg", "#252525");
     root.setProperty("--border-icon-color", "#4d5051");
     root.setProperty("--accent-color", "#127012");
 } else  {
     root.setProperty("--bg-color", "whitesmoke");
+    root.setProperty("--fieldset-bg", "#cccccc");
     root.setProperty("--font-color", "black");
     root.setProperty("--card-background", "#cccccc");
     root.setProperty("--input-bg", "#a0a0a0ff");

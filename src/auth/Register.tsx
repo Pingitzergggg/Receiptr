@@ -127,7 +127,7 @@ function Register() : any {
                     <img src='/icon.png' alt='Logo' className='w-[10rem] h-[7.5rem]' />
                     <h1 className='text-6xl font-bold'>Receiptr</h1>
                 </div>
-                <fieldset className="fieldset bg-base-200 border-base-300 rounded-box md:w-[50%] w-[90%] border p-4">
+                <fieldset className="fieldset bg-(--fieldset-bg) border-base-300 rounded-box md:w-[50%] w-[90%] border p-4">
                     <legend className="fieldset-legend">Register Account</legend>
 
                     <label className="label">Username<b className='text-red-500!'>*</b></label>
@@ -156,7 +156,7 @@ function Register() : any {
                     <input id='confirm_password' onChange={handleInputChange} type="password" className="input w-full" placeholder="Password" />
                     {(registerData.confirm_password.error.length != 0) && <span className='error'>{registerData.confirm_password.error}</span>}
 
-                    <Button loadingIndicator={true} onClick={register} className='mt-3' width="100%" label="Register" icon={<FontAwesomeIcon icon={faArrowRightToBracket} />} />
+                    <Button async={true} onClick={register} className='mt-3' width="100%" label="Register" icon={<FontAwesomeIcon icon={faArrowRightToBracket} />} />
 
                     <p>Back to <NavLink to='/login'>Login</NavLink></p>
                 </fieldset>
