@@ -4,10 +4,13 @@
 
 - Redesign the filter bar to be more mobile friendly - done
 - Make the download button work on BinaryPanel - done
-- Look into why CSS isn't loading on email-verified page
 - Maybe add a loading indicator to see what's happening - done
 - Make colors responsive inside <fieldset> on /login, /register - done
-- Make loading indicator stop the animation when response arrives
-- Fix double clicking on Mobile for button click event
-- Fix iframe does not work on Google Chrome Mobile
+- Make loading indicator stop the animation when response arrives - done
+- Fix double clicking on Mobile for button click event - done
+- Fix iframe does not work on Google Chrome Mobile - done
 - Design the checkbox
+- Look into why CSS isn't loading on email-verified page
+- Fix vertical overflow for /register, /login
+- Make entire text be hyperlink on /register 'back to Login' button
+- Change general box shadow
