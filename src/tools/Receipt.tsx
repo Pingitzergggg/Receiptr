@@ -1,4 +1,4 @@
-import { faTrashCan, faWrench, faArrowUp } from "@fortawesome/free-solid-svg-icons";
+import { faTrashCan, faWrench, faArrowUp, faBarcode } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { type ReactElement } from "react";
 import { useNavigate } from "react-router-dom";
@@ -26,6 +26,10 @@ function Receipt({id, title, size, unit, store, creation, card, category, color,
         <div key={id} id={`receipt-${id}`} className="card receipt w-96 bg-base-100 card-xs shadow-sm relative transition hover:scale-103 cursor-pointer mb-[4rem]">
             <div className="card-body p-3">
                         <div className="flex justify-end items-center">
+                            <a onClick={() => navigate(`/receipts/${id}?barcode&title=${title}`)} title='Barcode' className='btn-nav bg-sky-400 ml-1'>
+                                <FontAwesomeIcon icon={faBarcode} />
+                            </a>
+                            
                             <a onClick={() => navigate(`/receipts/delete?id=${id}`)} title='Delete' className='btn-nav bg-red-400 ml-1'>
                                 <FontAwesomeIcon icon={faTrashCan} />
                             </a>

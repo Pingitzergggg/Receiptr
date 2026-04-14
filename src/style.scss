@@ -261,12 +261,12 @@ input, select, textarea {
   z-index: 2;
   width: 500px;
   height: auto;
-  top: 5vh;
+  top: 40%;
+  transform: translate(0, -40%);
 
   #binary-panel-content {
     overflow: scroll !important;
     width: 100%;
-    height: 80vh;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
   }
@@ -291,9 +291,6 @@ input, select, textarea {
 @media (max-width: 660px) {
   #binary-panel-div {
     width: 90% !important;
-  }
-  #binary-panel-content {
-    height: 60vh;
   }
   .upload {
     padding: 1.5rem;

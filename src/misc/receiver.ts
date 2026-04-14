@@ -1,7 +1,7 @@
 import type {paginatable, responseType} from "./databaseTables"
 
-// export const domainUrl: string = 'https://pgapi.ddns.net';
-export const domainUrl: string = 'http://localhost:8000';
+export const domainUrl: string = 'https://pgapi.ddns.net';
+// export const domainUrl: string = 'http://localhost:8000';
 
 export type methods = "GET" | "POST" | "PUT" | "DELETE";
 export type endpoints = "user" | "cards" | "categories" | "receipts" | "archive" | "login" | "register" | "logout" | "wipeout";
@@ -41,8 +41,8 @@ export async function sendFileForm(data: FormData): Promise<boolean> {
     return response.ok;
 }
 
-export async function requestFile(id: number): Promise<Blob>{
-    const response = await fetch(domainUrl+'/api/receiptr/receipts/'+id, {
+export async function requestFile(id: number, barcodeMode: boolean = false): Promise<Blob>{
+    const response = await fetch(`${domainUrl}/api/receiptr/receipts/${id}${barcodeMode ? '?barcode' : ''}`, {
         method: 'GET',
         headers: {
             'Accept': 'application/json',
