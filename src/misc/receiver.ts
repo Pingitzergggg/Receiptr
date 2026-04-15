@@ -11,6 +11,26 @@ export type response<T extends keyof responseType> = {
     content?: keyof responseType[T]
 }
 
+export async function verifyCaptcha(token: string): Promise<boolean> {
+
+    const response = await fetch("https://pgapi.ddns.net/api/receiptr/verify-captcha", {
+        method: "POST",
+        headers: {
+            "content-type": "application/json",
+            "accept": "application/json"
+        },
+        body: JSON.stringify(token)
+    });
+
+    const data: responseType['reCAPTCHA'] = await response.json();
+    if (response.status >= 400) {
+        const value: responseType['error'] = data as unknown as responseType['error'];
+        // @ts-ignore
+        throw new WebTransportError({message: value.error, streamErrorCode: response.status});
+    }
+    return data.success;
+}
+
 export async function loadResource<T extends keyof paginatable>(resource: "cards"|"categories"): Promise<paginatable[T] | null> {
     const session : string | null = sessionStorage.getItem(resource);
     if (session) {

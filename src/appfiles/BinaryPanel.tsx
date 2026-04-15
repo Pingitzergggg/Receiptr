@@ -35,8 +35,8 @@ function BinaryPanel() : any {
 
     async function load(barcodeMode: boolean = false) {
         try {
-            const blob: Blob = await requestFile(Number(receiptId));
-            setContent(<Display barcodeMode={barcodeMode} fileUrl={URL.createObjectURL(blob)} />);
+            const blob: Blob = await requestFile(Number(receiptId), barcodeMode);
+            setContent(<Display barcodeMode={barcodeMode} fileUrl={barcodeMode ? '/barcode.png' : URL.createObjectURL(blob)} />);
         } catch (error) {
             console.error(error);
             setError('Failed to load');
@@ -60,9 +60,8 @@ function BinaryPanel() : any {
 
     const Display = ({fileUrl, barcodeMode}: {fileUrl: string, barcodeMode?: boolean}) => {
         return <>
-            {error && <Popup type={"ERROR"} message={error} />}
             <div id="binary-panel-content" className={barcodeMode ? 'h-full top-[40%]!' : 'md:h-[80vh] h-[60vh] top-[5vh]!'}>
-                {barcodeMode && <div className="w-full bg-[#ffffff] py-5 px-2 flex justify-center items-center"><img src='/barcode.png' /></div>}
+                {barcodeMode && <div className="w-full bg-[#ffffff] py-5 px-2 flex justify-center items-center"><img src={fileUrl} title="barcode" alt="barcode" /></div>}
                 {!barcodeMode && <PdfViewer fileUrl={fileUrl} />}
             </div>
             <div id="binary-panel-control-bar">
@@ -87,7 +86,9 @@ function BinaryPanel() : any {
 
     useEffect(() => {load(barcode !== null)}, []);
 
-    return <div id="binary-panel-div"> {content} </div>;
+    return <>{error && <Popup type={"ERROR"} message={error} />}
+        <div id="binary-panel-div"> {content} </div>
+    </>;
 }
 
 export default BinaryPanel;

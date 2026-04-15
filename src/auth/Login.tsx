@@ -112,9 +112,9 @@ function Login() : any {
                             <input id='password' onChange={handleInputChange} type="password" className="input" placeholder="Password" />
                             {(loginData.password.error.length != 0) && <span className='error'>{loginData.password.error}</span>}
 
-                            <div className='w-[50%] mt-2 flex justify-evenly'>
+                            <div className='mt-2 flex items-center'>
                                 <p>Remember browser</p>
-                                <input onChange={event => rememberMe.current = event.target.checked} type='checkbox'/>
+                                <input className='checkbox checkbox-md ml-2' onChange={event => rememberMe.current = event.target.checked} type='checkbox'/>
                             </div>
 
                             <Button async={true} onClick={login} className='mt-1' width="100%" label="Login" icon={<FontAwesomeIcon icon={faArrowRightToBracket} />} />

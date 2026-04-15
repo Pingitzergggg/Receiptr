@@ -11,10 +11,10 @@
 - Fix iframe does not work on Google Chrome Mobile - done
 - Look into why CSS isn't loading on email-verified page
 - Fix vertical overflow for /register, /login
-- Make entire text be hyperlink on /register 'back to Login' button
-- Change general box shadow
-- Make own checkbox design (or find a working one)
-- Add required "Acceppt EULA" checkbox with a hyperlink to EULA next to "Remember me" on /register
-- Add EULA.md to repo
-- Add reCAPTCHA
+- Make entire text be hyperlink on /register 'back to Login' button - done
+- Change general box shadow - done
+- Make own checkbox design (or find a working one) - done
+- Add required "Acceppt EULA" checkbox with a hyperlink to EULA next to "Remember me" on /register - done
+- Add EULA.md to repo - done
+- Add reCAPTCHA - done
 - Make a websocket for receipt refreshing

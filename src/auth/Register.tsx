@@ -2,30 +2,42 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { stringValidate } from '../misc/stringValidator';
 import CountryCodes from './CountryCodes';
 import type { inputType } from '../misc/stringValidator';
-import { useState } from 'react';
+import { useRef, useState, type ReactElement, type RefObject } from 'react';
 import '../tailwind.css'
 import '../style.scss'
-import {extractResponse, requestResource} from "../misc/receiver.ts";
+import {extractResponse, requestResource, verifyCaptcha} from "../misc/receiver.ts";
 import Popup from "../tools/Popup.tsx";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowRightToBracket} from "@fortawesome/free-solid-svg-icons";
 import Button from "../tools/Button.tsx";
+import { GoogleLogin } from '@react-oauth/google';
+import { jwtDecode, type JwtPayload } from 'jwt-decode';
+import ReCAPTCHA from "react-google-recaptcha";
 
-function Register() : any {
+const RECAPTCHA_SITE_KEY: string = "6LdEgbgsAAAAALhLcvKuOINgF1dn4lN-KOSRFkcV";
 
-    type FormField = {
-        value: string;
-        error: string;
-    };
+interface GoogleJWTPayload extends JwtPayload {
+    email: string,
+    name: string
+}
 
-    type FormFields = {
-        username: FormField;
-        email: FormField;
-        tel: FormField;
-        password: FormField;
-        confirm_password: FormField;
-        countryCode: FormField;
-    };
+type FormField = {
+    value: string;
+    error: string;
+};
+
+type FormFields = {
+    username: FormField;
+    email: FormField;
+    tel: FormField;
+    password: FormField;
+    confirm_password: FormField;
+    countryCode: FormField;
+};
+
+function Register(): ReactElement {
+    const rememberMe: RefObject<boolean> = useRef(false);
+    const eulaAccepted: RefObject<boolean> = useRef(false);
 
     const [registerData, setRegisterData] = useState<FormFields>({
         username: {
@@ -56,6 +68,7 @@ function Register() : any {
 
     const [error, setError] = useState<string>('');
 
+    const recaptchaRef: RefObject<ReCAPTCHA|null> = useRef(null);
     async function register() {
         setError('');
         for (let field in registerData) {
@@ -64,15 +77,35 @@ function Register() : any {
                 return;
             }
         }
+
+        if (!eulaAccepted.current) {
+            setError("You must accept the EULA!");
+            return;
+        }
+
         const body = {
             username: registerData.username.value,
             email: registerData.email.value,
             country_code: registerData.countryCode.value ?? null,
             phone: registerData.tel.value ?? null,
             password: registerData.password.value,
-            confirm_password: registerData.confirm_password.value
+            confirm_password: registerData.confirm_password.value,
+            remember_device: rememberMe.current
         }
         try {
+            const token = await recaptchaRef.current?.executeAsync();
+
+            if (!token) {
+                setError("CAPTCHA Failed!");
+                return;
+            }
+
+            if (await verifyCaptcha(token)) {
+                setError("CAPTCHA Invalid!");
+                return;
+            }
+            recaptchaRef.current?.reset();
+
             const response = await requestResource<'login'>('register', 'POST', null, null, body);
             await extractResponse<'login'>(response);
             sessionStorage.removeItem('cards');
@@ -98,9 +131,9 @@ function Register() : any {
             setRegisterData((prev) => ({...prev, [getId]: {value: getValue, error: ''}}));
         } catch(err : any) {
             if (getValue.length != 0) {
-                setRegisterData((prev) => ({...prev, [getId]: {value: '', error: err}}));
+                setRegisterData((prev) => ({...prev, [getId]: {value: getValue, error: err}}));
             } else {
-                setRegisterData((prev) => ({...prev, [getId]: {value: '', error: ''}}));
+                setRegisterData((prev) => ({...prev, [getId]: {value: getValue, error: ''}}));
             }
         }
     };
@@ -131,11 +164,11 @@ function Register() : any {
                     <legend className="fieldset-legend">Register Account</legend>
 
                     <label className="label">Username<b className='text-red-500!'>*</b></label>
-                    <input id="username" onChange={handleInputChange} type="text" className="input w-full" placeholder="First Name" />
+                    <input id="username" onChange={handleInputChange} type="text" className="input w-full" value={registerData.username.value} />
                     {(registerData.username.error.length != 0) && <span className='error'>{registerData.username.error}</span>}
 
                     <label className="label">Email<b className='text-red-500!'>*</b></label>
-                    <input id='email' onChange={handleInputChange} type="email" className="input w-full" placeholder="Email" />
+                    <input id='email' onChange={handleInputChange} type="email" className="input w-full" value={registerData.email.value} />
                     {(registerData.email.error.length != 0) && <span className='error'>{registerData.email.error}</span>}
 
                     <label className="label">Country Code</label>
@@ -145,20 +178,38 @@ function Register() : any {
                     </select>
 
                     <label className="label">Phone</label>
-                    <input id='tel' onChange={handleInputChange} type="tel" className="input w-full" placeholder="Phone" />
+                    <input id='tel' onChange={handleInputChange} type="tel" className="input w-full" />
                     {(registerData.tel.error.length != 0) && <span className='error'>{registerData.tel.error}</span>}
 
                     <label className="label">Password<b className='text-red-500!'>*</b></label>
-                    <input id='password' onChange={handleInputChange} type="password" className="input w-full" placeholder="Password" />
+                    <input id='password' onChange={handleInputChange} type="password" className="input w-full" />
                     {(registerData.password.error.length != 0) && <span className='error'>{registerData.password.error}</span>}
 
                     <label className="label">Confirm password<b className='text-red-500!'>*</b></label>
-                    <input id='confirm_password' onChange={handleInputChange} type="password" className="input w-full" placeholder="Password" />
+                    <input id='confirm_password' onChange={handleInputChange} type="password" className="input w-full" />
                     {(registerData.confirm_password.error.length != 0) && <span className='error'>{registerData.confirm_password.error}</span>}
+                    
+                    <div className='flex items-center'>
+                        <p>I've read and accepted the <a href='https://github.com/Pingitzergggg/Receiptr/blob/main/EULA.md' target='_blank' className='font-bold hover:underline cursor-pointer'>EULA</a><b className='text-red-500!'>*</b></p>
+                        <input onClick={() => eulaAccepted.current = true} className='checkbox checkbox-md ml-2' type='checkbox' />
+                    </div>
 
+                    <div className='flex items-center'>
+                        <p>Remember me</p>
+                        <input onClick={() => rememberMe.current = true} className='checkbox checkbox-md ml-2' type='checkbox' />
+                    </div>
+
+                    <div className='mt-5'><GoogleLogin theme='filled_blue' text='signup_with' onSuccess={credentialResponse => {
+                        if (!credentialResponse.credential) return;
+                        const decoded: GoogleJWTPayload = jwtDecode(credentialResponse.credential);
+                        setRegisterData(prev => ({...prev, username: {value: decoded.name, error: ''}, email: {value: decoded.email, error: ''}}));
+                    }} onError={() => console.error('Google Login failed!')} /></div>
+                    
+                    
+                    <ReCAPTCHA size='invisible' sitekey={RECAPTCHA_SITE_KEY} ref={recaptchaRef} />
                     <Button async={true} onClick={register} className='mt-3' width="100%" label="Register" icon={<FontAwesomeIcon icon={faArrowRightToBracket} />} />
 
-                    <p>Back to <NavLink to='/login'>Login</NavLink></p>
+                    <p className='hover:underline'><NavLink to='/login'>Back to Login</NavLink></p>
                 </fieldset>
             </div>
         </div></>

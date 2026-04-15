@@ -1,4 +1,7 @@
 export type responseType = {
+    reCAPTCHA: {
+        success: boolean
+    },
     error: {
         error: string,
         toDisplay: boolean
