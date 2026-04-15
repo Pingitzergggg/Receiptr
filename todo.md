@@ -9,8 +9,12 @@
 - Make loading indicator stop the animation when response arrives - done
 - Fix double clicking on Mobile for button click event - done
 - Fix iframe does not work on Google Chrome Mobile - done
-- Design the checkbox
 - Look into why CSS isn't loading on email-verified page
 - Fix vertical overflow for /register, /login
 - Make entire text be hyperlink on /register 'back to Login' button
 - Change general box shadow
+- Make own checkbox design (or find a working one)
+- Add required "Acceppt EULA" checkbox with a hyperlink to EULA next to "Remember me" on /register
+- Add EULA.md to repo
+- Add reCAPTCHA
+- Make a websocket for receipt refreshing
