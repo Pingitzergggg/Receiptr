@@ -84,7 +84,7 @@ function ReceiptPanel() : any {
                 updateReceipts(result.query);
             }
         }} />
-        <div className='container mt-20 mb-20 w-[90%]' id='receipts-div'>
+        <div className='container mt-10 mb-20 w-[90%]' id='receipts-div'>
             {receiptPanel.length == 0 && <div className='flex justify-center items-center'>
                 {sessionStorage.getItem('receipts') && <p className='text-2xl'>No receipts yet...</p>}
                 {!sessionStorage.getItem('receipts') &&  <i className='text-2xl'>Loading<span className="loading loading-spinner loading-md mx-1"></span></i>}

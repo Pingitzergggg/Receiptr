@@ -151,8 +151,9 @@ input, select, textarea {
   padding: 1rem;
   height: auto;
   width: auto;
-  border: none;
+  border: .1px var(--border-icon-color) solid;
   border-radius: 15px;
+  box-shadow: 1px 1px 2px 1px black;
 
   svg {
     height: 3rem;

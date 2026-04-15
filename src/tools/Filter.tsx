@@ -6,7 +6,8 @@ import Select from "./Select.tsx";
 import {type response, requestResource, extractResponse} from "../misc/receiver.ts";
 import {stringValidate} from "../misc/stringValidator.ts";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faArrowRotateRight, faFilter} from "@fortawesome/free-solid-svg-icons";
+import {faArrowRotateRight, faCaretDown, faFilter} from "@fortawesome/free-solid-svg-icons";
+import Refresh from "./Refresh.tsx";
 
 type forPanel = "receipts" | "cards" | "categories";
 type filter = {
@@ -55,38 +56,42 @@ function Filter<T extends keyof paginatable>({forPanel, onFilter, onRefresh, fil
         }
     }
 
-    return (
-        <div className='flex md:flex-row flex-col bg-(--card-background) rounded-[15px] p-2 justify-evenly items-center w-[90%] mt-10'>
-            <div className='mx-2 md:w-[50%] w-[95%]'>
-                <Input width='100%' title='Search' id='search' errorInValue={keyword.error.length != 0} error={keyword.error} value={keyword.value} onChange={handleInputChange} />
+    const [filterOpened, setFilterOpened] = useState<boolean>(false);
+    return (<div className="justify-evenly items-center w-[90%] mt-10">
+        <div className="flex justify-evenly items-center px-1">
+            <div onClick={() => setFilterOpened(!filterOpened)} className="flex items-center cursor-pointer">
+                <FontAwesomeIcon className={`${filterOpened ? '' : 'rotate-[-90deg]'} transition`} icon={faCaretDown} />
+                <h3 className="font-bold text-2xl p-2">Filters</h3>
             </div>
+            <Refresh trigger={async () => {
+                if (onRefresh) onRefresh(await load());
+            }} className="mt-[0] p-2" />
+        </div>
+        {filterOpened && <div className='flex md:flex-row flex-col bg-(--card-background) rounded-[10px] p-3'>
             <div className="flex w-full justify-center items-center">
-                <div className='mx-2 w-[50%]'>
+                <div className='mr-2 w-[50%]'>
                     <Select width='100%' title='Order By' id='orderby' errorInValue={false} onChange={(event) => {
                         if (event.target.value) filter.current.order = event.target.value;
                     }} values={
                         !filterableColumns ? [] :
-                            filterableColumns.map(each => {return {value: each, label: each}})
+                        filterableColumns.map(each => {return {value: each, label: each}}).filter(each => each.value !== 'color')
                     } />
                 </div>
-                <div className='mx-2 w-[50%]'>
-                    <Select width='100%' title='Direction' id='direction' errorInValue={false} onChange={(event) => {
-                        if (event.target.value) filter.current.direction = event.target.value;
-                    }} values={[
-                        {label: 'ascending', value:'asc'},
-                        {label: 'descending', value:'desc'}
-                    ]} />
-                </div>
+                <Input width='100%' title='Search' id='search' errorInValue={false} value={keyword.value} onChange={handleInputChange} />
             </div>
-            <div className="flex w-full justify-center items-center">
-                <Button width='100%' className='mx-5' label='Refresh' icon={<FontAwesomeIcon style={{width: '1rem', height: '1rem'}} icon={faArrowRotateRight} />} onClick={async () => {
-                    if (onRefresh) onRefresh(await load());
-                }} />
-                <Button width='100%' className='mx-5' label='Filter' icon={<FontAwesomeIcon style={{width: '1rem', height: '1rem'}} icon={faFilter} />} onClick={async () => {
+            <div className="flex w-full justify-between items-center">
+                <div className="flex">
+                    <p>Reverse: </p>
+                    <input type="checkbox" className="checkbox checkbox-md ml-2" onChange={event => {
+                        filter.current.direction = event.target.checked ? "descending" : "ascending";
+                        console.log(filter.current.direction);
+                    }} />
+                </div>
+                <Button width='100%' className="ml-5" label='Filter' icon={<FontAwesomeIcon style={{width: '1rem', height: '1rem'}} icon={faFilter} />} onClick={async () => {
                     if (onFilter) onFilter(await load());
                 }} />
             </div>
-        </div>
+        </div>}</div>
     );
 }
 

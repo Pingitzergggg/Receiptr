@@ -17,4 +17,5 @@
 - Add required "Acceppt EULA" checkbox with a hyperlink to EULA next to "Remember me" on /register - done
 - Add EULA.md to repo - done
 - Add reCAPTCHA - done
+- Fix filter
 - Make a websocket for receipt refreshing
