@@ -6,7 +6,7 @@ import Select from "./Select.tsx";
 import {type response, requestResource, extractResponse} from "../misc/receiver.ts";
 import {stringValidate} from "../misc/stringValidator.ts";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faArrowRotateRight, faCaretDown, faFilter} from "@fortawesome/free-solid-svg-icons";
+import {faCaretDown, faFilter} from "@fortawesome/free-solid-svg-icons";
 import Refresh from "./Refresh.tsx";
 
 type forPanel = "receipts" | "cards" | "categories";
@@ -79,7 +79,7 @@ function Filter<T extends keyof paginatable>({forPanel, onFilter, onRefresh, fil
                 </div>
                 <Input width='100%' title='Search' id='search' errorInValue={false} value={keyword.value} onChange={handleInputChange} />
             </div>
-            <div className="flex w-full justify-between items-center">
+            <div className="flex w-full md:w-[40%] justify-between md:justify-center items-center">
                 <div className="flex">
                     <p>Reverse: </p>
                     <input type="checkbox" className="checkbox checkbox-md ml-2" onChange={event => {
@@ -87,7 +87,7 @@ function Filter<T extends keyof paginatable>({forPanel, onFilter, onRefresh, fil
                         console.log(filter.current.direction);
                     }} />
                 </div>
-                <Button width='100%' className="ml-5" label='Filter' icon={<FontAwesomeIcon style={{width: '1rem', height: '1rem'}} icon={faFilter} />} onClick={async () => {
+                <Button width="100%" className="ml-5 md:w-[50%]!" label='Filter' icon={<FontAwesomeIcon style={{width: '1rem', height: '1rem'}} icon={faFilter} />} onClick={async () => {
                     if (onFilter) onFilter(await load());
                 }} />
             </div>

@@ -59,7 +59,7 @@ function Archive<T extends keyof paginatable>({type}: PropsType): ReactElement {
     return (<>
         {error && <Popup type={'ERROR'} message={error} />}
         {location.state?.restoreSuccess && <Popup type={'SUCCESS'} message={'Item restored'} />}
-        <div className="absolute-center window bg-(--card-background) rounded-[15px] p-5 w-[25rem]">
+        <div className="absolute-center window bg-(--card-background) rounded-[15px] p-5 md:w-[25rem] w-[90%]">
             <div className='flex justify-end'>
                 <a onClick={() => navigate('/settings')} className="btn-nav bg-red-400">
                     <FontAwesomeIcon icon={faXmark} />

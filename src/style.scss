@@ -298,6 +298,18 @@ input, select, textarea {
   }
 }
 
+@media (max-height: 860px) {
+  #banner {
+    display: none;
+  }
+}
+
+@media (max-width: 1470px) {
+  #banner {
+    display: none;
+  }
+}
+
 .triangle {
   width: 0;
   height: 0;

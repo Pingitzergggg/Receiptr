@@ -152,11 +152,11 @@ function Register(): ReactElement {
     return (
         <>{error && <Popup type={"ERROR"} message={error} />}
         <div className='flex justify-evenly items-center w-[100vw] h-[100vh]'>
-            <div className='w-full hidden lg:block'>
-                <img src='/banner.jpg' alt='Banner' className='h-[100vh] w-[50vw]' />
+            <div id='banner' className='w-full hidden lg:block'>
+                <img draggable={false} src={`/banner_${localStorage.getItem('theme')}.png`} alt='Banner' className='h-[100vh] w-[50vw]' />
             </div>
-            <div className='w-full flex flex-col justify-center items-center'>
-                <div className='flex items-center justify-center mb-10 flex-wrap'>
+            <div className='w-full flex flex-col justify-center items-center m-auto'>
+                <div className='flex flex-col md:flex-row items-center justify-center mb-10 flex-wrap'>
                     <img src='/icon.png' alt='Logo' className='w-[10rem] h-[7.5rem]' />
                     <h1 className='text-6xl font-bold'>Receiptr</h1>
                 </div>
@@ -206,7 +206,7 @@ function Register(): ReactElement {
                     }} onError={() => console.error('Google Login failed!')} /></div>
                     
                     
-                    <ReCAPTCHA size='invisible' sitekey={RECAPTCHA_SITE_KEY} ref={recaptchaRef} />
+                    <ReCAPTCHA className='z-[20] hidden md:block' size='invisible' sitekey={RECAPTCHA_SITE_KEY} ref={recaptchaRef} />
                     <Button async={true} onClick={register} className='mt-3' width="100%" label="Register" icon={<FontAwesomeIcon icon={faArrowRightToBracket} />} />
 
                     <p className='hover:underline'><NavLink to='/login'>Back to Login</NavLink></p>
