@@ -10,16 +10,10 @@ import Popup from "../tools/Popup.tsx";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowRightToBracket} from "@fortawesome/free-solid-svg-icons";
 import Button from "../tools/Button.tsx";
-import { GoogleLogin } from '@react-oauth/google';
-import { jwtDecode, type JwtPayload } from 'jwt-decode';
+import { useGoogleLogin } from '@react-oauth/google';
 import ReCAPTCHA from "react-google-recaptcha";
 
 const RECAPTCHA_SITE_KEY: string = "6LdEgbgsAAAAALhLcvKuOINgF1dn4lN-KOSRFkcV";
-
-interface GoogleJWTPayload extends JwtPayload {
-    email: string,
-    name: string
-}
 
 type FormField = {
     value: string;
@@ -149,6 +143,43 @@ function Register(): ReactElement {
 
     const navigate = useNavigate();
 
+    const GoogleSignupButton = () => {
+        const login = useGoogleLogin({
+            onSuccess: async (tokenResponse) => {
+            const userInfo = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+                headers: { Authorization: `Bearer ${tokenResponse.access_token}` },
+            }).then(res => res.json());
+
+            setRegisterData(prev => ({
+                ...prev,
+                username: { value: userInfo.name, error: '' },
+                email: { value: userInfo.email, error: '' }
+            }));
+            },
+            onError: () => console.error('Google Login Failed'),
+        });
+
+        return (
+            <button
+            onClick={() => login()}
+            className="cursor-pointer mt-5 flex items-center w-full max-w-[400px] bg-[#1a73e8] hover:bg-[#185abc] text-white rounded-md overflow-hidden p-[1px] transition-all"
+            style={{ border: '1px solid #1a73e8' }}
+            >
+            <div className="bg-white p-2 flex items-center justify-center rounded-l-[4px]">
+                <img 
+                src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" 
+                alt="Google" 
+                className="w-5 h-5" 
+                />
+            </div>
+            
+            <span className="flex-grow text-center font-medium text-sm px-4">
+                Sign up with Google
+            </span>
+            </button>
+        );
+    };
+
     return (
         <>{error && <Popup type={"ERROR"} message={error} />}
         <div className='flex justify-evenly items-center w-[100vw] h-[100vh]'>
@@ -199,7 +230,7 @@ function Register(): ReactElement {
                         <input onClick={() => rememberMe.current = true} className='checkbox checkbox-md ml-2' type='checkbox' />
                     </div>
 
-                    <div className='mt-5'><GoogleLogin
+                    {/* <div className='mt-5'><GoogleLogin
                         theme='filled_blue'
                         text='signup_with'
                         width='100%'
@@ -207,8 +238,8 @@ function Register(): ReactElement {
                             if (!credentialResponse.credential) return;
                             const decoded: GoogleJWTPayload = jwtDecode(credentialResponse.credential);
                             setRegisterData(prev => ({...prev, username: {value: decoded.name, error: ''}, email: {value: decoded.email, error: ''}}));
-                    }} onError={() => console.error('Google Login failed!')} /></div>
-                    
+                    }} onError={() => console.error('Google Login failed!')} /></div> */}
+                    <GoogleSignupButton />
                     
                     <ReCAPTCHA className='z-[20] hidden md:block' size='invisible' sitekey={RECAPTCHA_SITE_KEY} ref={recaptchaRef} />
                     <Button async={true} onClick={register} className='mt-3' width="100%" label="Register" icon={<FontAwesomeIcon icon={faArrowRightToBracket} />} />
