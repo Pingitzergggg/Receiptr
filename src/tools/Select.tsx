@@ -15,10 +15,11 @@ type propsType = {
     errorInValue: boolean,
     width?: string,
     values?: optionType[],
+    defaultValue?: string | number,
     onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void
 }
 
-function Select({title, error, className, id, errorInValue, width, values, onChange, selected} : propsType) : ReactElement {
+function Select({title, error, className, id, errorInValue, defaultValue, width, values, onChange, selected} : propsType) : ReactElement {
     const [isClassActivated, setClassActivated] = useState<boolean>(false);
     
         const select = useRef<HTMLSelectElement>(null);
@@ -39,7 +40,7 @@ function Select({title, error, className, id, errorInValue, width, values, onCha
                             onFocus={() => setClassActivated(true)}
                             onBlur={e => setClassActivated(e.target.value.length > 0)}
                             onChange={onChange} >
-                                <option value="" unselectable="on">{title}</option>
+                                <option value={defaultValue ?? ''} unselectable="on">{title}</option>
                                 {values?.map(element => 
                                     <option value={element.value} selected={element.value == selected}>{element.label}</option>
                                 )}

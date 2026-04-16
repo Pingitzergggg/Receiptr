@@ -70,7 +70,7 @@ function Filter<T extends keyof paginatable>({forPanel, onFilter, onRefresh, fil
         {filterOpened && <div className='flex md:flex-row flex-col bg-(--card-background) rounded-[10px] p-3'>
             <div className="flex w-full justify-center items-center">
                 <div className='mr-2 w-[50%]'>
-                    <Select width='100%' title='Order By' id='orderby' errorInValue={false} onChange={(event) => {
+                    <Select  defaultValue='creation' width='100%' title='Order By' id='orderby' errorInValue={false} onChange={(event) => {
                         if (event.target.value) filter.current.order = event.target.value;
                     }} values={
                         !filterableColumns ? [] :
@@ -83,7 +83,7 @@ function Filter<T extends keyof paginatable>({forPanel, onFilter, onRefresh, fil
                 <div className="flex">
                     <p>Reverse: </p>
                     <input type="checkbox" className="checkbox checkbox-md ml-2" onChange={event => {
-                        filter.current.direction = event.target.checked ? "descending" : "ascending";
+                        filter.current.direction = event.target.checked ? "desc" : "asc";
                         console.log(filter.current.direction);
                     }} />
                 </div>

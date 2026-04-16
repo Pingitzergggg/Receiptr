@@ -1,7 +1,7 @@
 import type {paginatable, responseType} from "./databaseTables"
 
-export const domainUrl: string = 'https://pgapi.ddns.net';
-// export const domainUrl: string = 'http://localhost:8000';
+// export const domainUrl: string = 'https://pgapi.ddns.net';
+export const domainUrl: string = 'http://localhost:8000';
 
 export type methods = "GET" | "POST" | "PUT" | "DELETE";
 export type endpoints = "user" | "cards" | "categories" | "receipts" | "archive" | "login" | "register" | "logout" | "wipeout";

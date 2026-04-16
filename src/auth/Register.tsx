@@ -199,10 +199,14 @@ function Register(): ReactElement {
                         <input onClick={() => rememberMe.current = true} className='checkbox checkbox-md ml-2' type='checkbox' />
                     </div>
 
-                    <div className='mt-5'><GoogleLogin theme='filled_blue' text='signup_with' onSuccess={credentialResponse => {
-                        if (!credentialResponse.credential) return;
-                        const decoded: GoogleJWTPayload = jwtDecode(credentialResponse.credential);
-                        setRegisterData(prev => ({...prev, username: {value: decoded.name, error: ''}, email: {value: decoded.email, error: ''}}));
+                    <div className='mt-5'><GoogleLogin
+                        theme='filled_blue'
+                        text='signup_with'
+                        width='100%'
+                        onSuccess={credentialResponse => {
+                            if (!credentialResponse.credential) return;
+                            const decoded: GoogleJWTPayload = jwtDecode(credentialResponse.credential);
+                            setRegisterData(prev => ({...prev, username: {value: decoded.name, error: ''}, email: {value: decoded.email, error: ''}}));
                     }} onError={() => console.error('Google Login failed!')} /></div>
                     
                     
