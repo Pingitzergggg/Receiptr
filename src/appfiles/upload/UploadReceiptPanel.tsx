@@ -1,7 +1,7 @@
 import {useEffect, useState, type ReactElement, useRef} from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUpload, faXmark } from '@fortawesome/free-solid-svg-icons';
-import {useNavigate, useParams, useSearchParams} from "react-router-dom";
+import {useLocation, useNavigate, useParams, useSearchParams} from "react-router-dom";
 import Input from "../../tools/Input";
 import Select from "../../tools/Select";
 import Button from "../../tools/Button";
@@ -43,7 +43,7 @@ type inputFields = {
     purchased_at: inputField
 }
 
-function UploadReceiptPanel(): ReactElement {
+function UploadReceiptPanel({key}: {key?: string}): ReactElement {
     const navigate = useNavigate();
     const [categories, updateCategories] = useState<{value: string, label: string}[]>([]);
     const [cards, updateCards] = useState<{value: string, label: string}[]>([]);
@@ -152,15 +152,20 @@ function UploadReceiptPanel(): ReactElement {
         setError('');
         const response: boolean = updateReceipt ? await update() : await store();
         if (response) {
-            navigate('/receipts', {state: 
-                {
-                    globalPopup: {
-                        message: 'Receipt uploaded!',
-                        type: 'SUCCESS'
-                    },
-                    uploadSuccess: true
-                }
-            });
+            if (!key) {
+                navigate('/receipts', {state: 
+                    {
+                        globalPopup: {
+                            message: 'Receipt uploaded!',
+                            type: 'SUCCESS'
+                        },
+                        uploadSuccess: true
+                    }
+                });
+            } else {
+                navigate('/receipts', {state: {sessionCreated: true}});
+            }
+        
         }
     }
 
@@ -195,7 +200,6 @@ function UploadReceiptPanel(): ReactElement {
     }
 
     async function store(): Promise<boolean> {
-        console.log('store running');
         const fileContainer: FormData = new FormData();
         for (let field in receiptData) {
             if (receiptData[field as keyof inputFields].error.length != 0) {
@@ -212,7 +216,7 @@ function UploadReceiptPanel(): ReactElement {
         if (categoryId.current) fileContainer.append('binding_id', String(categoryId.current));
         if (cardId.current) fileContainer.append('card_id', String(cardId.current));
         try {
-            const result = await sendFileForm(fileContainer);
+            const result = await sendFileForm(fileContainer, !!key);
             if (!result) setError('Upload failed!');
             return result;
         } catch (error) {
@@ -225,12 +229,18 @@ function UploadReceiptPanel(): ReactElement {
             return false;
         }
     }
+    const location = useLocation();
 
     console.log(cardId.current);
     return (<>
+        {location.state?.sessionCreated && <Popup type='SUCCESS' message='Session created!' />}
         {popUpError && <Popup type='ERROR' message={popUpError} />}
         <div className="window upload w-[90%]! lg:w-[auto]!">
-            <a onClick={() => navigate('/receipts')} className="btn-nav bg-red-400">
+            <a onClick={() => {
+                    if (!key) {
+                        navigate('/receipts');
+                    }
+                }} className="btn-nav bg-red-400">
                 <FontAwesomeIcon icon={faXmark} />
             </a>
             <h2 className="text-3xl font-semibold my-5">{updateReceipt ? 'Update' : 'Upload'} Receipt</h2>

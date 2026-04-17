@@ -47,8 +47,8 @@ export async function loadResource<T extends keyof paginatable>(resource: "cards
     }
 }
 
-export async function sendFileForm(data: FormData): Promise<boolean> {
-    const response = await fetch(domainUrl+'/api/receiptr/receipts', {
+export async function sendFileForm(data: FormData, kioskMode: boolean = false): Promise<boolean> {
+    const response = await fetch(domainUrl+'/api/receiptr/'+(kioskMode ? 'create-session' : 'receipts'), {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
