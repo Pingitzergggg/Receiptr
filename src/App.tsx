@@ -9,8 +9,8 @@ import {
   type NavigateFunction
 } from 'react-router-dom'
 // @ts-ignore
-import {useState, useEffect, type ReactElement, useRef} from 'react'
-import Popup from './tools/Popup'
+import {useState, useEffect, type ReactElement, useRef, type RefObject} from 'react'
+import Popup, { type popupType } from './tools/Popup'
 import ReceiptPanel from './appfiles/ReceiptPanel'
 import CardPanel from './appfiles/CardPanel'
 import SettingsPanel from './appfiles/SettingsPanel'
@@ -38,6 +38,27 @@ import PasswordRequest from './tools/PasswordRequest.tsx'
 
 function App(): ReactElement {
 
+  const Global = () => {
+    type globalPopupType = {
+      message: string,
+      type: popupType
+    }
+    const location = useLocation();
+    const [globalPopup, setGlobalPopup] = useState<globalPopupType>({message: '', type: "INFO"});
+    const currentURL: RefObject<string> = useRef('/');
+    useEffect(() => {
+      if (location.state?.globalPopup && currentURL.current !== location.pathname) {
+        setGlobalPopup(location.state.globalPopup);
+      }
+      currentURL.current = location.pathname;
+    }, [location.pathname]);
+
+    return <>
+      {!!globalPopup.message.length && <Popup onFinish={() => {
+        setGlobalPopup({message: '', type: 'INFO'});
+      }} message={globalPopup.message} type={globalPopup.type} />}
+    </>
+  }
 
   // @ts-ignore
   const Navbar = (
@@ -85,6 +106,16 @@ function App(): ReactElement {
   const Panel = () => {
     const location = useLocation();
     const navigate = useNavigate();
+    useEffect(() => {
+      if (['/login', '/register'].includes(location.pathname)) {
+        navigate(location.pathname);
+      }
+      if (!sessionStorage.getItem('user')) {
+        navigate("/login");
+        console.log(`Redirected to /login due to missing user session!`)
+        return;
+      }
+    }, [location.pathname]);
 
     useEffect(() => {
       console.log('Fetching user session on first mount...')
@@ -104,22 +135,8 @@ function App(): ReactElement {
           })
     }, []);
 
-    useEffect(() => {
-      console.log("Authorizing...for "+location.pathname);
-      if (['/login', '/register'].includes(location.pathname)) {
-        navigate(location.pathname);
-        return;
-      }
-      if (!sessionStorage.getItem('user')) {
-        navigate("/login");
-        console.log(`Redirected to /login due to missing user session!`)
-        return;
-      }
-    }, [location.pathname]);
-
     return (
       <>
-        {location.state?.fromLogin && <Popup type='SUCCESS' message='succesful login' />}
         {Navbar}
         <Outlet/>
         <Dock navigate={navigate}/>
@@ -129,6 +146,7 @@ function App(): ReactElement {
 
   return(
       <BrowserRouter>
+        <Global />
         <Routes>
           <Route path='/' element={<Panel/>}>
             <Route path='/' element={<ReceiptPanel/>} />

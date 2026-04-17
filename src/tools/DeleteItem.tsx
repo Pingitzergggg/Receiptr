@@ -17,7 +17,10 @@ function DeleteItem<T extends keyof responseType>({itemType} : props) : ReactEle
 
     async function load() {
         if (await destroy()) {
-            navigate('/'+itemType.toLowerCase(), {state: {deleteSuccess: true}});
+            navigate('/'+itemType.toLowerCase(), {state: {
+                globalPopup: {message: 'Item deleted!', type: 'SUCCESS'},
+                deleteSuccess: true
+            }});
         } else {
             setError('Delete failed!');
         }

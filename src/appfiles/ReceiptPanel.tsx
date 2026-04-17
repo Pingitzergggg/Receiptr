@@ -66,8 +66,6 @@ function ReceiptPanel() : any {
 
   return (
     <>
-        {location.state?.deleteSuccess && <Popup type={"SUCCESS"} message={'Delete successful!'} />}
-        {location.state?.uploadSuccess && <Popup type='SUCCESS' message='Upload was successful!' />}
         <Outlet />
         <Upload onClick={() => navigate(location.pathname == '/' ? 'receipts/upload' : 'upload')} />
         <Filter<'receipts'> forPanel='receipts' filterableColumns={['creation', 'title', 'size', 'color', 'price', 'currency', 'category']} onFilter={(result) => {

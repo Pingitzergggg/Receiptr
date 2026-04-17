@@ -52,8 +52,6 @@ function CardPanel() : any {
 
   return (
     <>
-        {location.state?.deleteSuccess && <Popup type={"SUCCESS"} message={'Delete successful!'} />}
-        {location.state?.uploadSuccess && <Popup type='SUCCESS' message='Upload was successful!' />}
         <Outlet />
         <Upload onClick={() => navigate('upload')} />
         <Refresh trigger={load} />

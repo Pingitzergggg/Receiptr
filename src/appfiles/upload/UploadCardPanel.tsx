@@ -105,7 +105,13 @@ function UploadReceiptPanel() : ReactElement {
         setError('');
         const response: boolean = updateData ? await update() : await store();
         if (response) {
-            navigate('/cards', {state: {uploadSuccess: true}});
+            navigate('/cards', {state: {
+                globalPopup: {
+                    message: 'Card uploaded!',
+                    type: 'SUCCESS'
+                },
+                uploadSuccess: true
+            }});
         }
     }
 

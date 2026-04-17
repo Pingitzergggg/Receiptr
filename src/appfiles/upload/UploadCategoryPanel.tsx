@@ -83,7 +83,13 @@ function UploadCategoryPanel() : ReactElement {
                 color: categoryData.color.value
             });
             await extractResponse<'categories'>(response);
-            navigate('/categories', {state: {uploadSuccess: true}});
+            navigate('/categories', {state: {
+                globalPopup: {
+                    message: 'Category uploaded!',
+                    type: 'SUCCESS'
+                },
+                uploadSuccess: true
+            }});
         } catch (error) {
             if (error instanceof WebTransportError) {
                 setError(error.message);

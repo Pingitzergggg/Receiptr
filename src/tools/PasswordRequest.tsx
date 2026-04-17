@@ -32,7 +32,10 @@ function PasswordRequest(): ReactElement {
             });
 
             if (!response.ok) throw Error(await response.json());
-            navigate('/login', {state: {passwordRequest: true}});
+            navigate('/login', {state: {
+                globalPopup: {message: 'Email sent!', type: 'SUCCESS'},
+                passwordRequest: true
+            }});
         } catch (error) {
             console.error(error);
         }

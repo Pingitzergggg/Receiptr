@@ -49,8 +49,6 @@ function CategoryPanel() : ReactElement {
     console.log(categoryPanel.length);
     return (
         <>
-            {location.state?.deleteSuccess && <Popup type={"SUCCESS"} message={'Delete successful!'} />}
-            {location.state?.uploadSuccess && <Popup type='SUCCESS' message='Upload was successful!' />}
             <Refresh trigger={load} />
             <Upload onClick={() => navigate('upload')} />
             <div className='container mt-10 mb-45 sm:mb-20 w-[90%]'>

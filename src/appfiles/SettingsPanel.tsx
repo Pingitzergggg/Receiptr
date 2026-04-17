@@ -35,7 +35,13 @@ function SettingsPanel() : ReactElement {
 
   function removeSession(key: 'receipts'|'categories'|'cards') {
     sessionStorage.removeItem(key);
-    navigate("/settings", {state: {cacheClearSuccess: true}});
+    navigate("/settings", {state: {
+      globalPopup: {
+        message: 'Cache cleared!',
+        type: 'SUCCESS'
+      },
+      cacheClearSuccess: true
+    }});
   }
 
   async function logout(wipeoutMode: boolean = false) {
@@ -76,8 +82,6 @@ function SettingsPanel() : ReactElement {
                   </div>
                 </div>
               </div>}
-          {location.state?.cacheClearSuccess && <Popup type={"SUCCESS"} message={"Cache cleared!"} />}
-          {location.state?.uploadSuccess && <Popup type={"SUCCESS"} message={"Upload successful!"} />}
           {error && <Popup type="ERROR" message={error} />}
           <Outlet />
         <div className="grid grid-cols-1 gap-3 my-20 w-[90%] md:w-[75%]">

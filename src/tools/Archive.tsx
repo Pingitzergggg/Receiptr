@@ -41,7 +41,10 @@ function Archive<T extends keyof paginatable>({type}: PropsType): ReactElement {
             await extractResponse<"trash">(response);
             await paginate<T>(type.toLowerCase() as endpoints, 0);
             setError('');
-            navigate(`/settings/archive/${type.toLowerCase()}`, {state: {restoreSuccess: true}});
+            navigate(`/settings/archive/${type.toLowerCase()}`, {state: {
+                globalPopup: {message: 'Item archived!', type: "SUCCESS"},
+                restoreSuccess: true
+            }});
         } catch (error) {
             console.error(error);
             setError('Restore failed!');

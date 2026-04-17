@@ -75,7 +75,7 @@ function Login() : any {
                 sessionStorage.removeItem('cards');
                 sessionStorage.removeItem('receipts');
                 sessionStorage.removeItem('categories');
-                navigate("/", {state: {fromLogin: true}});
+                navigate("/", {state: {globalPopup:{message: 'Successfull login!', type: 'SUCCESS'}}});
             } catch (error) {
                 console.log(error);
                 if (error instanceof WebTransportError) {
@@ -89,8 +89,6 @@ function Login() : any {
 
     return (
             <>
-                {location.state?.passwordRequest && <Popup type='SUCCESS' message='Password requested!' />}
-                {location.state?.passwordReset && <Popup type='SUCCESS' message='Password reset!' />}
                 {error && <Popup type='ERROR' message={error}/>}
                 <div className='flex justify-evenly items-center w-[100vw] h-[100vh]'>
                     <div id='banner' className='w-full hidden lg:block'>

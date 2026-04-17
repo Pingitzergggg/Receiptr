@@ -1,13 +1,10 @@
 import type { ReactElement } from "react";
-import { useNavigate } from "react-router-dom";
 
 type propsType = {
     onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void
 }
 
 function Upload({onClick} : propsType) : ReactElement {
-    // @ts-ignore
-    const navigate = useNavigate();
 
     return (<>
         <button onClick={onClick} className='upload-button btn'>

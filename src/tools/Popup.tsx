@@ -1,9 +1,22 @@
 import '../tailwind.css'
 import '../style.scss'
+import { useEffect } from 'react';
 
 export type popupType = "INFO" | "SUCCESS" | "ERROR";
 
-function Popup({type, message} : {type: popupType, message: string}) : any {
+type propsType = {
+    message: string,
+    type: popupType,
+    onFinish?: () => void
+}
+
+function Popup({type, message, onFinish}: propsType) : any {
+
+    useEffect(() => {
+        setTimeout(() => {
+            if (onFinish) onFinish();
+        }, 5000);
+    }, []);
 
     const successPopup = (
         <div role="alert" className="alert alert-success">

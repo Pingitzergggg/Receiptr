@@ -80,7 +80,10 @@ function PasswordReset(): ReactElement {
                     setError("Error occurred!");
                 }
             } else {
-                navigate("/login", {state: {passwordReset: true}});
+                navigate("/login", {state: {
+                    globalPopup: {message: 'Password reset!', type: 'SUCCESS'},
+                    passwordReset: true
+                }});
             }
         } catch {
             console.error("Request failed!");

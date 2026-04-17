@@ -152,7 +152,15 @@ function UploadReceiptPanel(): ReactElement {
         setError('');
         const response: boolean = updateReceipt ? await update() : await store();
         if (response) {
-            navigate('/receipts', {state: {uploadSuccess: true}});
+            navigate('/receipts', {state: 
+                {
+                    globalPopup: {
+                        message: 'Receipt uploaded!',
+                        type: 'SUCCESS'
+                    },
+                    uploadSuccess: true
+                }
+            });
         }
     }
 

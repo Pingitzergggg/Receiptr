@@ -162,7 +162,7 @@ function Register(): ReactElement {
         return (
             <button
             onClick={() => login()}
-            className="cursor-pointer mt-5 flex items-center w-full max-w-[400px] bg-[#1a73e8] hover:bg-[#185abc] text-white rounded-md overflow-hidden p-[1px] transition-all"
+            className="cursor-pointer mt-5 flex items-center w-full bg-[#1a73e8] hover:bg-[#185abc] text-white rounded-md overflow-hidden p-[1px] transition-all"
             style={{ border: '1px solid #1a73e8' }}
             >
             <div className="bg-white p-2 flex items-center justify-center rounded-l-[4px]">
@@ -230,15 +230,6 @@ function Register(): ReactElement {
                         <input onClick={() => rememberMe.current = true} className='checkbox checkbox-md ml-2' type='checkbox' />
                     </div>
 
-                    {/* <div className='mt-5'><GoogleLogin
-                        theme='filled_blue'
-                        text='signup_with'
-                        width='100%'
-                        onSuccess={credentialResponse => {
-                            if (!credentialResponse.credential) return;
-                            const decoded: GoogleJWTPayload = jwtDecode(credentialResponse.credential);
-                            setRegisterData(prev => ({...prev, username: {value: decoded.name, error: ''}, email: {value: decoded.email, error: ''}}));
-                    }} onError={() => console.error('Google Login failed!')} /></div> */}
                     <GoogleSignupButton />
                     
                     <ReCAPTCHA className='z-[20] hidden md:block' size='invisible' sitekey={RECAPTCHA_SITE_KEY} ref={recaptchaRef} />
