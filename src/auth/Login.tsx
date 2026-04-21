@@ -1,4 +1,4 @@
-import { NavLink, useLocation, useNavigate } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { useRef, useState, type RefObject } from 'react'
 import { checkInjection } from '../misc/stringValidator'
 import Popup from '../tools/Popup'
@@ -90,7 +90,7 @@ function Login() : any {
                 {error && <Popup type='ERROR' message={error}/>}
                 <div className='flex justify-evenly items-center w-[100vw] h-[100vh]'>
                     <div id='banner' className='w-full hidden lg:block'>
-                        <img draggable={false} src={`/banner_${localStorage.getItem('theme')}.png`} alt='Banner' className='h-[100vh] w-[50vw]' />
+                        <img draggable={false} src={`/banner_${localStorage.getItem('theme')}_trans.png`} alt='Banner' className='h-[100vh] w-[50vw]' />
                     </div>
                     <div className='w-full flex flex-col justify-center items-center'>
                         <div className='flex flex-col md:flex-row items-center justify-center mb-10'>

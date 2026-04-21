@@ -8,11 +8,6 @@ import Upload from '../tools/Upload';
 import type {paginatable} from "../misc/databaseTables.ts";
 import {paginate} from "../misc/receiver.ts";
 import Filter from "../tools/Filter.tsx";
-import Popup from "../tools/Popup.tsx";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faQrcode } from '@fortawesome/free-solid-svg-icons';
-import QReader from '../tools/QReader.tsx';
-
 // let receipts : any[] = receiptsDummy;
 function ReceiptPanel() : any {
     const [receipts, updateReceipts] = useState<paginatable['receipts']['query']>([]);

@@ -7,7 +7,6 @@ import Upload from '../tools/Upload';
 import type {paginatable, responseType} from "../misc/databaseTables.ts";
 import {extractResponse, requestResource, type response} from "../misc/receiver.ts";
 import Refresh from "../tools/Refresh.tsx";
-import Popup from "../tools/Popup.tsx";
 
 function CardPanel() : any {
   const navigate = useNavigate();
