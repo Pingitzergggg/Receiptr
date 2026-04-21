@@ -43,7 +43,9 @@ type inputFields = {
     purchased_at: inputField
 }
 
-function UploadReceiptPanel({key}: {key?: string}): ReactElement {
+function UploadReceiptPanel(): ReactElement {
+    const [params] = useSearchParams();
+    const APIKey: string|null = params.get('key');
     const navigate = useNavigate();
     const [categories, updateCategories] = useState<{value: string, label: string}[]>([]);
     const [cards, updateCards] = useState<{value: string, label: string}[]>([]);
@@ -152,7 +154,7 @@ function UploadReceiptPanel({key}: {key?: string}): ReactElement {
         setError('');
         const response: boolean = updateReceipt ? await update() : await store();
         if (response) {
-            if (!key) {
+            if (!APIKey) {
                 navigate('/receipts', {state: 
                     {
                         globalPopup: {
@@ -163,7 +165,15 @@ function UploadReceiptPanel({key}: {key?: string}): ReactElement {
                     }
                 });
             } else {
-                navigate('/receipts', {state: {sessionCreated: true}});
+                navigate('/kiosk?key='+APIKey, {state: 
+                    {
+                        globalPopup: {
+                            message: 'Session created!',
+                            type: 'SUCCESS'
+                        },
+                        sessionCreated: true
+                    }
+                });
             }
         
         }
@@ -213,10 +223,11 @@ function UploadReceiptPanel({key}: {key?: string}): ReactElement {
             return false;
         }
         fileContainer.append('value', currentFile[0]);
+        if (APIKey) fileContainer.append('key', APIKey);
         if (categoryId.current) fileContainer.append('binding_id', String(categoryId.current));
         if (cardId.current) fileContainer.append('card_id', String(cardId.current));
         try {
-            const result = await sendFileForm(fileContainer, !!key);
+            const result = await sendFileForm(fileContainer, !!APIKey);
             if (!result) setError('Upload failed!');
             return result;
         } catch (error) {
@@ -237,8 +248,10 @@ function UploadReceiptPanel({key}: {key?: string}): ReactElement {
         {popUpError && <Popup type='ERROR' message={popUpError} />}
         <div className="window upload w-[90%]! lg:w-[auto]!">
             <a onClick={() => {
-                    if (!key) {
+                    if (!APIKey) {
                         navigate('/receipts');
+                    } else {
+                        navigate(-1);
                     }
                 }} className="btn-nav bg-red-400">
                 <FontAwesomeIcon icon={faXmark} />
@@ -252,8 +265,8 @@ function UploadReceiptPanel({key}: {key?: string}): ReactElement {
                         <Input title="Currency" errorInValue={receiptData.currency.error.length != 0} error={receiptData.currency.error} id="currency" width="48%" onChange={handleInputChange} value={receiptData.currency.value.toUpperCase()} />
                     </div>
                     <Input type="date" errorInValue={receiptData.purchased_at.error.length != 0} error={receiptData.purchased_at.error} id="purchased_at" title="" width="100%" onChange={handleInputChange} value={receiptData.purchased_at.value} />
-                    <Select onChange={(event) => cardId.current = Number(event.target.value)} errorInValue={false} id="card" title="Used Card" width="100%" values={cards} selected={cardId.current ?? ''} /> {/*fuck thi piece of shit*/}
-                    <Select onChange={(event) => categoryId.current = Number(event.target.value)} errorInValue={false} id="class" title="Choose Category" width="100%" values={categories} selected={categoryId.current ?? ''} />
+                    {!APIKey && <><Select onChange={(event) => cardId.current = Number(event.target.value)} errorInValue={false} id="card" title="Used Card" width="100%" values={cards} selected={cardId.current ?? ''} /> {/*fuck thi piece of shit*/}
+                    <Select onChange={(event) => categoryId.current = Number(event.target.value)} errorInValue={false} id="class" title="Choose Category" width="100%" values={categories} selected={categoryId.current ?? ''} /></>}
                 </div>
 
                 <div className={updateReceipt ? '' :'flex-col md:ml-[2rem]'}>

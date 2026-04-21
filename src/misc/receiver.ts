@@ -1,10 +1,10 @@
 import type {paginatable, responseType} from "./databaseTables"
 
-export const domainUrl: string = 'https://pgapi.ddns.net';
-// export const domainUrl: string = 'http://localhost:8000';
+// export const domainUrl: string = 'https://pgapi.ddns.net';
+export const domainUrl: string = 'http://localhost:8000';
 
 export type methods = "GET" | "POST" | "PUT" | "DELETE";
-export type endpoints = "user" | "cards" | "categories" | "receipts" | "archive" | "login" | "register" | "logout" | "wipeout";
+export type endpoints = "user" | "cards" | "categories" | "receipts" | "archive" | "login" | "register" | "logout" | "wipeout" | "assign-session";
 
 export type response<T extends keyof responseType> = {
     status: number;
@@ -13,13 +13,13 @@ export type response<T extends keyof responseType> = {
 
 export async function verifyCaptcha(token: string): Promise<boolean> {
 
-    const response = await fetch("https://pgapi.ddns.net/api/receiptr/verify-captcha", {
+    const response = await fetch(domainUrl+"/api/receiptr/verify-captcha", {
         method: "POST",
         headers: {
             "content-type": "application/json",
             "accept": "application/json"
         },
-        body: JSON.stringify(token)
+        body: JSON.stringify({captcha: token})
     });
 
     const data: responseType['reCAPTCHA'] = await response.json();
@@ -58,6 +58,10 @@ export async function sendFileForm(data: FormData, kioskMode: boolean = false): 
     });
     if (response.status === 401) await authenticate();
     await extractResponse(response);
+    if (kioskMode) {
+        const data = await response.json();
+        sessionStorage.setItem('sessionKey', data.sessionKey ?? 'null');
+    }
     return response.ok;
 }
 

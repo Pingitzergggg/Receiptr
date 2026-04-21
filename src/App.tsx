@@ -36,6 +36,7 @@ import NotFound from './tools/NotFound.tsx'
 import PasswordReset from './tools/PasswordReset.tsx'
 import PasswordRequest from './tools/PasswordRequest.tsx'
 import KioskDemo from './tools/KioskDemo.tsx'
+import QReader from './tools/QReader.tsx'
 
 function App(): ReactElement {
 
@@ -182,8 +183,11 @@ function App(): ReactElement {
           <Route path='/register' element={<Register/>} />
           <Route path='/dev' element={<Test />}/>
 
-          <Route path='/kiosk' element={<KioskDemo />} />
+          <Route path='/kiosk' element={<KioskDemo />} >
+            <Route path='form' element={<UploadReceiptPanel />} />
+          </Route>
 
+          <Route path='scanner' element={<QReader />} />
           <Route path="/reset-password" element={<PasswordReset />} />
           <Route path="/request-password" element={<PasswordRequest />} />
           <Route path="*" element={<NotFound />} />
