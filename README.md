@@ -3,7 +3,7 @@
 ![Logo](public/banner_dark_trans.png)
 
 ## Abstract
-Receiptr is a web application designed to save and organize receipts under an account. It's technology could be implemented in stores and web shops to create a unified system for creating and managing fully digital receipts.
+Receiptr is a web application designed to save and organize receipts under an account. Its technology could be implemented in stores and web shops to create a unified system for creating and managing fully digital receipts.
 
 ## How it works
 Receiptr is hosted on [receiptr.net](https://receiptr.net) and can be accessed from any device. You can create receipts, cards and categories to help you organize your payments. 
@@ -14,7 +14,7 @@ There are two ways this technology could be implemented in the future:
 - By scanning a QR-code in the app
 
 #### Paying with a digital wallet
-One way to implement Receiptr in stores would be to identify Receiptr account by Digital Wallets. This is possible because the use of Digital Wallets is restricted and can only be accessed once authenticated, unlike regular credit cards using NFC technology. This allows for a direct identification method which could happen alongside with the payment interaction at the store. For this method we've created a simple RFID scanning device using a Raspberry Pi Pico 2 WH to simulate to moment of the transaction.
+One way to implement Receiptr in stores would be to identify the Receiptr account by Digital Wallets. This is possible because the use of Digital Wallets is restricted and can only be accessed once authenticated, unlike regular credit cards using NFC technology. This allows for a direct identification method which could happen alongside with the payment interaction at the store. For this method we've created (a simple RFID scanning device)[https://github.com/Pingitzergggg/Receiptr-Kiosk_Vizsga] using a Raspberry Pi Pico 2 WH to simulate the moment of the transaction.
 
 #### Scanning the QR-code
 This method is much more generic. When the payment is done, the store creates the receipt on the Receiptr servers and the user just needs to scan the QR-code. With the QR-code Receiptr is able to identify the corresponding payment session and can link it to the authenticated user. This method can also be used for other payment methods like cash or coupons.
