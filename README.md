@@ -115,5 +115,7 @@ src/
 2. [David Reicher](https://github.com/Fyrra1)
 3. [David Horvath](https://github.com/TrxpleD23)
 
+*For further information read the [Receiptr Docs](https://implementlater.com)*
+
 *This software is under the MIT License*<br>
 *© 2026 David Pingitzer All Rights Reserved*
