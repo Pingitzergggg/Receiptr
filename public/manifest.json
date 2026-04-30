@@ -6,21 +6,13 @@
   "orientation": "portrait",
   "scope": "/",
   "short_name": "Receiptr",
-  "start_url": "receiptr.net/",
+  "start_url": "/",
   "theme_color": "#127012",
   "icons": [
     {
       "src": "https://receiptr.net/favicon.png",
       "type": "image/png",
-      "sizes": "32x32",
-      "isSquare": true,
-      "isPng": true,
-      "isWebp": false,
-      "isJpg": false,
-      "width": 32,
-      "is512x512": false,
-      "is256x256": false,
-      "is192x192": false
+      "sizes": "32x32"
     },
     {
       "src": "/appstore-images/android/launchericon-48x48.png",
@@ -60,15 +52,7 @@
     },
     {
       "src": "https://receiptr.net/favicon.ico",
-      "type": "image/x-icon",
-      "isSquare": false,
-      "isPng": false,
-      "isWebp": false,
-      "isJpg": false,
-      "width": 0,
-      "is512x512": false,
-      "is256x256": false,
-      "is192x192": false
+      "type": "image/x-icon"
     }
   ],
   "id": "receiptr",
